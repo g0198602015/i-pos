@@ -1,4 +1,4 @@
-package com.CenterFragment;
+package com.CenterFragment.TabFragment.Goods;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -6,24 +6,23 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.CenterFragment.TabFragment.BaseFragment;
-import com.CenterFragment.TabFragment.Goods.GoodsDetailActivity;
-import com.CenterFragment.TabFragment.Goods.NormalRecyclerViewAdapter;
 import com.LeftFragement.ListViewData;
 
 import jerome.i_pos.R;
 
+import static java.lang.Thread.sleep;
 
-public class ShippmentFragement extends BaseFragment implements AbsListView.OnItemClickListener
+
+public class GoodsFragement extends BaseFragment implements AbsListView.OnItemClickListener
 {
 
     private ProgressDialog mProgressDialog = null;
@@ -34,12 +33,12 @@ public class ShippmentFragement extends BaseFragment implements AbsListView.OnIt
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment ShippmentFragement.
+     * @return A new instance of fragment GoodsFragement.
      */
     // TODO: Rename and change types and number of parameters
-    public static ShippmentFragement newInstance()
+    public static GoodsFragement newInstance()
     {
-        ShippmentFragement fragment = new ShippmentFragement();
+        GoodsFragement fragment = new GoodsFragement();
 
         return fragment;
     }
@@ -56,7 +55,7 @@ public class ShippmentFragement extends BaseFragment implements AbsListView.OnIt
                              Bundle savedInstanceState)
     {
         Log.i("i-pos", getTitle()+"onCreateView()............");
-        View view = inflater.inflate(R.layout.shippment_fragement, container, false);
+        View view = inflater.inflate(R.layout.goods_fragement, container, false);
 
         return view;
 
@@ -70,68 +69,55 @@ public class ShippmentFragement extends BaseFragment implements AbsListView.OnIt
             super.onResume();
             Log.i("i-pos", getTitle()+" "+"onResume()............");
 
-
-            mFinished = false;
-            //設定訊息內容後顯示於前景
-            mProgressDialog = new ProgressDialog(this.getActivity());
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setMessage("載入中，請稍後 ...");
-            mProgressDialog.setCancelable(true);
-            mProgressDialog.show();
-            //建構執行緒
-            new Thread(){
-                @Override
-                public void run()
-                {
-                    try
-                    {
-
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    finally
-                    {
-                        mFinished = true;
-                    }
-                }
-            }.start(); //開始執行執行緒
-
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    while (true)
-                    {
+            if (mListViewItems == null) {
+                mFinished = false;
+                //設定訊息內容後顯示於前景
+                mProgressDialog = new ProgressDialog(this.getActivity());
+                mProgressDialog.setIndeterminate(true);
+                mProgressDialog.setMessage("載入中，請稍後 ...");
+                mProgressDialog.setCancelable(true);
+                mProgressDialog.show();
+                //建構執行緒
+                new Thread() {
+                    @Override
+                    public void run() {
                         try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        if (mFinished)
-                        {
-                            refreshListViewData();
 
-                            handler.removeCallbacks(this);
-                            mProgressDialog.dismiss();
-                            break;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            mFinished = true;
                         }
                     }
-                }}, 500);
+                }.start(); //開始執行執行緒
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        while (true) {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            if (mFinished) {
+                                refreshListViewData();
+
+                                handler.removeCallbacks(this);
+                                mProgressDialog.dismiss();
+                                break;
+                            }
+                        }
+                    }
+                }, 500);
+            }
 
         }
         catch(Exception ex)
         {
 
         }
-    }
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri)
-    {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
     }
 
     @Override
@@ -153,42 +139,31 @@ public class ShippmentFragement extends BaseFragment implements AbsListView.OnIt
 //        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        public void onFragmentInteraction(Uri uri);
-//    }
     private ListViewData mListViewItems;
-    private RecyclerView mlistView;
-    private NormalRecyclerViewAdapter mRecyclerViewerAdapter = null;
+    private ListView mlistView;
+    private GoodsListViewAdapter mGoodsListViewAdapter = null;
     public void refreshListViewData()
     {
         if (mListViewItems == null)
             mListViewItems = parseData();
         mCallback.onListViewDataChanged(mListViewItems);
-        mRecyclerViewerAdapter = new NormalRecyclerViewAdapter(
-                getActivity()
+        mGoodsListViewAdapter = new GoodsListViewAdapter(
+                getActivity(),
+                mListViewItems,
+                getSearchText()
         );
-        mRecyclerViewerAdapter.notifyDataSetChanged();
+        mGoodsListViewAdapter.notifyDataSetChanged();
         // Inflate the layout for this fragment
         try {
 
             if (getView() != null)
             {
-                RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.shippment_recyclerView);
-                if (recyclerView != null)
+                View listView = getView().findViewById(R.id.listView);
+                if (listView != null)
                 {
-                    mlistView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    mlistView.setAdapter(mRecyclerViewerAdapter);
+                    mlistView = (ListView) listView;
+                    mlistView.setAdapter(mGoodsListViewAdapter);
+                    mlistView.setOnItemClickListener(this);
                 }
             }
         }
@@ -205,6 +180,7 @@ public class ShippmentFragement extends BaseFragment implements AbsListView.OnIt
         intent.setClass(getActivity(), GoodsDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("Type", 0);
+        bundle.putSerializable("ListViewData", (ListViewData) mGoodsListViewAdapter.getItem(position));
         intent.putExtras(bundle);
         startActivityForResult(intent, mRequestCode);
     }

@@ -1,34 +1,29 @@
-package com.CenterFragment.TabFragment;
+package com.CenterFragment.TabFragment.Shippment;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
+import com.CenterFragment.TabFragment.BaseFragment;
 import com.CenterFragment.TabFragment.Goods.GoodsDetailActivity;
-import com.CenterFragment.TabFragment.Goods.GoodsListViewAdapter;
 import com.LeftFragement.ListViewData;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import jerome.i_pos.R;
-import model.BaseDataClass;
-
-import static java.lang.Thread.sleep;
 
 
-public class GoodsFragement extends BaseFragment implements AbsListView.OnItemClickListener
+public class ShippmentFragement extends BaseFragment
 {
 
     private ProgressDialog mProgressDialog = null;
@@ -39,12 +34,13 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment GoodsFragement.
+     * @return A new instance of fragment ShippmentFragement.
      */
     // TODO: Rename and change types and number of parameters
-    public static GoodsFragement newInstance()
+    public static ShippmentFragement newInstance()
     {
-        GoodsFragement fragment = new GoodsFragement();
+
+        ShippmentFragement fragment = new ShippmentFragement();
 
         return fragment;
     }
@@ -60,9 +56,8 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        Log.i("i-pos", getTitle()+"onCreateView()............");
-        View view = inflater.inflate(R.layout.goods_fragement, container, false);
-
+        Log.i("i-pos", getTitle() + "onCreateView()............");
+        View view = inflater.inflate(R.layout.shippment_fragment, container, false);
         return view;
 
     }
@@ -75,55 +70,49 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
             super.onResume();
             Log.i("i-pos", getTitle()+" "+"onResume()............");
 
-
-            mFinished = false;
-            //設定訊息內容後顯示於前景
-            mProgressDialog = new ProgressDialog(this.getActivity());
-            mProgressDialog.setIndeterminate(true);
-            mProgressDialog.setMessage("載入中，請稍後 ...");
-            mProgressDialog.setCancelable(true);
-            mProgressDialog.show();
-            //建構執行緒
-            new Thread(){
-                @Override
-                public void run()
-                {
-                    try
-                    {
-
-                    }
-                    catch (Exception e){
-                        e.printStackTrace();
-                    }
-                    finally
-                    {
-                        mFinished = true;
-                    }
-                }
-            }.start(); //開始執行執行緒
-
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run()
-                {
-                    while (true)
-                    {
+            if (mListViewItems == null) {
+                mFinished = false;
+                //設定訊息內容後顯示於前景
+                mProgressDialog = new ProgressDialog(this.getActivity());
+                mProgressDialog.setIndeterminate(true);
+                mProgressDialog.setMessage("載入中，請稍後 ...");
+                mProgressDialog.setCancelable(true);
+                mProgressDialog.show();
+                //建構執行緒
+                new Thread() {
+                    @Override
+                    public void run() {
                         try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                        if (mFinished)
-                        {
-                            refreshListViewData();
 
-                            handler.removeCallbacks(this);
-                            mProgressDialog.dismiss();
-                            break;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            mFinished = true;
                         }
                     }
-                }}, 500);
+                }.start(); //開始執行執行緒
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        while (true) {
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            if (mFinished) {
+                                refreshListViewData();
+
+                                handler.removeCallbacks(this);
+                                mProgressDialog.dismiss();
+                                break;
+                            }
+                        }
+                    }
+                }, 500);
+            }
 
         }
         catch(Exception ex)
@@ -173,30 +162,29 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
 //        public void onFragmentInteraction(Uri uri);
 //    }
     private ListViewData mListViewItems;
-    private ListView mlistView;
-    private GoodsListViewAdapter mGoodsListViewAdapter = null;
+   // private RecyclerView mlistView;
+    private NormalRecyclerViewAdapter mRecyclerViewerAdapter = null;
     public void refreshListViewData()
     {
         if (mListViewItems == null)
             mListViewItems = parseData();
         mCallback.onListViewDataChanged(mListViewItems);
-        mGoodsListViewAdapter = new GoodsListViewAdapter(
+        mRecyclerViewerAdapter = new NormalRecyclerViewAdapter(
                 getActivity(),
                 mListViewItems,
                 getSearchText()
         );
-        mGoodsListViewAdapter.notifyDataSetChanged();
+        mRecyclerViewerAdapter.notifyDataSetChanged();
         // Inflate the layout for this fragment
         try {
 
             if (getView() != null)
             {
-                View listView = getView().findViewById(R.id.listView);
-                if (listView != null)
+                RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.shippment_recyclerView);
+                if (recyclerView != null)
                 {
-                    mlistView = (ListView) listView;
-                    mlistView.setAdapter(mGoodsListViewAdapter);
-                    mlistView.setOnItemClickListener(this);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    recyclerView.setAdapter(mRecyclerViewerAdapter);
                 }
             }
         }
@@ -208,24 +196,6 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //new一個intent物件，並指定Activity切換的class
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), GoodsDetailActivity.class);
-
-//        //new一個Bundle物件，並將要傳遞的資料傳入
-        Bundle bundle = new Bundle();
-        bundle.putInt("Type", 0);
-        bundle.putSerializable("ListViewData", (ListViewData) mGoodsListViewAdapter.getItem(position));
-        intent.putExtras(bundle);
-
-//
-//        //將Bundle物件assign給intent
-//        intent.putExtras(bundle);
-        //切換Activity
-        startActivityForResult(intent, mRequestCode);
-    }
-    @Override
     public void onDestroy() {
         super.onDestroy();
         Log.i("i-pos", getTitle() + " " + "onDestory()............");
@@ -234,7 +204,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("i-pos", getTitle()+" "+"onPause()............");
+        Log.i("i-pos", getTitle() + " " + "onPause()............");
     }
 
 

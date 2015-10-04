@@ -4,20 +4,15 @@ package com.CenterFragment;
  * Created by Jerome on 2015/8/8.
  */
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +21,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.CenterFragment.TabFragment.BaseFragment;
-import com.CenterFragment.TabFragment.GoodsFragement;
+import com.CenterFragment.TabFragment.Goods.GoodsFragement;
+import com.CenterFragment.TabFragment.Shippment.ShippmentFragement;
 import com.tools.ImageUtility;
 
 import java.util.LinkedList;
@@ -58,39 +54,16 @@ public class CenterFragmenet extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
        View view =  inflater.inflate(R.layout.center_fragement, container, false);
-       InitToolbar(view);
-       setHasOptionsMenu(true);
+
        int type = getArguments().getInt("Type", -1);
+        InitToolbar(view, type);
+        setHasOptionsMenu(true);
        //adapter
        final LinkedList<BaseFragment> fragments = createFragments(type);
        adapter = new TabFragmentPagerAdapter(getFragmentManager(), fragments);
        //pager
        pager = (ViewPager) view.findViewById(R.id.pager);
        pager.setAdapter(adapter);
-       pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-           @Override
-           public void onPageSelected(int position) {
-
-               Toolbar toolbar = (Toolbar) ((AppCompatActivity) getActivity()).findViewById(R.id.toolbar);
-               TextView titleTextView = (TextView) toolbar.findViewById(R.id.toolbarTitle);
-               titleTextView.setText(titles[position]);
-               if (myPageChangeListener != null)
-                   myPageChangeListener.onPageSelected(position);
-           }
-
-           @Override
-           public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-
-           }
-
-           @Override
-           public void onPageScrollStateChanged(int position) {
-
-
-           }
-       });
 
        //tabs
        slidingTabLayout = (CenterFragmentSlidingTabLayout) view.findViewById(R.id.tabs);
@@ -98,7 +71,7 @@ public class CenterFragmenet extends BaseFragment
        return view;
     }
 
-    private void InitToolbar(View view)
+    private void InitToolbar(View view, int type)
     {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
@@ -112,7 +85,8 @@ public class CenterFragmenet extends BaseFragment
             }
         });
         TextView titleTextView = (TextView)toolbar.findViewById(R.id.toolbarTitle);
-        titleTextView.setText(titles[0]);
+        if (type >= 0)
+            titleTextView.setText(titles[type]);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
        // ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
@@ -146,8 +120,6 @@ public class CenterFragmenet extends BaseFragment
     // type:1 建立[進貨Fragment]
     private LinkedList<BaseFragment> createFragments(int type)
     {
-        int indicatorColor = Color.BLUE;
-        int dividerColor = Color.TRANSPARENT;
         Bitmap bitmap = ImageUtility.createBitmap(getActivity(), R.mipmap.ic_launcher, 50, 50);
         LinkedList<BaseFragment> fragments = new LinkedList<BaseFragment>();
         if (type == 0) {
@@ -175,41 +147,9 @@ public class CenterFragmenet extends BaseFragment
             mBaseFragment.refreshListViewData();
         }
     }
-    public boolean isFirst()
-    {
-        if (pager.getCurrentItem() == 0)
-            return true;
-        else
-            return false;
-    }
-
-    public boolean isEnd()
-    {
-        if (pager.getCurrentItem() == adapter.getCount() - 1)
-        {
-
-            //Toolbar toolbar = (Toolbar) getView().findViewById(R.id.tool_bar);
-            //((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-//            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-            return true;
-        }
-        else
-            return false;
-    }
-    private MyPageChangeListener myPageChangeListener;
-
-    public void setMyPageChangeListener(MyPageChangeListener l) {
-
-        myPageChangeListener = l;
-
-    }
 
     @Override
     public void refreshListViewData() {
 
-    }
-
-    public interface MyPageChangeListener {
-        public void onPageSelected(int position);
     }
 }
