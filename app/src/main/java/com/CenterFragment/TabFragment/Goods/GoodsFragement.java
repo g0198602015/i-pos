@@ -15,7 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.CenterFragment.TabFragment.BaseFragment;
-import com.LeftFragement.ListViewData;
+import com.LeftFragement.BaseItemData;
 
 import jerome.i_pos.R;
 
@@ -139,7 +139,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
 //        mListener = null;
     }
 
-    private ListViewData mListViewItems;
+    private BaseItemData mListViewItems;
     private ListView mlistView;
     private GoodsListViewAdapter mGoodsListViewAdapter = null;
     public void refreshListViewData()
@@ -180,7 +180,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         intent.setClass(getActivity(), GoodsDetailActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("Type", 0);
-        bundle.putSerializable("ListViewData", (ListViewData) mGoodsListViewAdapter.getItem(position));
+        bundle.putSerializable("ListViewData", (BaseItemData) mGoodsListViewAdapter.getItem(position));
         intent.putExtras(bundle);
         startActivityForResult(intent, mRequestCode);
     }
@@ -214,16 +214,16 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
     }
-    public ListViewData parseData()
+    public BaseItemData parseData()
     {
-        ListViewData _RootItemData = new ListViewData("全部");
+        BaseItemData _RootItemData = new GoodsItemData("全部");
         _RootItemData.setParent(null);
-        ListViewData goodItem = createViewData("商品", _RootItemData);
-        ListViewData goodsChildItem = createViewData("商品的子類別", goodItem);
+        BaseItemData goodItem = createViewData("商品", _RootItemData);
+        BaseItemData goodsChildItem = createViewData("商品的子類別", goodItem);
         createViewData("商品 1", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
         createViewData("商品 2", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
-        ListViewData operationItem = createViewData("技術操作", _RootItemData);
-        ListViewData operationChildItem = createViewData("促銷折扣", operationItem);
+        BaseItemData operationItem = createViewData("技術操作", _RootItemData);
+        BaseItemData operationChildItem = createViewData("促銷折扣", operationItem);
         createViewData("促銷折扣 1", operationChildItem).setIconResourceID(R.drawable.discount).setInfo("折扣描述");
         //睫毛
         operationChildItem = createViewData("睫毛", operationItem);
@@ -261,9 +261,9 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         createViewData("染髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
         return _RootItemData;
     }
-    public ListViewData createViewData(String title,ListViewData parent)
+    public BaseItemData createViewData(String title,BaseItemData parent)
     {
-        ListViewData item = new ListViewData(title);
+        BaseItemData item = new GoodsItemData(title);
         if (parent != null) {
             item.setParent(parent);
             parent.addChild(item);

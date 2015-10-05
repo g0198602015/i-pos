@@ -20,10 +20,10 @@ public class LeftListViewAdapter extends BaseAdapter
 {
     LeftFragment.OnLeftFragmentEventListener mCallback = null;
     private LayoutInflater myInflater;
-    private ListViewData mDatas;
+    private BaseItemData mDatas;
     private Context mContext;
     private Typeface mTypeface;
-    public LeftListViewAdapter(Context context, ListViewData datas, LeftFragment.OnLeftFragmentEventListener callback)
+    public LeftListViewAdapter(Context context, BaseItemData datas, LeftFragment.OnLeftFragmentEventListener callback)
     {
         mContext = context;
         myInflater = LayoutInflater.from(mContext);
@@ -31,7 +31,7 @@ public class LeftListViewAdapter extends BaseAdapter
         mDatas = datas;
         mCallback = callback;
     }
-    public void setListViewData(ListViewData datas)
+    public void setListViewData(BaseItemData datas)
     {
         mDatas = datas;
     }

@@ -38,7 +38,7 @@ public class LeftFragment extends Fragment
 //	private String[] list = {"鉛筆","原子筆","鋼筆","毛筆","彩色筆"};
 //	private ArrayAdapter<String> listAdapter;
 	private ListView listView;
-	private ListViewData _CurrentItem;
+	private BaseItemData _CurrentItem;
 	private LeftListViewAdapter _LeftListViewAdapter;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class LeftFragment extends Fragment
 					+ " must implement OnHeadlineSelectedListener");
 		}
 	}
-	public void setListViewData(ListViewData item)
+	public void setListViewData(BaseItemData item)
 	{
 		_CurrentItem = item;
 		if (_CurrentItem != null) {

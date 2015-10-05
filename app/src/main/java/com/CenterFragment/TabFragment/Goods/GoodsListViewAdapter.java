@@ -14,13 +14,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.LeftFragement.ListViewData;
+import com.LeftFragement.BaseItemData;
 
 import jerome.i_pos.R;
 
 public class GoodsListViewAdapter extends BaseAdapter
 {
-    private ArrayList<ListViewData> _DataItems;
+    private ArrayList<GoodsItemData> _DataItems;
     private LayoutInflater mInflater;
     private Context mContext;
     private ItemView mItemView;
@@ -31,9 +31,9 @@ public class GoodsListViewAdapter extends BaseAdapter
         TextView ItemInfo;
     }
 
-    public GoodsListViewAdapter(Context context, ListViewData dataItems, String searchText)
+    public GoodsListViewAdapter(Context context, BaseItemData dataItems, String searchText)
     {
-        _DataItems = new ArrayList<ListViewData>();
+        _DataItems = new ArrayList<GoodsItemData>();
         mSearchText = searchText;
         parseDataItems(dataItems, _DataItems);
         mContext = context;
@@ -79,7 +79,7 @@ public class GoodsListViewAdapter extends BaseAdapter
             convertView.setTag(mItemView);
         }
 
-        ListViewData appInfo = _DataItems.get(position);
+        GoodsItemData appInfo = _DataItems.get(position);
         if (appInfo != null)
         {
             mItemView.ItemName.setText(appInfo.getTitle());
@@ -90,29 +90,29 @@ public class GoodsListViewAdapter extends BaseAdapter
 
         return convertView;
     }
-    private  ArrayList<ListViewData> parseDataItems(ListViewData currentDataItem,ArrayList<ListViewData> arrayListItems)
+    private  ArrayList<GoodsItemData> parseDataItems(BaseItemData currentDataItem,ArrayList<GoodsItemData> arrayListItems)
     {
         if (currentDataItem.getVisible())
         {
             int childSize = currentDataItem.getChildSize();
             for (int childIndex = 0; childIndex < childSize; childIndex++)
             {
-                ListViewData childDataItem = currentDataItem.getChild(childIndex);
+                BaseItemData childDataItem = currentDataItem.getChild(childIndex);
                 if (!childDataItem.getClassification()) // 不為類別身分
                 {
                     if (mSearchText.length() != 0)
                     {
                         if (childDataItem.getTitle().contains(mSearchText) || childDataItem.getInfo().contains(mSearchText))
-                            arrayListItems.add(childDataItem);
+                            arrayListItems.add((GoodsItemData)childDataItem);
                     }
                     else
                     {
-                        arrayListItems.add(childDataItem);
+                        arrayListItems.add((GoodsItemData)childDataItem);
                     }
                 }
                 else
                 {
-                    parseDataItems(childDataItem, arrayListItems); //類別的話, 繼續往下挖
+                    parseDataItems((GoodsItemData)childDataItem, arrayListItems); //類別的話, 繼續往下挖
                 }
             }
         }

@@ -18,7 +18,7 @@ import android.widget.AdapterView;
 
 import com.CenterFragment.TabFragment.BaseFragment;
 import com.CenterFragment.TabFragment.Goods.GoodsDetailActivity;
-import com.LeftFragement.ListViewData;
+import com.LeftFragement.BaseItemData;
 
 import jerome.i_pos.R;
 
@@ -161,7 +161,7 @@ public class ShippmentFragement extends BaseFragment
 //        // TODO: Update argument type and name
 //        public void onFragmentInteraction(Uri uri);
 //    }
-    private ListViewData mListViewItems;
+    private BaseItemData mListViewItems;
    // private RecyclerView mlistView;
     private NormalRecyclerViewAdapter mRecyclerViewerAdapter = null;
     public void refreshListViewData()
@@ -225,16 +225,16 @@ public class ShippmentFragement extends BaseFragment
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
     }
-    public ListViewData parseData()
+    public BaseItemData parseData()
     {
-        ListViewData _RootItemData = new ListViewData("全部");
+        BaseItemData _RootItemData = new BaseItemData("全部");
         _RootItemData.setParent(null);
-        ListViewData goodItem = createViewData("商品", _RootItemData);
-        ListViewData goodsChildItem = createViewData("商品的子類別", goodItem);
+        BaseItemData goodItem = createViewData("商品", _RootItemData);
+        BaseItemData goodsChildItem = createViewData("商品的子類別", goodItem);
         createViewData("商品 1", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
         createViewData("商品 2", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
-        ListViewData operationItem = createViewData("技術操作", _RootItemData);
-        ListViewData operationChildItem = createViewData("促銷折扣", operationItem);
+        BaseItemData operationItem = createViewData("技術操作", _RootItemData);
+        BaseItemData operationChildItem = createViewData("促銷折扣", operationItem);
         createViewData("促銷折扣 1", operationChildItem).setIconResourceID(R.drawable.discount).setInfo("折扣描述");
         //睫毛
         operationChildItem = createViewData("睫毛", operationItem);
@@ -272,9 +272,9 @@ public class ShippmentFragement extends BaseFragment
         createViewData("染髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
         return _RootItemData;
     }
-    public ListViewData createViewData(String title,ListViewData parent)
+    public BaseItemData createViewData(String title,BaseItemData parent)
     {
-        ListViewData item = new ListViewData(title);
+        BaseItemData item = new BaseItemData(title);
         if (parent != null) {
             item.setParent(parent);
             parent.addChild(item);

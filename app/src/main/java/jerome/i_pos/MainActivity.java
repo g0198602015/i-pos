@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import com.CenterFragment.TabFragment.BaseFragment;
 import com.LeftFragement.LeftFragment;
-import com.LeftFragement.ListViewData;
+import com.LeftFragement.BaseItemData;
 import com.RightFragment.RightFragment;
 import com.CenterFragment.SlidingMenu;
 import com.CenterFragment.CenterFragmenet;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
         }
     }
     private boolean bInitial = true;
-    public void onListViewDataChanged(ListViewData items) {
+    public void onListViewDataChanged(BaseItemData items) {
         // The user selected the headline of an article from the HeadlinesFragment
         // Do something here to display that article
         if (bInitial) {

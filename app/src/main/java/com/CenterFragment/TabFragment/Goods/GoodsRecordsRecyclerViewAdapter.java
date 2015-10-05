@@ -1,4 +1,4 @@
-package com.CenterFragment.TabFragment.Shippment;
+package com.CenterFragment.TabFragment.Goods;
 
 /**
  * Created by Jerome on 2015/8/9.
@@ -9,31 +9,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.CenterFragment.TabFragment.Goods.GoodsDetailActivity;
 import com.LeftFragement.BaseItemData;
 
 import java.util.ArrayList;
 
 import jerome.i_pos.R;
 
-public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecyclerViewAdapter.NormalTextViewHolder> {
+public class GoodsRecordsRecyclerViewAdapter extends RecyclerView.Adapter<GoodsRecordsRecyclerViewAdapter.NormalTextViewHolder> {
     private static ArrayList<BaseItemData> _DataItems;
     private final LayoutInflater mLayoutInflater;
     private static Context mContext;
-    private String mSearchText="";
 
 
-    public NormalRecyclerViewAdapter(Context context, BaseItemData dataItems, String searchText)
+    public GoodsRecordsRecyclerViewAdapter(Context context, BaseItemData dataItems)
     {
         _DataItems = new ArrayList<BaseItemData>();
-        mSearchText = searchText;
         parseDataItems(dataItems, _DataItems);
         mContext = context;
         mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -104,15 +100,7 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
                 BaseItemData childDataItem = currentDataItem.getChild(childIndex);
                 if (!childDataItem.getClassification()) // 不為類別身分
                 {
-                    if (mSearchText.length() != 0)
-                    {
-                        if (childDataItem.getTitle().contains(mSearchText) || childDataItem.getInfo().contains(mSearchText))
-                            arrayListItems.add(childDataItem);
-                    }
-                    else
-                    {
-                        arrayListItems.add(childDataItem);
-                    }
+                    arrayListItems.add(childDataItem);
                 }
                 else
                 {

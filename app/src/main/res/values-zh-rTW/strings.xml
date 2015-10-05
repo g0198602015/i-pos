@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">i-pos</string>
     <string name="hello_world">Hello world!</string>
@@ -7,15 +8,15 @@
     <string name="tab_notifications">Notifications</string>
     <string name="tab_photos">Photos</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="title_activity_goods_detail">GoodsDetailActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <!-- TODO: goods_detail Didalog -->
-    <string name="goods_detail_service_persion">Service Persion: </string>
-    <string name="goods_detail_price">Price: </string>
-    <string name="goods_detail_discount">Discount: </string>
-    <string name="goods_detail_commit">Commit:  </string>
+    <string name="goods_detail_service_persion">服務人員</string>
+    <string name="goods_detail_price">價格</string>
+    <string name="goods_detail_discount">折數</string>
+    <string name="goods_detail_commit">備註</string>
 </resources>

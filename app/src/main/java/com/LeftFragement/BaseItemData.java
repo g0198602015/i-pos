@@ -6,26 +6,26 @@ import java.util.ArrayList;
 /**
  * Created by Jerome on 2015/9/3.
  */
-public class ListViewData implements Serializable
+public class BaseItemData implements Serializable
 {
 
     private boolean mClassification; //判斷有無子項目
     private String mTitle;
     private String mInfo;
-    private ListViewData mParent;
-    private ArrayList<ListViewData> mChilds;
+    private BaseItemData mParent;
+    private ArrayList<BaseItemData> mChilds;
     private boolean mVisible;
     private int mIconId=0;
-    public ListViewData(String title)
+    public BaseItemData(String title)
     {
         mTitle = title;
         mInfo = "";
         mParent = null;
-        mChilds = new ArrayList<ListViewData>();
+        mChilds = new ArrayList<BaseItemData>();
         mVisible = true;
         mClassification = false;
     }
-    public ListViewData setIconResourceID(int id)
+    public BaseItemData setIconResourceID(int id)
     {
         mIconId = id;
         return this;
@@ -38,16 +38,16 @@ public class ListViewData implements Serializable
     {
         return mTitle;
     }
-    public ListViewData setParent(ListViewData parent)
+    public BaseItemData setParent(BaseItemData parent)
     {
         mParent = parent;
         return this;
     }
-    public ListViewData getParent()
+    public BaseItemData getParent()
     {
         return mParent;
     }
-    public ListViewData addChild(ListViewData child)
+    public BaseItemData addChild(BaseItemData child)
     {
         setClassification(true);
         mChilds.add(child);
@@ -57,11 +57,11 @@ public class ListViewData implements Serializable
     {
         return mChilds.size();
     }
-    public ListViewData getChild(int index)
+    public BaseItemData getChild(int index)
     {
         return mChilds.get(index);
     }
-    public ListViewData setInfo(String info)
+    public BaseItemData setInfo(String info)
     {
         mInfo = info;
         return this;
@@ -70,7 +70,7 @@ public class ListViewData implements Serializable
     {
         return mInfo;
     }
-    public ListViewData setVisible(boolean visible)
+    public BaseItemData setVisible(boolean visible)
     {
 
         mVisible = visible;
@@ -85,12 +85,12 @@ public class ListViewData implements Serializable
     {
         return mClassification;
     }
-    public ListViewData setClassification(boolean isClassification)
+    public BaseItemData setClassification(boolean isClassification)
     {
         mClassification = isClassification;
         return this;
     }
-    public ListViewData setTitle(String title)
+    public BaseItemData setTitle(String title)
     {
         mTitle = title;
         return this;

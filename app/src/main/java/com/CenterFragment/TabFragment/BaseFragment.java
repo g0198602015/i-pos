@@ -1,15 +1,8 @@
 package com.CenterFragment.TabFragment;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 
-import com.LeftFragement.ListViewData;
-
-import java.util.ArrayList;
-
-import model.BaseDataClass;
-
+import com.LeftFragement.BaseItemData;
 /**
  * Created by Jerome on 2015/8/8.
  */
@@ -18,7 +11,7 @@ public abstract class BaseFragment extends Fragment {
     protected BaseFragmentEventListener mCallback;
     // Container Activity must implement this interface
     public interface BaseFragmentEventListener {
-        public void onListViewDataChanged(ListViewData items);
+        public void onListViewDataChanged(BaseItemData items);
     }
 //    private ArrayList<BaseDataClass> mData;
     private String mTitle = "";
