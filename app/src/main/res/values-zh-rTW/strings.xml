@@ -19,4 +19,6 @@
     <string name="goods_detail_price">價格</string>
     <string name="goods_detail_discount">折數</string>
     <string name="goods_detail_commit">備註</string>
+    <!-- TODO: Goods Recored Activtiy -->
+    <string name="goods_record_title">打單紀錄</string>
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff">
@@ -52,7 +53,7 @@
 
             <TextView
                 android:text="@string/goods_detail_price"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dip"
                 android:layout_marginLeft="10dp"
@@ -62,7 +63,7 @@
             <EditText
                 android:id="@+id/goods_detail_price_editText"
                 android:text="0"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dip"
                 android:inputType="number"
@@ -72,7 +73,7 @@
 
             <TextView
                 android:text="@string/goods_detail_discount"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dip"
                 android:layout_marginLeft="10dp"
@@ -83,7 +84,7 @@
                 android:id="@+id/goods_detail_discount_editText"
                 android:layout_weight="1"
                 android:text="0"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20dip"
                 android:inputType="number"

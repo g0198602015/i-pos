@@ -27,6 +27,12 @@
             android:label="@string/title_activity_goods_detail"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
+        <activity
+            android:name="com.CenterFragment.TabFragment.Goods.GoodsRecordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/goods_record_title"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
     </application>
 
 </manifest>
