@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by Jerome on 2015/9/3.
  */
-public class BaseItemData implements Serializable
+public class BaseItemData implements Serializable, Cloneable
 {
 
     private boolean mClassification; //判斷有無子項目
@@ -53,6 +53,11 @@ public class BaseItemData implements Serializable
         mChilds.add(child);
         return this;
     }
+    public BaseItemData removeChild(BaseItemData child)
+    {
+        mChilds.remove(child);
+        return this;
+    }
     public int getChildSize()
     {
         return mChilds.size();
@@ -94,5 +99,16 @@ public class BaseItemData implements Serializable
     {
         mTitle = title;
         return this;
+    }
+    public Object clone()
+    {
+        try
+        {
+            return super.clone();
+        }
+        catch( CloneNotSupportedException e )
+        {
+            return null;
+        }
     }
 }

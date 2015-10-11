@@ -18,7 +18,15 @@
     <string name="goods_detail_service_persion">服務人員</string>
     <string name="goods_detail_price">價格</string>
     <string name="goods_detail_discount">折數</string>
-    <string name="goods_detail_commit">備註</string>
-    <!-- TODO: Goods Recored Activtiy -->
-    <string name="goods_record_title">打單紀錄</string>
+    <string name="goods_detail_comment">備註</string>
+    <!-- TODO: Goods Cart Activtiy -->
+    <string name="goods_cart_title">購物車</string>
+    <string name="goods_cart_subtotal">總價:</string>
+    <string name="goods_cart_submit">結帳</string>
+    <!-- TODO: Goods Cart Detail Didalog -->
+    <string name="goods_record_detail_service_persion">服務人員</string>
+    <string name="goods_record_detail_sumprice">總價</string>
+    <string name="goods_record_detail_single_price">單價</string>
+    <string name="goods_record_detail_comment">備註</string>
+    <string name="goods_record_detail_count">數量</string>
 </resources>

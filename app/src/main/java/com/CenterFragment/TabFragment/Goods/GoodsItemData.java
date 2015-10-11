@@ -8,6 +8,7 @@ import com.LeftFragement.BaseItemData;
 public class GoodsItemData extends BaseItemData {
 
     //名稱, 服務人員, 價格, 折數, 備註
+    private int mCount = 0; //購買數量
     private String mName = "";
     private String mServicePersionName = "";
     private double mPrice = 0.0;
@@ -33,7 +34,7 @@ public class GoodsItemData extends BaseItemData {
     {
         return mServicePersionName;
     }
-    public void serPrice(double price)
+    public void setPrice(double price)
     {
         mPrice = price;
     }
@@ -56,5 +57,13 @@ public class GoodsItemData extends BaseItemData {
     public String getCommit()
     {
         return mCommit;
+    }
+    public void setCount(int count)
+    {
+        mCount = count;
+    }
+    public int getCount()
+    {
+        return mCount;
     }
 }

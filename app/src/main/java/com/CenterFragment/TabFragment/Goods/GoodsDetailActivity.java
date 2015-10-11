@@ -3,15 +3,20 @@ package com.CenterFragment.TabFragment.Goods;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.LeftFragement.BaseItemData;
 
 import jerome.i_pos.R;
 
@@ -29,29 +34,57 @@ public class GoodsDetailActivity extends Activity {
         mContext = this;
         TextView toolbarTitle = (TextView)view.findViewById(R.id.goods_detail_toolbar_title);
         toolbarTitle.setText(mItem.getTitle());
-        EditText servicePersionEditText = (EditText)view.findViewById(R.id.goods_detail_service_persion_editText);
+        final EditText servicePersionEditText = (EditText)view.findViewById(R.id.goods_detail_service_persion_editText);
         servicePersionEditText.setText(mItem.getServeicePersionName());
-        EditText priceEditText = (EditText)view.findViewById(R.id.goods_detail_price_editText);
+        final EditText priceEditText = (EditText)view.findViewById(R.id.goods_detail_price_editText);
         priceEditText.setText(String.valueOf(mItem.getPrice()));
-        EditText discountEditText = (EditText)view.findViewById(R.id.goods_detail_discount_editText);
+        final EditText discountEditText = (EditText)view.findViewById(R.id.goods_detail_discount_editText);
         discountEditText.setText(String.valueOf(mItem.getDiscount()));
         TextView commitTextView = (TextView)view.findViewById(R.id.goods_detail_commit_textView);
         commitTextView.setText(mItem.getCommit());
-        ImageView goodsIconImageView = (ImageView)view.findViewById(R.id.goods_detail_goods_icon);
+        final ImageView goodsIconImageView = (ImageView)view.findViewById(R.id.goods_detail_goods_icon);
         goodsIconImageView.setBackgroundResource(mItem.getIconResourceID());
 
-        ImageButton shoppingCartButton = (ImageButton)view.findViewById(R.id.goods_detail_shppoing_cart);
+        final GoodsDetailCartImageView shoppingCartImageView = (GoodsDetailCartImageView)view.findViewById(R.id.goods_detail_cart_imageview);
+        shoppingCartImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(mContext, GoodsCartListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getRealSize(size);
+        int timeDuraction = 1000;
+        final Animation am = new TranslateAnimation(0,size.x/2,0,-100);
+        am.setDuration(timeDuraction);
+        am.setRepeatCount(0);
+        final AnimationSet animationSet = new AnimationSet(true);
+        animationSet.addAnimation(am);
+        AlphaAnimation alpha=new AlphaAnimation(1,0);
+        alpha.setDuration(timeDuraction);
+        alpha.setFillAfter(true);
+        animationSet.addAnimation(alpha);
+        LinearLayout shoppingCartButton = (LinearLayout)view.findViewById(R.id.goods_detail_shppoing_cart);
         shoppingCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent();
-                intent.setClass(mContext, GoodsRecordActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("Type", 0);
-//                bundle.putSerializable("ListViewData", (BaseItemData) mGoodsListViewAdapter.getItem(position));
-//                intent.putExtras(bundle);
-                startActivityForResult(intent, 1);
+            public void onClick(View v) {
+                goodsIconImageView.startAnimation(animationSet);
+                mItem.setCount(1);
+                mItem.setServicePersionName(servicePersionEditText.getText().toString());
+                mItem.setPrice(Double.parseDouble(priceEditText.getText().toString()));
+
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                GoodsCartListActivity.addGoodsItem(mItem.clone());
+                shoppingCartImageView.invalidate();
+
             }
         });
         setContentView(view);

@@ -28,9 +28,15 @@
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name="com.CenterFragment.TabFragment.Goods.GoodsRecordActivity"
+            android:name="com.CenterFragment.TabFragment.Goods.GoodsCartDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/goods_record_title"
+            android:label="@string/title_activity_goods_detail"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="com.CenterFragment.TabFragment.Goods.GoodsCartListActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/goods_cart_title"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
     </application>

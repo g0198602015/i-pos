@@ -7,17 +7,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
+
+import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
 
 public class MainViewActivity extends Activity {
 
-    private Context _context;
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.main_view, null);
-        _context = this;
+        mContext = this;
         ImageButton orderImageButton = (ImageButton)view.findViewById(R.id.orderImageButton);
         ImageButton shippmentImageButton = (ImageButton)view.findViewById(R.id.shippmentImageButton);
         ImageButton inventoryImageButton = (ImageButton)view.findViewById(R.id.inventoryImageButton);
@@ -25,7 +26,7 @@ public class MainViewActivity extends Activity {
         orderImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(_context, MainActivity.class);
+                intent.setClass(mContext, MainActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("Type", 0);
                 intent.putExtras(bundle);
@@ -35,7 +36,7 @@ public class MainViewActivity extends Activity {
         shippmentImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(_context, MainActivity.class);
+                intent.setClass(mContext, MainActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("Type", 1);
                 intent.putExtras(bundle);
@@ -50,8 +51,9 @@ public class MainViewActivity extends Activity {
         });
         recordImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //do something
-
+                Intent intent = new Intent();
+                intent.setClass(mContext, GoodsCartListActivity.class);
+                startActivity(intent);
             }
         });
         setContentView(view);

@@ -220,45 +220,45 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         _RootItemData.setParent(null);
         BaseItemData goodItem = createViewData("商品", _RootItemData);
         BaseItemData goodsChildItem = createViewData("商品的子類別", goodItem);
-        createViewData("商品 1", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
-        createViewData("商品 2", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
+        ((GoodsItemData)createViewData("商品 1", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述")).setPrice(30);
+        ((GoodsItemData) createViewData("商品 2", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述")).setPrice(60);
         BaseItemData operationItem = createViewData("技術操作", _RootItemData);
         BaseItemData operationChildItem = createViewData("促銷折扣", operationItem);
-        createViewData("促銷折扣 1", operationChildItem).setIconResourceID(R.drawable.discount).setInfo("折扣描述");
+        ((GoodsItemData) createViewData("促銷折扣 1", operationChildItem).setIconResourceID(R.drawable.discount).setInfo("折扣描述")).setPrice(100);
         //睫毛
         operationChildItem = createViewData("睫毛", operationItem);
-        createViewData("睫毛 1", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述");
-        createViewData("睫毛 2", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述");
-        createViewData("睫毛 3", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述");
-        createViewData("睫毛 4", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述");
+        ((GoodsItemData)createViewData("睫毛 1", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述")).setPrice(89);
+        ((GoodsItemData)createViewData("睫毛 2", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述")).setPrice(103);
+        ((GoodsItemData)createViewData("睫毛 3", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述")).setPrice(60);
+        ((GoodsItemData) createViewData("睫毛 4", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述")).setPrice(97);
 
         //剪髮
         operationChildItem = createViewData("剪髮", operationItem);
-        createViewData("剪髮 1", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述");
-        createViewData("剪髮 2", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述");
-        createViewData("剪髮 3", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述");
-        createViewData("剪髮 4", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述");
+        ((GoodsItemData)createViewData("剪髮 1", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述")).setPrice(45);
+        ((GoodsItemData)createViewData("剪髮 2", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述")).setPrice(49);
+        ((GoodsItemData)createViewData("剪髮 3", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述")).setPrice(99);
+        ((GoodsItemData)createViewData("剪髮 4", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述")).setPrice(102);
 
         //燙髮
         operationChildItem = createViewData("燙髮", operationItem);
-        createViewData("燙髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述");
-        createViewData("燙髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述");
-        createViewData("燙髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述");
-        createViewData("燙髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述");
+        ((GoodsItemData)createViewData("燙髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述")).setPrice(87);
+        ((GoodsItemData)createViewData("燙髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述")).setPrice(73);
+        ((GoodsItemData)createViewData("燙髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述")).setPrice(68);
+        ((GoodsItemData)createViewData("燙髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述")).setPrice(61);
 
         //洗髮
         operationChildItem = createViewData("洗髮", operationItem);
-        createViewData("洗髮 1", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
-        createViewData("洗髮 2", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
-        createViewData("洗髮 3", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
-        createViewData("洗髮 4", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
+        ((GoodsItemData)createViewData("洗髮 1", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述")).setPrice(96);
+        ((GoodsItemData)createViewData("洗髮 2", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述")).setPrice(39);
+        ((GoodsItemData)createViewData("洗髮 3", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述")).setPrice(25);
+        ((GoodsItemData)createViewData("洗髮 4", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述")).setPrice(94);
 
         //染髮
         operationChildItem = createViewData("染髮", operationItem);
-        createViewData("染髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
-        createViewData("染髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
-        createViewData("染髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
-        createViewData("染髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
+        ((GoodsItemData)createViewData("染髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述")).setPrice(60);
+        ((GoodsItemData)createViewData("染髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述")).setPrice(98);
+        ((GoodsItemData)createViewData("染髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述")).setPrice(108);
+        ((GoodsItemData)createViewData("染髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述")).setPrice(452);
         return _RootItemData;
     }
     public BaseItemData createViewData(String title,BaseItemData parent)
