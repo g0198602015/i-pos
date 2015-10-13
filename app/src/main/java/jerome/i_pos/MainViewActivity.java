@@ -16,6 +16,8 @@ public class MainViewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        enableNetwork();
+        Util.WebServiceAPI.GetProducts();
         LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.main_view, null);
         mContext = this;
@@ -56,6 +58,7 @@ public class MainViewActivity extends Activity {
                 startActivity(intent);
             }
         });
+
         setContentView(view);
 
     }
@@ -64,5 +67,20 @@ public class MainViewActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    public void enableNetwork()
+    {
+        android.os.StrictMode.setThreadPolicy(new android.os.StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .penaltyLog()
+                .build());
+        android.os.StrictMode.setVmPolicy(new android.os.StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedSqlLiteObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build());
     }
 }

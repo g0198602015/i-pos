@@ -55,6 +55,7 @@ public class GoodsDetailActivity extends Activity {
             }
         });
 
+        //製作購物車的動畫
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getRealSize(size);
@@ -67,6 +68,23 @@ public class GoodsDetailActivity extends Activity {
         AlphaAnimation alpha=new AlphaAnimation(1,0);
         alpha.setDuration(timeDuraction);
         alpha.setFillAfter(true);
+        alpha.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                shoppingCartImageView.invalidate();
+            }
+        });
         animationSet.addAnimation(alpha);
         LinearLayout shoppingCartButton = (LinearLayout)view.findViewById(R.id.goods_detail_shppoing_cart);
         shoppingCartButton.setOnClickListener(new View.OnClickListener() {
@@ -76,14 +94,8 @@ public class GoodsDetailActivity extends Activity {
                 mItem.setCount(1);
                 mItem.setServicePersionName(servicePersionEditText.getText().toString());
                 mItem.setPrice(Double.parseDouble(priceEditText.getText().toString()));
-
-//                try {
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
                 GoodsCartListActivity.addGoodsItem(mItem.clone());
-                shoppingCartImageView.invalidate();
+
 
             }
         });
