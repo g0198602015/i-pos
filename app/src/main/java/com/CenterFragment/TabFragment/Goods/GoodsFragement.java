@@ -145,7 +145,10 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     public void refreshListViewData()
     {
         if (mListViewItems == null)
-            mListViewItems = parseData();
+        {
+            mListViewItems =  Util.WebServiceAPI.GetProducts();
+//            mListViewItems =parseData();
+        }
         mCallback.onListViewDataChanged(mListViewItems);
         mGoodsListViewAdapter = new GoodsListViewAdapter(
                 getActivity(),

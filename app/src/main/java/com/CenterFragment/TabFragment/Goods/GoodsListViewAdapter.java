@@ -83,7 +83,16 @@ public class GoodsListViewAdapter extends BaseAdapter
         if (appInfo != null)
         {
             mItemView.ItemName.setText(appInfo.getTitle());
-            mItemView.ItemInfo.setText(appInfo.getInfo());
+            StringBuilder info = new StringBuilder();
+            if (appInfo.getFirm().length() >= 0)
+                info.append("廠商:"+appInfo.getFirm());
+            if (appInfo.getInfo().length() >= 0)
+            {
+                if (info.length() > 0)
+                    info.append(", ");
+                info.append(appInfo.getInfo());
+            }
+            mItemView.ItemInfo.setText(info.toString());
             if (appInfo.getIconResourceID() != 0)
                 mItemView.ItemImage.setImageDrawable(mItemView.ItemImage.getResources().getDrawable(appInfo.getIconResourceID()));
         }

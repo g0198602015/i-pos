@@ -2,19 +2,11 @@ package com.CenterFragment.TabFragment.Goods;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.CenterFragment.TabFragment.BaseFragment;
 
 import jerome.i_pos.R;
 
@@ -43,7 +35,7 @@ public class GoodsCartDetailActivity extends Activity {
         discountTextView.setText(String.valueOf(mItem.getDiscount()));
 
         TextView commentTextView = (TextView)view.findViewById(R.id.goods_record_detail_commit_textView);
-        commentTextView.setText(mItem.getCommit());
+        commentTextView.setText(mItem.getComment());
 
         TextView countTextView = (TextView)view.findViewById(R.id.goods_record_detail_count_TextView);
         countTextView.setText(String.valueOf(mItem.getCount()));

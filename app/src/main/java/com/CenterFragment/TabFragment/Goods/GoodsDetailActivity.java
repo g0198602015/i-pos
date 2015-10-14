@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,7 +40,7 @@ public class GoodsDetailActivity extends Activity {
         final EditText discountEditText = (EditText)view.findViewById(R.id.goods_detail_discount_editText);
         discountEditText.setText(String.valueOf(mItem.getDiscount()));
         TextView commitTextView = (TextView)view.findViewById(R.id.goods_detail_commit_textView);
-        commitTextView.setText(mItem.getCommit());
+        commitTextView.setText(mItem.getComment());
         final ImageView goodsIconImageView = (ImageView)view.findViewById(R.id.goods_detail_goods_icon);
         goodsIconImageView.setBackgroundResource(mItem.getIconResourceID());
 

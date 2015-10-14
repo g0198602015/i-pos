@@ -13,10 +13,15 @@ public class GoodsItemData extends BaseItemData {
     private String mServicePersionName = "";
     private double mPrice = 0.0;
     private double mDiscount ;
-    private String mCommit = "";
+    private String mComment = "";
+    private String mFirm = "";
     public GoodsItemData(String title)
     {
         super(title);
+    }
+    public GoodsItemData()
+    {
+
     }
     public void setName(String name)
     {
@@ -50,13 +55,13 @@ public class GoodsItemData extends BaseItemData {
     {
         return mDiscount;
     }
-    public void getCommit(String commit)
+    public void setComment(String commit)
     {
-        mCommit = commit;
+        mComment = commit;
     }
-    public String getCommit()
+    public String getComment()
     {
-        return mCommit;
+        return mComment;
     }
     public void setCount(int count)
     {
@@ -65,5 +70,13 @@ public class GoodsItemData extends BaseItemData {
     public int getCount()
     {
         return mCount;
+    }
+    public void setFirm(String firm)
+    {
+        mFirm = firm;
+    }
+    public String getFirm()
+    {
+        return mFirm;
     }
 }

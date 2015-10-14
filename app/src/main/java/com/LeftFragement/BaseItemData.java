@@ -10,12 +10,19 @@ public class BaseItemData implements Serializable, Cloneable
 {
 
     private boolean mClassification; //判斷有無子項目
-    private String mTitle;
-    private String mInfo;
+    private String mClassificationName = "";
+    private String mTitle = "";
+    private String mInfo = "";
+    private String mMainClassName = "";
+    private String mSecondClassName = "";
     private BaseItemData mParent;
     private ArrayList<BaseItemData> mChilds;
     private boolean mVisible;
     private int mIconId=0;
+    public BaseItemData()
+    {
+
+    }
     public BaseItemData(String title)
     {
         mTitle = title;
@@ -24,6 +31,24 @@ public class BaseItemData implements Serializable, Cloneable
         mChilds = new ArrayList<BaseItemData>();
         mVisible = true;
         mClassification = false;
+    }
+    public BaseItemData setMainClassName(String mainClassName)
+    {
+        mMainClassName = mainClassName;
+        return this;
+    }
+    public String getMainClassName()
+    {
+        return mMainClassName;
+    }
+    public BaseItemData setSecondClassName(String secondClassName)
+    {
+        mSecondClassName = secondClassName;
+        return this;
+    }
+    public String getSecondClassName()
+    {
+        return mSecondClassName;
     }
     public BaseItemData setIconResourceID(int id)
     {
@@ -50,8 +75,13 @@ public class BaseItemData implements Serializable, Cloneable
     public BaseItemData addChild(BaseItemData child)
     {
         setClassification(true);
+        mClassificationName = child.getMainClassName();
         mChilds.add(child);
         return this;
+    }
+    public String getmClassificationName()
+    {
+        return mClassificationName;
     }
     public BaseItemData removeChild(BaseItemData child)
     {
