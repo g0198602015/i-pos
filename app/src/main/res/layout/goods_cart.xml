@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
                     android:textSize="20dip"
-                    android:textColor="#000000"
+                    android:textColor="#ff0000"
                     android:layout_marginLeft="10dp"
                     android:text="@string/goods_cart_subtotal"
                     android:singleLine="false"
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="left|center_vertical"
                     android:textSize="20dip"
-                    android:textColor="#000000"
+                    android:textColor="#ff0000"
                     android:layout_marginLeft="10dp"
                     android:text="$0"
                     android:id="@+id/goods_cart_subtotal_textView" />

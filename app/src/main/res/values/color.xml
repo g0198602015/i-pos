@@ -20,4 +20,6 @@
     <color name="bg_color_deep">#E5E5E5</color>
     <color name="text_color">#434343</color>
     <color name="black_half">#50000000</color>
+    <color name="leftfragment_item_top">#e4d2d2c8</color>
+    <color name="leftfragment_item_others">#e4ebeae7</color>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import jerome.i_pos.R;
+import model.GoodsItemData;
 
 public class GoodsCartDetailActivity extends Activity {
 

@@ -144,33 +144,33 @@ public class ShippmentFragement extends BaseFragment
 
     public void refreshListViewData()
     {
-        if (mListViewItems == null)
-            mListViewItems = parseData();
-        mCallback.onListViewDataChanged(mListViewItems);
-        mRecyclerViewerAdapter = new NormalRecyclerViewAdapter(
-                getActivity(),
-                mListViewItems,
-                getSearchText()
-        );
-        mRecyclerViewerAdapter.notifyDataSetChanged();
-        // Inflate the layout for this fragment
-        try {
-
-            if (getView() != null)
-            {
-                RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.shippment_recyclerView);
-                if (recyclerView != null)
-                {
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerView.setAdapter(mRecyclerViewerAdapter);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            String str = ex.toString();
-            str = str;
-        }
+//        if (mListViewItems == null)
+//            mListViewItems = parseData();
+//        mCallback.onListViewDataChanged(mListViewItems);
+//        mRecyclerViewerAdapter = new NormalRecyclerViewAdapter(
+//                getActivity(),
+//                mListViewItems,
+//                getSearchText()
+//        );
+//        mRecyclerViewerAdapter.notifyDataSetChanged();
+//        // Inflate the layout for this fragment
+//        try {
+//
+//            if (getView() != null)
+//            {
+//                RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.shippment_recyclerView);
+//                if (recyclerView != null)
+//                {
+//                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                    recyclerView.setAdapter(mRecyclerViewerAdapter);
+//                }
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            String str = ex.toString();
+//            str = str;
+//        }
     }
 
     @Override
@@ -203,60 +203,60 @@ public class ShippmentFragement extends BaseFragment
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
     }
-    public BaseItemData parseData()
-    {
-        BaseItemData _RootItemData = new BaseItemData("全部");
-        _RootItemData.setParent(null);
-        BaseItemData goodItem = createViewData("商品", _RootItemData);
-        BaseItemData goodsChildItem = createViewData("商品的子類別", goodItem);
-        createViewData("商品 1", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
-        createViewData("商品 2", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
-        BaseItemData operationItem = createViewData("技術操作", _RootItemData);
-        BaseItemData operationChildItem = createViewData("促銷折扣", operationItem);
-        createViewData("促銷折扣 1", operationChildItem).setIconResourceID(R.drawable.discount).setInfo("折扣描述");
-        //睫毛
-        operationChildItem = createViewData("睫毛", operationItem);
-        createViewData("睫毛 1", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述");
-        createViewData("睫毛 2", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述");
-        createViewData("睫毛 3", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述");
-        createViewData("睫毛 4", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述");
-
-        //剪髮
-        operationChildItem = createViewData("剪髮", operationItem);
-        createViewData("剪髮 1", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述");
-        createViewData("剪髮 2", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述");
-        createViewData("剪髮 3", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述");
-        createViewData("剪髮 4", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述");
-
-        //燙髮
-        operationChildItem = createViewData("燙髮", operationItem);
-        createViewData("燙髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述");
-        createViewData("燙髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述");
-        createViewData("燙髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述");
-        createViewData("燙髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述");
-
-        //洗髮
-        operationChildItem = createViewData("洗髮", operationItem);
-        createViewData("洗髮 1", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
-        createViewData("洗髮 2", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
-        createViewData("洗髮 3", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
-        createViewData("洗髮 4", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
-
-        //染髮
-        operationChildItem = createViewData("染髮", operationItem);
-        createViewData("染髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
-        createViewData("染髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
-        createViewData("染髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
-        createViewData("染髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
-        return _RootItemData;
-    }
-    public BaseItemData createViewData(String title,BaseItemData parent)
-    {
-        BaseItemData item = new BaseItemData(title);
-        if (parent != null) {
-            item.setParent(parent);
-            parent.addChild(item);
-        }
-        return item;
-    }
+//    public BaseItemData parseData()
+//    {
+//        BaseItemData _RootItemData = new BaseItemData("全部");
+//        _RootItemData.setParent(null);
+//        BaseItemData goodItem = createViewData("商品", _RootItemData);
+//        BaseItemData goodsChildItem = createViewData("商品的子類別", goodItem);
+//        createViewData("商品 1", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
+//        createViewData("商品 2", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述");
+//        BaseItemData operationItem = createViewData("技術操作", _RootItemData);
+//        BaseItemData operationChildItem = createViewData("促銷折扣", operationItem);
+//        createViewData("促銷折扣 1", operationChildItem).setIconResourceID(R.drawable.discount).setInfo("折扣描述");
+//        //睫毛
+//        operationChildItem = createViewData("睫毛", operationItem);
+//        createViewData("睫毛 1", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述");
+//        createViewData("睫毛 2", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述");
+//        createViewData("睫毛 3", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述");
+//        createViewData("睫毛 4", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述");
+//
+//        //剪髮
+//        operationChildItem = createViewData("剪髮", operationItem);
+//        createViewData("剪髮 1", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述");
+//        createViewData("剪髮 2", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述");
+//        createViewData("剪髮 3", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述");
+//        createViewData("剪髮 4", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述");
+//
+//        //燙髮
+//        operationChildItem = createViewData("燙髮", operationItem);
+//        createViewData("燙髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述");
+//        createViewData("燙髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述");
+//        createViewData("燙髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述");
+//        createViewData("燙髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述");
+//
+//        //洗髮
+//        operationChildItem = createViewData("洗髮", operationItem);
+//        createViewData("洗髮 1", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
+//        createViewData("洗髮 2", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
+//        createViewData("洗髮 3", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
+//        createViewData("洗髮 4", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述");
+//
+//        //染髮
+//        operationChildItem = createViewData("染髮", operationItem);
+//        createViewData("染髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
+//        createViewData("染髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
+//        createViewData("染髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
+//        createViewData("染髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述");
+//        return _RootItemData;
+//    }
+//    public BaseItemData createViewData(String title,BaseItemData parent)
+//    {
+//        BaseItemData item = new BaseItemData(title);
+//        if (parent != null) {
+//            item.setParent(parent);
+//            parent.addChild(item);
+//        }
+//        return item;
+//    }
 }

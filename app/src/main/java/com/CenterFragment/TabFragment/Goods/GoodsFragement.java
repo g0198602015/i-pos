@@ -3,21 +3,31 @@ package com.CenterFragment.TabFragment.Goods;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.CenterFragment.TabFragment.BaseFragment;
 import com.LeftFragement.BaseItemData;
 
 import jerome.i_pos.R;
+import model.ActivityRequestCodeConstant;
+import model.BundleConstant;
+import model.GoodsItemData;
 
 import static java.lang.Thread.sleep;
 
@@ -25,9 +35,10 @@ import static java.lang.Thread.sleep;
 public class GoodsFragement extends BaseFragment implements AbsListView.OnItemClickListener
 {
 
-    private ProgressDialog mProgressDialog = null;
+//    private ProgressDialog mProgressDialog = null;
     private boolean mFinished = false;
-    private int mRequestCode = 1;
+    private AnimationSet animationSet;
+//    private int mRequestCode = 1;
 
     /**
      * Use this factory method to create a new instance of
@@ -49,15 +60,15 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         super.onCreate(savedInstanceState);
         Log.i("i-pos", getTitle()+"onCreate()............");
     }
-
+    private View mView = null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         Log.i("i-pos", getTitle()+"onCreateView()............");
-        View view = inflater.inflate(R.layout.goods_fragement, container, false);
+        mView = inflater.inflate(R.layout.goods_fragement, container, false);
 
-        return view;
+        return mView;
 
     }
     @Override
@@ -69,49 +80,24 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
             super.onResume();
             Log.i("i-pos", getTitle()+" "+"onResume()............");
 
-            if (mListViewItems == null) {
-                mFinished = false;
-                //設定訊息內容後顯示於前景
-                mProgressDialog = new ProgressDialog(this.getActivity());
-                mProgressDialog.setIndeterminate(true);
-                mProgressDialog.setMessage("載入中，請稍後 ...");
-                mProgressDialog.setCancelable(true);
-                mProgressDialog.show();
-                //建構執行緒
-                new Thread() {
-                    @Override
+            if (GoodsItemRecordsData.getChildSize() == 0)
+            {
+                getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        try {
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            mFinished = true;
-                        }
-                    }
-                }.start(); //開始執行執行緒
-
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        while (true) {
+                        while(Util.WebServiceAPI.mBGetProductsing == true) {
                             try {
-                                Thread.sleep(1000);
+                                Thread.sleep(300);
                             } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
-                            if (mFinished) {
-                                refreshListViewData();
 
-                                handler.removeCallbacks(this);
-                                mProgressDialog.dismiss();
-                                break;
-                            }
                         }
+                        refreshListViewData();
                     }
-                }, 500);
+                });
             }
+            else
+                refreshListViewData();
 
         }
         catch(Exception ex)
@@ -142,18 +128,20 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     private BaseItemData mListViewItems;
     private ListView mlistView;
     private GoodsListViewAdapter mGoodsListViewAdapter = null;
+
     public void refreshListViewData()
     {
         if (mListViewItems == null)
         {
-            mListViewItems =  Util.WebServiceAPI.GetProducts();
+            mListViewItems =  GoodsItemRecordsData.getGoodsItemRecordsData();
 //            mListViewItems =parseData();
         }
         mCallback.onListViewDataChanged(mListViewItems);
         mGoodsListViewAdapter = new GoodsListViewAdapter(
                 getActivity(),
                 mListViewItems,
-                getSearchText()
+                getSearchText(),
+                getBarcode()
         );
         mGoodsListViewAdapter.notifyDataSetChanged();
         // Inflate the layout for this fragment
@@ -167,6 +155,14 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
                     mlistView = (ListView) listView;
                     mlistView.setAdapter(mGoodsListViewAdapter);
                     mlistView.setOnItemClickListener(this);
+                    if (mGoodsListViewAdapter.getCount() == 1)
+                    {
+                        GoodsItemData goodsItemData = (GoodsItemData) mGoodsListViewAdapter.getItem(0);
+                        if (goodsItemData.getBarcode().equalsIgnoreCase(getBarcode()) && getBarcode().length() > 0)
+                        {
+                            ShowGoodsDetailActivity(goodsItemData);
+                        }
+                    }
                 }
             }
         }
@@ -178,14 +174,37 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), GoodsDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putInt("Type", 0);
-        bundle.putSerializable("ListViewData", (BaseItemData) mGoodsListViewAdapter.getItem(position));
-        intent.putExtras(bundle);
-        startActivityForResult(intent, mRequestCode);
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    {
+        GoodsItemData goodsItemData = (GoodsItemData) mGoodsListViewAdapter.getItem(position);
+        if (GoodsCardRecordData.contains(goodsItemData.getSerialIndex()) != null)
+        {
+
+            GoodsCardRecordData.addGoodsItem(goodsItemData);
+            //final ImageView goodsIconImageView = (ImageView)view.findViewById(R.id.goods_detail_goods_icon);
+            int width = mView.getWidth();
+            int[] goodsImageViewlocation = new int[2];
+            goodsImageViewlocation[0] = 0 ;
+            goodsImageViewlocation[1] = 0;
+            view.getLocationOnScreen(goodsImageViewlocation);
+            int delX = width - goodsImageViewlocation[0];
+            int delY = 0 - goodsImageViewlocation[1];
+            int timeDuraction = 1000;
+            final Animation am = new TranslateAnimation(0, delX, 0, delY);
+            am.setDuration(timeDuraction);
+            am.setRepeatCount(0);
+            animationSet = new AnimationSet(true);
+            animationSet.addAnimation(am);
+            AlphaAnimation alpha=new AlphaAnimation(1,0);
+            alpha.setDuration(timeDuraction);
+            alpha.setFillAfter(true);
+            animationSet.addAnimation(alpha);
+            view.startAnimation(animationSet);
+
+        }
+        else {
+            ShowGoodsDetailActivity(goodsItemData);
+        }
     }
     @Override
     public void onDestroy() {
@@ -203,13 +222,13 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     @Override
     public void onStart() {
         super.onStart();
-        Log.i("i-pos", getTitle()+" "+"onStart()............");
+        Log.i("i-pos", getTitle() + " " + "onStart()............");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i("i-pos", getTitle()+" "+"onStop()............");
+        Log.i("i-pos", getTitle() + " " + "onStop()............");
     }
 
     @Override
@@ -217,60 +236,14 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
     }
-    public BaseItemData parseData()
-    {
-        BaseItemData _RootItemData = new GoodsItemData("全部");
-        _RootItemData.setParent(null);
-        BaseItemData goodItem = createViewData("商品", _RootItemData);
-        BaseItemData goodsChildItem = createViewData("商品的子類別", goodItem);
-        ((GoodsItemData)createViewData("商品 1", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述")).setPrice(30);
-        ((GoodsItemData) createViewData("商品 2", goodsChildItem).setIconResourceID(R.drawable.hair_salon_goods).setInfo("商品描述")).setPrice(60);
-        BaseItemData operationItem = createViewData("技術操作", _RootItemData);
-        BaseItemData operationChildItem = createViewData("促銷折扣", operationItem);
-        ((GoodsItemData) createViewData("促銷折扣 1", operationChildItem).setIconResourceID(R.drawable.discount).setInfo("折扣描述")).setPrice(100);
-        //睫毛
-        operationChildItem = createViewData("睫毛", operationItem);
-        ((GoodsItemData)createViewData("睫毛 1", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述")).setPrice(89);
-        ((GoodsItemData)createViewData("睫毛 2", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述")).setPrice(103);
-        ((GoodsItemData)createViewData("睫毛 3", operationChildItem).setIconResourceID(R.drawable.mascara2).setInfo("商品描述")).setPrice(60);
-        ((GoodsItemData) createViewData("睫毛 4", operationChildItem).setIconResourceID(R.drawable.mascara1).setInfo("商品描述")).setPrice(97);
 
-        //剪髮
-        operationChildItem = createViewData("剪髮", operationItem);
-        ((GoodsItemData)createViewData("剪髮 1", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述")).setPrice(45);
-        ((GoodsItemData)createViewData("剪髮 2", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述")).setPrice(49);
-        ((GoodsItemData)createViewData("剪髮 3", operationChildItem).setIconResourceID(R.drawable.scissors).setInfo("商品描述")).setPrice(99);
-        ((GoodsItemData)createViewData("剪髮 4", operationChildItem).setIconResourceID(R.drawable.scissors2).setInfo("商品描述")).setPrice(102);
-
-        //燙髮
-        operationChildItem = createViewData("燙髮", operationItem);
-        ((GoodsItemData)createViewData("燙髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述")).setPrice(87);
-        ((GoodsItemData)createViewData("燙髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述")).setPrice(73);
-        ((GoodsItemData)createViewData("燙髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser).setInfo("商品描述")).setPrice(68);
-        ((GoodsItemData)createViewData("燙髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser2).setInfo("商品描述")).setPrice(61);
-
-        //洗髮
-        operationChildItem = createViewData("洗髮", operationItem);
-        ((GoodsItemData)createViewData("洗髮 1", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述")).setPrice(96);
-        ((GoodsItemData)createViewData("洗髮 2", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述")).setPrice(39);
-        ((GoodsItemData)createViewData("洗髮 3", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述")).setPrice(25);
-        ((GoodsItemData)createViewData("洗髮 4", operationChildItem).setIconResourceID(R.drawable.shampoo).setInfo("商品描述")).setPrice(94);
-
-        //染髮
-        operationChildItem = createViewData("染髮", operationItem);
-        ((GoodsItemData)createViewData("染髮 1", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述")).setPrice(60);
-        ((GoodsItemData)createViewData("染髮 2", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述")).setPrice(98);
-        ((GoodsItemData)createViewData("染髮 3", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述")).setPrice(108);
-        ((GoodsItemData)createViewData("染髮 4", operationChildItem).setIconResourceID(R.drawable.hairdresser7).setInfo("商品描述")).setPrice(452);
-        return _RootItemData;
+    private void ShowGoodsDetailActivity(GoodsItemData goodsItemData) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), GoodsDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(BundleConstant.TYPE, 0);
+        bundle.putSerializable("ListViewData", goodsItemData);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_FRAGMENT);
     }
-    public BaseItemData createViewData(String title,BaseItemData parent)
-    {
-        BaseItemData item = new GoodsItemData(title);
-        if (parent != null) {
-            item.setParent(parent);
-            parent.addChild(item);
-        }
-        return item;
-    }
-}
+  }

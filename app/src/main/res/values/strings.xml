@@ -14,18 +14,24 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <!-- TODO: goods_detail Didalog -->
-    <string name="goods_detail_service_persion">Service Persion: </string>
+    <string name="goods_detail_count">Count: </string>
     <string name="goods_detail_price">Price: </string>
+    <string name="goods_detail_subtotal">Subtoal: </string>
     <string name="goods_detail_discount">Discount: </string>
     <string name="goods_detail_comment">Comment:  </string>
     <!-- TODO: Goods Recored Activtiy -->
     <string name="goods_cart_title">Goods Cart</string>
     <string name="goods_cart_subtotal">Subtotal:</string>
-    <string name="goods_cart_submit">SUBMIT</string>
+    <string name="goods_cart_submit">Submit</string>
     <!-- TODO: Record_detail Didalog -->
     <string name="goods_record_detail_service_persion">Service Persion: </string>
-    <string name="goods_record_detail_sumprice">Sum Price: </string>
+    <string name="goods_record_detail_subtotal">Subtotal: </string>
     <string name="goods_record_detail_single_price">Price: </string>
     <string name="goods_record_detail_comment">Comment:  </string>
     <string name="goods_record_detail_count">Count:  </string>
+    <string name="goods_record_detail_addGoods">Add to Cart</string>
+    <string name="goods_record_detail_modifyGoods">Modify</string>
+    <!-- TODO: Goods Cart ListView Item -->
+    <string name="goods_cart_listview_price">Price:  </string>
+    <string name="goods_cart_listview_subtotal">Subtotal: </string>
 </resources>

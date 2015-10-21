@@ -5,6 +5,7 @@ package com.CenterFragment;
  */
 
 import android.app.SearchManager;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,17 +17,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.CenterFragment.TabFragment.BaseFragment;
+import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
 import com.CenterFragment.TabFragment.Goods.GoodsFragement;
 import com.CenterFragment.TabFragment.Shippment.ShippmentFragement;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.tools.ImageUtility;
 
 import java.util.LinkedList;
 
+import jerome.i_pos.ActivityRequestConstants;
 import jerome.i_pos.MainActivity;
 import jerome.i_pos.R;
 
@@ -39,7 +45,7 @@ public class CenterFragmenet extends BaseFragment
     private CenterFragmentSlidingTabLayout slidingTabLayout;
     private ViewPager pager;
     private FragmentPagerAdapter adapter;
-    private String[] titles = {"打單", "進貨", "盤點", "紀錄"};
+    private String[] titles = {"加入品項", "進貨", "盤點", "紀錄"};
     private GoodsFragement mGoodsFragment = null;
     private ShippmentFragement mShippmentFragment = null;
     private BaseFragment mBaseFragment = null;
@@ -87,6 +93,7 @@ public class CenterFragmenet extends BaseFragment
         TextView titleTextView = (TextView)toolbar.findViewById(R.id.toolbarTitle);
         if (type >= 0)
             titleTextView.setText(titles[type]);
+        toolbar.setOnMenuItemClickListener(onMenuItemClick);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
        // ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
@@ -108,7 +115,7 @@ public class CenterFragmenet extends BaseFragment
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                updateFragmentData(newText);
+                updateFragmentData(newText, "");
                 return false;
             }
         });
@@ -120,7 +127,7 @@ public class CenterFragmenet extends BaseFragment
     // type:1 建立[進貨Fragment]
     private LinkedList<BaseFragment> createFragments(int type)
     {
-        Bitmap bitmap = ImageUtility.createBitmap(getActivity(), R.mipmap.ic_launcher, 50, 50);
+        Bitmap bitmap = ImageUtility.createBitmap(getActivity(), R.mipmap.ic_launcher2, 50, 50);
         LinkedList<BaseFragment> fragments = new LinkedList<BaseFragment>();
         if (type == 0) {
             mGoodsFragment = GoodsFragement.newInstance();
@@ -140,16 +147,54 @@ public class CenterFragmenet extends BaseFragment
 //        fragments.add(ContentFragment.newInstance("Wood", Color.MAGENTA, dividerColor, bitmap));
         return fragments;
     }
-    public void updateFragmentData(String searchText)
+    public void updateFragmentData(String searchText, String barcode)
     {
         if (mBaseFragment != null) {
             mBaseFragment.setSearchText(searchText);
+            mBaseFragment.setSearchBarcode(barcode);
             mBaseFragment.refreshListViewData();
         }
     }
 
     @Override
     public void refreshListViewData() {
+
+    }
+
+    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            String msg = "";
+            if (menuItem.getItemId() == R.id.menuScanBarcode)
+            {
+                try {
+                    IntentIntegrator integrator = new IntentIntegrator(getActivity());
+                    integrator.initiateScan(IntentIntegrator.ALL_CODE_TYPES);
+                }
+                catch(Exception ex)
+                {
+
+                    String ex2 = ex.toString() +"";
+                    ex2 = ex2;
+                }
+            }
+            else if  (menuItem.getItemId() == R.id.menuGoodsCart)
+            {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), GoodsCartListActivity.class);
+                startActivityForResult(intent, ActivityRequestConstants.CENTER_FRAGMENT);
+            }
+
+//            if(!msg.equals("")) {
+//                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+//            }
+            return true;
+        }
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
 }

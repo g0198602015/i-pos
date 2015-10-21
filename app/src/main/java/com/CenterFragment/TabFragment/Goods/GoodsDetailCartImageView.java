@@ -39,18 +39,13 @@ public class GoodsDetailCartImageView extends ImageView {
 //        currentPaint.setColor(0xFF00CC00);  // alpha.r.g.b
 
     }
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-          //  int height = getDrawable().getIntrinsicHeight();
-          //  int width = getDrawable().getIntrinsicWidth();
-        Rect clipRect = canvas.getClipBounds();
-        //currentPaint.setColor(Color.RED);
-        //canvas.drawCircle(0, 10, 5, currentPaint);
-        currentPaint.setColor(Color.RED);
-        if ( GoodsCartListActivity.getGoodsItemSize() != 0)
-            canvas.drawText("" + GoodsCartListActivity.getGoodsItemSize(), clipRect.right - 20, 20, currentPaint);
-//        canvas.drawLine(0,0,20,20, currentPaint);
-    }
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        super.onDraw(canvas);
+//        Rect clipRect = canvas.getClipBounds();
+//        currentPaint.setColor(Color.RED);
+//        if ( GoodsCardRecordData.getGoodsItemSize() != 0)
+//            canvas.drawText("" + GoodsCardRecordData.getGoodsItemSize(), clipRect.right - 20, 20, currentPaint);
+//    }
 }
 

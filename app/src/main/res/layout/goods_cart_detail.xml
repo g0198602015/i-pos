@@ -14,6 +14,14 @@
         android:background="#f6eac8"
         android:gravity="center"
         android:textColor="#000000" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/goods_record_detail_goods_icon"
         android:layout_width="wrap_content"
@@ -29,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:text="@string/goods_detail_service_persion"
+            android:text="@string/goods_detail_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dip"
@@ -86,7 +94,7 @@
             android:textSize="20dip" />
 
         <TextView
-            android:text="@string/goods_record_detail_sumprice"
+            android:text="@string/goods_record_detail_subtotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dip"

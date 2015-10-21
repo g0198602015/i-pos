@@ -15,16 +15,18 @@ public class BaseItemData implements Serializable, Cloneable
     private String mInfo = "";
     private String mMainClassName = "";
     private String mSecondClassName = "";
-    private BaseItemData mParent;
+    private BaseItemData mParent = null;
     private ArrayList<BaseItemData> mChilds;
     private boolean mVisible;
     private int mIconId=0;
-    public BaseItemData()
+    private int mSerialIndex=0;
+    public BaseItemData(int serialIndex)
     {
-
+        mSerialIndex = serialIndex;
     }
-    public BaseItemData(String title)
+    public BaseItemData(String title, int serialIndex)
     {
+        mSerialIndex = serialIndex;
         mTitle = title;
         mInfo = "";
         mParent = null;
@@ -141,4 +143,9 @@ public class BaseItemData implements Serializable, Cloneable
             return null;
         }
     }
+    public int getSerialIndex()
+    {
+        return mSerialIndex;
+    }
+
 }

@@ -57,7 +57,18 @@ public class MainViewActivity extends Activity {
                 startActivity(intent);
             }
         });
-
+        new Thread() {
+            @Override
+            public void run() {
+                try
+                {
+                    Util.WebServiceAPI.GetProducts();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                }
+            }
+        }.start(); //開始執行執行緒
         setContentView(view);
 
     }

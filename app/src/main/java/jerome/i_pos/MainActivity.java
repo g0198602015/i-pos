@@ -1,5 +1,6 @@
 package jerome.i_pos;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import com.LeftFragement.BaseItemData;
 import com.RightFragment.RightFragment;
 import com.CenterFragment.SlidingMenu;
 import com.CenterFragment.CenterFragmenet;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity implements LeftFragment.OnLeftFragmentEventListener, BaseFragment.BaseFragmentEventListener
 {
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            articleFrag.updateFragmentData("");
+            articleFrag.updateFragmentData("", "");
         }
     }
     private boolean bInitial = true;
@@ -102,6 +105,20 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
                 articleFrag.setListViewData(items);
             }
             bInitial = false;
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IntentIntegrator.REQUEST_CODE)
+        {
+            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (scanResult != null)
+            {
+                String result = scanResult.getContents();
+                mCenterFragmenet.updateFragmentData("", result);
+            }
         }
     }
 

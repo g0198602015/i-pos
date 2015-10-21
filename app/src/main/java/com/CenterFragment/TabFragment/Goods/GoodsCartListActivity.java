@@ -1,6 +1,7 @@
 package com.CenterFragment.TabFragment.Goods;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,13 +14,14 @@ import android.widget.TextView;
 import com.LeftFragement.BaseItemData;
 
 import jerome.i_pos.R;
+import model.ActivityRequestCodeConstant;
 
 /**
  * Created by Jerome on 2015/10/5.
  */
 public class GoodsCartListActivity extends Activity
 {
-    private static BaseItemData mListViewItems = new BaseItemData("全部");
+
     private static GoodsCartListRecyclerViewAdapter mRecyclerViewerAdapter = null;
     private View mMainView = null;
     private static TextView mSubToalTextView = null;
@@ -44,41 +46,31 @@ public class GoodsCartListActivity extends Activity
 
         }
     }
-    public static BaseItemData getGoodsItem(int index)
+    public static void updateSubTotalValue()
     {
-        if (index < 0 || index > mListViewItems.getChildSize() -1)
-            return null;
-        return mListViewItems.getChild(index);
+        mSubToalTextView.setText("$"+GoodsCardRecordData.getSubTotal());
     }
-    public static void addGoodsItem(Object item)
+//    public static void addSubtotalValue(double value)
+//    {
+//        double total = Double.parseDouble(mSubToalTextView.getText().toString().replace("$", ""));
+//        mSubToalTextView.setText("$"+(total+value));
+//    }
+//    public static void subSubtotalValue(double value)
+//    {
+//        double total = Double.parseDouble(mSubToalTextView.getText().toString().replace("$", ""));
+//        mSubToalTextView.setText("$"+(total-value));
+//    }
+    public static void removeItem(BaseItemData item)
     {
-        mListViewItems.addChild((BaseItemData)item);
-    }
-    public static int getGoodsItemSize()
-    {
-        return mListViewItems.getChildSize();
-    }
-    public static void addSubtotalValue(double value)
-    {
-        double total = Double.parseDouble(mSubToalTextView.getText().toString().replace("$", ""));
-        mSubToalTextView.setText("$"+(total+value));
-    }
-    public static void subSubtotalValue(double value)
-    {
-        double total = Double.parseDouble(mSubToalTextView.getText().toString().replace("$", ""));
-        mSubToalTextView.setText("$"+(total-value));
-    }
-    public static void removeGoodsRecord(BaseItemData item)
-    {
-        mListViewItems.removeChild(item);
+        GoodsCardRecordData.removeGoodsItem(item);
         mRecyclerViewerAdapter.notifyDataSetChanged();
     }
     public void queryGoodsRecord()
     {
-
+        GoodsCartListActivity.updateSubTotalValue();
         mRecyclerViewerAdapter = new GoodsCartListRecyclerViewAdapter(
                 this,
-                mListViewItems
+                GoodsCardRecordData.getAllGoodsItem()
         );
         mRecyclerViewerAdapter.notifyDataSetChanged();
         // Inflate the layout for this fragment
@@ -91,6 +83,7 @@ public class GoodsCartListActivity extends Activity
                 {
                     recyclerView.setLayoutManager(new LinearLayoutManager(this));
                     recyclerView.setAdapter(mRecyclerViewerAdapter);
+
                 }
             }
         }
@@ -104,5 +97,7 @@ public class GoodsCartListActivity extends Activity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ActivityRequestCodeConstant.GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER)
+            finish();
     }
 }

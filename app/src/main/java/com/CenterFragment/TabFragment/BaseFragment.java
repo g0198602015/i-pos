@@ -16,6 +16,7 @@ public abstract class BaseFragment extends Fragment {
 //    private ArrayList<BaseDataClass> mData;
     private String mTitle = "";
     private String mSearchText = "";
+    private String mSearchBarcode = "";
 //    private int mIndicatorColor = Color.BLUE;
 //    private int mDividerColor = Color.GRAY;
 //    private Bitmap mBitmap = null;
@@ -34,6 +35,14 @@ public abstract class BaseFragment extends Fragment {
     public String getSearchText()
     {
         return mSearchText;
+    }
+    public void setSearchBarcode(String barcode)
+    {
+        mSearchBarcode = barcode;
+    }
+    public String getBarcode()
+    {
+        return mSearchBarcode;
     }
     public abstract void refreshListViewData();
 //    public int getmIndicatorColor()

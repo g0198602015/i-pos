@@ -74,16 +74,24 @@ public class LeftFragment extends Fragment
 			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-					if (_CurrentItem.getParent() == null) {
-						_CurrentItem = _CurrentItem.getChild(position);
-					} else {
+//					if (_CurrentItem.getParent() == null) {
+//						_CurrentItem = _CurrentItem.getChild(position);
+//					} else {
+//						if (position == 0)
+//							_CurrentItem = _CurrentItem.getParent();
+//						else
+//							_CurrentItem = _CurrentItem.getChild(position - 1);
+//					}
+//					_LeftListViewAdapter.setListViewData(_CurrentItem);
+//					_LeftListViewAdapter.notifyDataSetChanged();
+					for (int index = 0 ; index < _CurrentItem.getChildSize() ; index++) {
 						if (position == 0)
-							_CurrentItem = _CurrentItem.getParent();
+							_CurrentItem.getChild(index).setVisible(true);
+						else if (index == (position - 1))
+							_CurrentItem.getChild(index).setVisible(true);
 						else
-							_CurrentItem = _CurrentItem.getChild(position - 1);
+							_CurrentItem.getChild(index).setVisible(false);
 					}
-					_LeftListViewAdapter.setListViewData(_CurrentItem);
-					_LeftListViewAdapter.notifyDataSetChanged();
 					mCallback.onListViewClickChanged();
 				}
 			});

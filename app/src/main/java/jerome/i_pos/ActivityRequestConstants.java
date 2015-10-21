@@ -7,4 +7,5 @@ public class ActivityRequestConstants
 {
     public static int NONE = 0;
     public static int MAIN_ACTVITIY = ++NONE;
+    public static int CENTER_FRAGMENT =  ++NONE;
 }

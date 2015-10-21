@@ -1,6 +1,8 @@
 package Util;
 
-import com.CenterFragment.TabFragment.Goods.GoodsItemData;
+import model.GoodsItemData;
+
+import com.CenterFragment.TabFragment.Goods.GoodsItemRecordsData;
 import com.LeftFragement.BaseItemData;
 
 import org.ksoap2.SoapEnvelope;
@@ -59,16 +61,19 @@ public class WebServiceAPI
             String message= e.toString();
         }
     }
-
-    public static BaseItemData GetProducts()
+    public static boolean mBGetProductsing = false;
+    public static boolean mBTest= false;
+    public static void GetProducts()
     {
-        BaseItemData _RootItemData = new GoodsItemData("全部");
-        _RootItemData.setParent(null);
-        BaseItemData goodsItemData = new GoodsItemData("商品");
-        goodsItemData.setParent(_RootItemData);
-        _RootItemData.addChild(goodsItemData);
+        if (mBGetProductsing)
+            return;
 
-        String methodName = "GetProducts";
+        mBGetProductsing = true;
+        int serialIndex = 0;
+//        BaseItemData _RootItemData = new GoodsItemData("顯示全商品", ++serialIndex);
+
+
+        String methodName = "GetProducts"; //GetBranch, GetProducts
 //        String Get_HelloWorld="";
         String soapAction = NAMESPACE+methodName;
         try{
@@ -88,7 +93,7 @@ public class WebServiceAPI
 
             //Web method call
 
-            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL, 30000);
 
             androidHttpTransport.debug = true;
 
@@ -100,7 +105,8 @@ public class WebServiceAPI
 
             for(int productIndex = 0; productIndex<productCount; productIndex++)
             {
-                GoodsItemData newGoodsItemData = new GoodsItemData();
+                GoodsItemData newGoodsItemData = new GoodsItemData(++serialIndex);
+                newGoodsItemData.setCount(1);
                 SoapObject prodcut = (SoapObject)result.getProperty(productIndex);
 
                     String value;
@@ -138,10 +144,17 @@ public class WebServiceAPI
 //                            value = property.getValue().toString();
 //                            newGoodsItemData.setSecondClassName(value);
 //                        }
-//                        if (prodcut.getProperty("條碼") != null) {
-//                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("條碼");
-//                            value = property.getValue().toString();
-//                        }
+                        if (prodcut.getProperty("條碼") != null) {
+                            SoapObject property = (SoapObject) prodcut.getProperty("條碼");
+                            value = property.getInnerText();
+//                            if (mBTest == false)
+//                            {
+//                                value = "9780201310054";
+//                                mBTest = true;
+//                            }
+                            if (value != null && value.length() > 0)
+                                newGoodsItemData.setBarcode(value);
+                        }
                         if (prodcut.getProperty("備註") != null) {
                             SoapObject property = (SoapObject) prodcut.getProperty("備註");
 //                            value = property.().toString();
@@ -384,12 +397,13 @@ public class WebServiceAPI
                 boolean bExistMainClassName = false;
                 String newItemMainClassName = newGoodsItemData.getMainClassName();
                 newGoodsItemData.setIconResourceID(R.drawable.hairdresser);
-                int childSize = goodsItemData.getChildSize();
+                int childSize = GoodsItemRecordsData.getChildSize();
                 for (int childIndex = 0 ; childIndex < childSize ; childIndex++)
                 {
-                    GoodsItemData childItem = (GoodsItemData)goodsItemData.getChild(childIndex);
+                    GoodsItemData childItem = (GoodsItemData)GoodsItemRecordsData.getChild(childIndex);
                     if (childItem.getClassification() && childItem.getmClassificationName().compareToIgnoreCase(newItemMainClassName) == 0)
                     {
+
                         childItem.addChild(newGoodsItemData);
                         newGoodsItemData.setParent(childItem);
                         bExistMainClassName = true;
@@ -397,9 +411,9 @@ public class WebServiceAPI
                 }
                 if (!bExistMainClassName)
                 {
-                    BaseItemData item = new GoodsItemData(newItemMainClassName);
-                    item.setParent(goodsItemData);
-                    goodsItemData.addChild(item);
+                    BaseItemData item = new GoodsItemData(newItemMainClassName, ++serialIndex);
+                    item.setParent(GoodsItemRecordsData.getGoodsItemRecordsData());
+                    GoodsItemRecordsData.addChild((GoodsItemData)item);
 
                     newGoodsItemData.setParent(item);
                     item.addChild(newGoodsItemData);
@@ -420,7 +434,8 @@ public class WebServiceAPI
 //            Get_HelloWorld=e.getMessage(); //將錯誤訊息傳回
 
         }
-        return _RootItemData;
+        mBGetProductsing = false;
+//        return _RootItemData;
 //        return Get_HelloWorld; //傳回字串
 
     }

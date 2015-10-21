@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.LeftFragement.BaseItemData;
 
 import jerome.i_pos.R;
+import model.GoodsItemData;
 
 public class GoodsListViewAdapter extends BaseAdapter
 {
@@ -25,16 +26,19 @@ public class GoodsListViewAdapter extends BaseAdapter
     private Context mContext;
     private ItemView mItemView;
     private String mSearchText="";
+    private String mSearchBarcode = "";
     private class ItemView {
         ImageView ItemImage;
         TextView ItemName;
         TextView ItemInfo;
+        TextView ItemPrice;
     }
 
-    public GoodsListViewAdapter(Context context, BaseItemData dataItems, String searchText)
+    public GoodsListViewAdapter(Context context, BaseItemData dataItems, String searchText, String searchBarcode)
     {
         _DataItems = new ArrayList<GoodsItemData>();
         mSearchText = searchText;
+        mSearchBarcode = searchBarcode;
         parseDataItems(dataItems, _DataItems);
         mContext = context;
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -76,6 +80,7 @@ public class GoodsListViewAdapter extends BaseAdapter
             mItemView.ItemImage = (ImageView)convertView.findViewById(R.id.ItemImage);
             mItemView.ItemName = (TextView)convertView.findViewById(R.id.ItemName);
             mItemView.ItemInfo = (TextView)convertView.findViewById(R.id.ItemInfo);
+            mItemView.ItemPrice = (TextView)convertView.findViewById(R.id.ItemPrice);
             convertView.setTag(mItemView);
         }
 
@@ -95,6 +100,7 @@ public class GoodsListViewAdapter extends BaseAdapter
             mItemView.ItemInfo.setText(info.toString());
             if (appInfo.getIconResourceID() != 0)
                 mItemView.ItemImage.setImageDrawable(mItemView.ItemImage.getResources().getDrawable(appInfo.getIconResourceID()));
+            mItemView.ItemPrice.setText("$"+ appInfo.getPrice());
         }
 
         return convertView;
@@ -106,13 +112,23 @@ public class GoodsListViewAdapter extends BaseAdapter
             int childSize = currentDataItem.getChildSize();
             for (int childIndex = 0; childIndex < childSize; childIndex++)
             {
-                BaseItemData childDataItem = currentDataItem.getChild(childIndex);
-                if (!childDataItem.getClassification()) // 不為類別身分
+                GoodsItemData childDataItem = (GoodsItemData)currentDataItem.getChild(childIndex);
+                if (!childDataItem.getClassification()) // 不為類別身分廠商
                 {
                     if (mSearchText.length() != 0)
                     {
-                        if (childDataItem.getTitle().contains(mSearchText) || childDataItem.getInfo().contains(mSearchText))
+                        if (childDataItem.getTitle().contains(mSearchText) ||
+                            childDataItem.getInfo().contains(mSearchText) ||
+                            childDataItem.getFirm().contains(mSearchText))
                             arrayListItems.add((GoodsItemData)childDataItem);
+                    }
+                    else if (mSearchBarcode.length() != 0 )
+                    {
+                        if (childDataItem.getBarcode().length() != 0 && childDataItem.getBarcode().equalsIgnoreCase(mSearchBarcode))
+                        {
+                            arrayListItems.add((GoodsItemData)childDataItem);
+                            //return arrayListItems;
+                        }
                     }
                     else
                     {
