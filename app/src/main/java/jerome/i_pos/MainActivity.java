@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.CenterFragment.TabFragment.BaseFragment;
+import com.CenterFragment.TabFragment.Goods.GoodsDetailActivity;
+import com.CenterFragment.TabFragment.Goods.GoodsItemRecordsData;
 import com.LeftFragement.LeftFragment;
 import com.LeftFragement.BaseItemData;
 import com.RightFragment.RightFragment;
@@ -14,6 +16,12 @@ import com.CenterFragment.SlidingMenu;
 import com.CenterFragment.CenterFragmenet;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import java.util.ArrayList;
+
+import model.ActivityRequestCodeConstant;
+import model.BundleConstant;
+import model.GoodsItemData;
 
 public class MainActivity extends AppCompatActivity implements LeftFragment.OnLeftFragmentEventListener, BaseFragment.BaseFragmentEventListener
 {
@@ -111,15 +119,55 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IntentIntegrator.REQUEST_CODE)
+        if (requestCode == IntentIntegrator.REQUEST_CODE && data != null)
         {
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanResult != null)
             {
                 String result = scanResult.getContents();
-                mCenterFragmenet.updateFragmentData("", result);
+                GoodsItemData goodsItemData = (GoodsItemData)GoodsItemRecordsData.getGoodsItemRecordsData();
+                GoodsItemData resultItemData = IsContainsBarcode(goodsItemData, result);
+                if (resultItemData != null)
+                {
+                    ShowGoodsDetailActivity(resultItemData);
+                }
+//                mCenterFragmenet.updateFragmentData("", result);
             }
         }
     }
-
+    private GoodsItemData IsContainsBarcode(BaseItemData currentDataItem,String barcode)
+    {
+        if (currentDataItem.getVisible())
+        {
+            int childSize = currentDataItem.getChildSize();
+            for (int childIndex = 0; childIndex < childSize; childIndex++)
+            {
+                GoodsItemData childDataItem = (GoodsItemData)currentDataItem.getChild(childIndex);
+                if (!childDataItem.getClassification()) // 不為類別身分廠商
+                {
+                    if (barcode.length() != 0 )
+                    {
+                        if (childDataItem.getBarcode().length() != 0 && childDataItem.getBarcode().equalsIgnoreCase(barcode))
+                        {
+                            return childDataItem;
+                        }
+                    }
+                }
+                else
+                {
+                    return IsContainsBarcode((GoodsItemData) childDataItem, barcode); //類別的話, 繼續往下挖
+                }
+            }
+        }
+        return null;
+    }
+    private void ShowGoodsDetailActivity(GoodsItemData goodsItemData) {
+        Intent intent = new Intent();
+        intent.setClass(this, GoodsDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(BundleConstant.TYPE, 0);
+        bundle.putSerializable("ListViewData", goodsItemData);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_FRAGMENT);
+    }
 }

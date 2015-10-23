@@ -9,10 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.LeftFragement.BaseItemData;
 
+import Util.WebServiceAPI;
 import jerome.i_pos.R;
 import model.ActivityRequestCodeConstant;
 
@@ -25,12 +28,27 @@ public class GoodsCartListActivity extends Activity
     private static GoodsCartListRecyclerViewAdapter mRecyclerViewerAdapter = null;
     private View mMainView = null;
     private static TextView mSubToalTextView = null;
+    private Context mContext = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMainView = inflater.inflate(R.layout.goods_cart, null);
         mSubToalTextView = (TextView)mMainView.findViewById(R.id.goods_cart_subtotal_textView);
+        mContext = this;
+        final Button submitButton = (Button)mMainView.findViewById(R.id.goods_cart_submit_button);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+//                Intent intent = new Intent();
+//                intent.setClass(mContext, GoodsCartListActivity.class);
+//
+//                startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_DETAIL_ACTIVITY);
+                WebServiceAPI.SaveConsumeSetting2(WebServiceAPI.mBranchID, WebServiceAPI.mEmployeeID, WebServiceAPI.mTokenID, GoodsCardRecordData.getAllGoodsItem());
+                Toast.makeText(mContext, "已送出資料", Toast.LENGTH_LONG).show();
+            }
+        });
         setContentView(mMainView);
     }
     @Override

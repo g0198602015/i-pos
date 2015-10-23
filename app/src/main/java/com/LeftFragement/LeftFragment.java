@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import jerome.i_pos.MainActivity;
 import jerome.i_pos.R;
 
 
@@ -92,6 +93,7 @@ public class LeftFragment extends Fragment
 						else
 							_CurrentItem.getChild(index).setVisible(false);
 					}
+					((MainActivity) getActivity()).showLeft();
 					mCallback.onListViewClickChanged();
 				}
 			});

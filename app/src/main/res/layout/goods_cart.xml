@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/goods_cart_submit"
-                android:id="@+id/button"
+                android:id="@+id/goods_cart_submit_button"
                 android:background="@drawable/submit_button"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"

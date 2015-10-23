@@ -10,6 +10,8 @@ import android.widget.ImageButton;
 
 import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
 
+import Util.WebServiceAPI;
+
 public class MainViewActivity extends Activity {
 
     private Context mContext;
@@ -62,7 +64,9 @@ public class MainViewActivity extends Activity {
             public void run() {
                 try
                 {
-                    Util.WebServiceAPI.GetProducts();
+
+//                    Util.WebServiceAPI.SaveConsumeSetting2();
+                    Util.WebServiceAPI.GetProducts(WebServiceAPI.mBranchID, WebServiceAPI.mTokenID);
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {

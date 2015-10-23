@@ -26,7 +26,7 @@ public class GoodsListViewAdapter extends BaseAdapter
     private Context mContext;
     private ItemView mItemView;
     private String mSearchText="";
-    private String mSearchBarcode = "";
+//    private String mSearchBarcode = "";
     private class ItemView {
         ImageView ItemImage;
         TextView ItemName;
@@ -34,11 +34,11 @@ public class GoodsListViewAdapter extends BaseAdapter
         TextView ItemPrice;
     }
 
-    public GoodsListViewAdapter(Context context, BaseItemData dataItems, String searchText, String searchBarcode)
+    public GoodsListViewAdapter(Context context, BaseItemData dataItems, String searchText/*, String searchBarcode*/)
     {
         _DataItems = new ArrayList<GoodsItemData>();
         mSearchText = searchText;
-        mSearchBarcode = searchBarcode;
+//        mSearchBarcode = searchBarcode;
         parseDataItems(dataItems, _DataItems);
         mContext = context;
         mInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -117,19 +117,20 @@ public class GoodsListViewAdapter extends BaseAdapter
                 {
                     if (mSearchText.length() != 0)
                     {
-                        if (childDataItem.getTitle().contains(mSearchText) ||
-                            childDataItem.getInfo().contains(mSearchText) ||
-                            childDataItem.getFirm().contains(mSearchText))
+                        String searchText = mSearchText.toLowerCase();
+                        if (childDataItem.getTitle().toLowerCase().contains(searchText) ||
+                            childDataItem.getInfo().toLowerCase().contains(searchText) ||
+                            childDataItem.getFirm().toLowerCase().contains(searchText))
                             arrayListItems.add((GoodsItemData)childDataItem);
                     }
-                    else if (mSearchBarcode.length() != 0 )
-                    {
-                        if (childDataItem.getBarcode().length() != 0 && childDataItem.getBarcode().equalsIgnoreCase(mSearchBarcode))
-                        {
-                            arrayListItems.add((GoodsItemData)childDataItem);
-                            //return arrayListItems;
-                        }
-                    }
+//                    else if (mSearchBarcode.length() != 0 )
+//                    {
+//                        if (childDataItem.getBarcode().length() != 0 && childDataItem.getBarcode().equalsIgnoreCase(mSearchBarcode))
+//                        {
+//                            arrayListItems.add((GoodsItemData)childDataItem);
+//                            //return arrayListItems;
+//                        }
+//                    }
                     else
                     {
                         arrayListItems.add((GoodsItemData)childDataItem);

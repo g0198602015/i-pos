@@ -140,7 +140,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         mGoodsListViewAdapter = new GoodsListViewAdapter(
                 getActivity(),
                 mListViewItems,
-                getSearchText(),
+//                getSearchText(),
                 getBarcode()
         );
         mGoodsListViewAdapter.notifyDataSetChanged();
@@ -155,14 +155,14 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
                     mlistView = (ListView) listView;
                     mlistView.setAdapter(mGoodsListViewAdapter);
                     mlistView.setOnItemClickListener(this);
-                    if (mGoodsListViewAdapter.getCount() == 1)
-                    {
-                        GoodsItemData goodsItemData = (GoodsItemData) mGoodsListViewAdapter.getItem(0);
-                        if (goodsItemData.getBarcode().equalsIgnoreCase(getBarcode()) && getBarcode().length() > 0)
-                        {
-                            ShowGoodsDetailActivity(goodsItemData);
-                        }
-                    }
+//                    if (mGoodsListViewAdapter.getCount() == 1)
+//                    {
+//                        GoodsItemData goodsItemData = (GoodsItemData) mGoodsListViewAdapter.getItem(0);
+//                        if (goodsItemData.getBarcode().equalsIgnoreCase(getBarcode()) && getBarcode().length() > 0)
+//                        {
+//                            ShowGoodsDetailActivity(goodsItemData);
+//                        }
+//                    }
                 }
             }
         }
