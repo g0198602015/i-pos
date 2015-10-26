@@ -27,7 +27,7 @@ public class WebServiceAPI
     private static final String URL = "http://zoom-world.tw/WuchDemo/CloudService.asmx"; //Web Services的網址
 
 
-    public static int mBranchID = 0;
+    public static int mBranchID = 1;
     public static String mTokenID = "64860217";
     public static int mEmployeeID = 0;
     public WebServiceAPI()
@@ -36,7 +36,7 @@ public class WebServiceAPI
     }
 
 
-    public static void SaveConsumeSetting2(int branchID, int employeeID, String token, BaseItemData goodsCartData)
+    public static String SaveConsumeSetting2(int branchID, int employeeID, String token, BaseItemData goodsCartData)
     {
         String methodName = "SaveConsumeSetting2";
         String soapAction = NAMESPACE+methodName;
@@ -52,10 +52,10 @@ public class WebServiceAPI
             //Web method call
             HttpTransportSE androidHttpTransport = new HttpTransportSE(URL, 30000);
             envelope.dotNet = true;
-            request1.addProperty("BranchID", 0);
-            request1.addProperty("EmployeeID", 0);
-            request1.addProperty("token","64860217");
-            SoapObject products = new SoapObject("Products", "Products");
+            request1.addProperty("BranchID", branchID);
+            request1.addProperty("EmployeeID", employeeID);
+            request1.addProperty("token", token);
+            SoapObject products = new SoapObject(NAMESPACE, "Products");
 
     //            SoapObject serviceItems = new SoapObject();
     //            SoapObject serviceItem = new SoapObject();
@@ -117,11 +117,13 @@ public class WebServiceAPI
             for (int index = 0 ; index < size ; index++)
             {
                 GoodsItemData goodsItemData = (GoodsItemData)goodsCartData.getChild(index);
-                SoapObject product = new SoapObject("Product", "Product");
+                SoapObject product = new SoapObject(NAMESPACE, "Product");
                 product.addProperty("名稱", goodsItemData.getName());
                 product.addProperty("單價1", goodsItemData.getPrice());
+                product.addProperty("使用數量", goodsItemData.getCount());
+                product.addProperty("ID", goodsItemData.getProductID());
 //                product.addProperty("折扣", );
-                products.addProperty("Product", product);
+                products.addSoapObject(product);
             }
 //            if (prodcut.getProperty("名稱") != null) {
 //                SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("名稱");
@@ -136,9 +138,12 @@ public class WebServiceAPI
             androidHttpTransport.call(soapAction, envelope);
             SoapPrimitive result= (SoapPrimitive)envelope.getResponse();
             String res2 = result.toString();
-            String productCount = result.getAttribute("SaveConsumeSetting2Result").toString();
-        }catch (Exception e){
+            return res2;
+//            String productCount = result.getAttribute("SaveConsumeSetting2Result").toString();
+        }catch (Exception e)
+        {
             String message= e.toString();
+            return "";
         }
     }
     public static void GetEmployee()
@@ -198,9 +203,10 @@ public class WebServiceAPI
 
     public static boolean mBGetProductsing = false;
     public static boolean mBTest= false;
+    public static int mRecallTime = 0;
     public static void GetProducts(int branchID, String tokenID)
     {
-        if (mBGetProductsing)
+        if (mBGetProductsing && mRecallTime >= 2 )
             return;
 
         mBGetProductsing = true;
@@ -233,7 +239,12 @@ public class WebServiceAPI
             androidHttpTransport.call(soapAction, envelope);
             SoapObject result= (SoapObject)envelope.getResponse();
             int productCount = result.getPropertyCount();
-
+            if (productCount == 0 && mRecallTime<=2)
+            {
+                GetBranch(branchID, tokenID);
+                mRecallTime++;
+                GetProducts(branchID, tokenID);
+            }
             for(int productIndex = 0; productIndex<productCount; productIndex++)
             {
                 GoodsItemData newGoodsItemData = new GoodsItemData(++serialIndex);
@@ -242,10 +253,11 @@ public class WebServiceAPI
 
                     String value;
                     try {
-//                        if (prodcut.getProperty("ID") != null) {
-//                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("ID");
-//                            value = property.getValue().toString();
-//                        }
+                        if (prodcut.getProperty("ID") != null) {
+                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("ID");
+                            value = property.getValue().toString();
+                            newGoodsItemData.setProductId(Integer.parseInt(value));
+                        }
                         if (prodcut.getProperty("名稱") != null) {
                             SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("名稱");
                             value = property.getValue().toString();
@@ -256,10 +268,11 @@ public class WebServiceAPI
 //                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("說明");
 //                            value = property.getValue().toString();
 //                        }
-//                        if (prodcut.getProperty("編號") != null) {
-//                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("編號");
-//                            value = property.getValue().toString();
-//                        }
+                        if (prodcut.getProperty("編號") != null) {
+                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("編號");
+                            value = property.getValue().toString();
+                            newGoodsItemData.setGoodsSerialNumber(value);
+                        }
 //                        if (prodcut.getProperty("條碼") != null) {
 //                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("條碼");
 //                            value = property.getValue().toString();
@@ -514,10 +527,10 @@ public class WebServiceAPI
 //                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("TempProductDetailRecordID");
 //                            value = property.getValue().toString();
 //                        }
-//                        if (prodcut.getProperty("OwnerPackage") != null) {
-//                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("OwnerPackage");
-//                            value = property.getValue().toString();
-//                        }
+                        if (prodcut.getProperty("OwnerPackage") != null) {
+                            SoapPrimitive property = (SoapPrimitive) prodcut.getProperty("OwnerPackage");
+                            value = property.getValue().toString();
+                        }
                     }
                     catch (Exception e){
 
@@ -560,6 +573,37 @@ public class WebServiceAPI
 
         }
         mBGetProductsing = false;
+
+    }
+    public static void GetBranch(int branchID, String tokenID)
+    {
+
+        int serialIndex = 0;
+        String methodName = "GetBranch"; //GetBranch, GetProducts
+        String soapAction = NAMESPACE+methodName;
+        try{
+
+            // add paramaters and values
+
+            SoapObject request1 = new SoapObject(NAMESPACE, methodName);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            request1.addProperty("BranchID",branchID);
+            request1.addProperty("token", tokenID);
+            envelope.setOutputSoapObject(request1);
+            //Web method call
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL, 30000);
+            androidHttpTransport.debug = true;
+            androidHttpTransport.call(soapAction, envelope);
+            SoapObject result= (SoapObject)envelope.getResponse();
+            String results = result.toString();
+
+        }catch (Exception e){
+
+            String message= e.toString();
+            message = message;
+        }
 
     }
 }

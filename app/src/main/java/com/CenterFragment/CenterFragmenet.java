@@ -127,7 +127,7 @@ public class CenterFragmenet extends BaseFragment
     // type:1 建立[進貨Fragment]
     private LinkedList<BaseFragment> createFragments(int type)
     {
-        Bitmap bitmap = ImageUtility.createBitmap(getActivity(), R.mipmap.ic_launcher2, 50, 50);
+        Bitmap bitmap = ImageUtility.createBitmap(getActivity(), R.drawable.title_icon, 50, 50);
         LinkedList<BaseFragment> fragments = new LinkedList<BaseFragment>();
         if (type == 0) {
             mGoodsFragment = GoodsFragement.newInstance();

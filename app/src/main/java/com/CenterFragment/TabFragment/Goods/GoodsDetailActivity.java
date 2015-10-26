@@ -250,6 +250,10 @@ public class GoodsDetailActivity extends Activity {
                         goodsIconImageView.startAnimation(animationSet);
 
                     }
+                    mGoodsCartCountTextView.setTextColor(getResources().getColor(R.color.red));
+                    mGoodsCartCountTextView.setText("(" + GoodsCardRecordData.getGoodsItemSize() + ")" );
+                    mGoodsCartSubtotalTextView.setTextColor(getResources().getColor(R.color.red));
+                    mGoodsCartSubtotalTextView.setText("$" + GoodsCardRecordData.getSubTotal());
                 } catch (Exception ex) {
 
                 }
@@ -299,14 +303,15 @@ public class GoodsDetailActivity extends Activity {
             public void onAnimationEnd(Animation animation)
             {
 //                GoodsItemData itemData = (GoodsItemData)GoodsCardRecordData.contains(mItem.getSerialIndex());
-                String countStr = "";
+//                String countStr = "";
 //                if (itemData != null)
 //                    countStr = ""+itemData.getCount();
-                mGoodsCartCountTextView.setTextColor(getResources().getColor(R.color.red));
-                mGoodsCartCountTextView.setText("(" + GoodsCardRecordData.getGoodsItemSize() + ")" + countStr);
-                mGoodsCartSubtotalTextView.setTextColor(getResources().getColor(R.color.red));
-                mGoodsCartSubtotalTextView.setText("$" + GoodsCardRecordData.getSubTotal());
-                shoppingCartImageView.invalidate();
+//                mGoodsCartCountTextView.setTextColor(getResources().getColor(R.color.red));
+//                mGoodsCartCountTextView.setText("(" + GoodsCardRecordData.getGoodsItemSize() + ")" + countStr);
+//                mGoodsCartSubtotalTextView.setTextColor(getResources().getColor(R.color.red));
+//                mGoodsCartSubtotalTextView.setText("$" + GoodsCardRecordData.getSubTotal());
+//                shoppingCartImageView.invalidate();
+                finish();
             }
         });
         animationSet.addAnimation(alpha);

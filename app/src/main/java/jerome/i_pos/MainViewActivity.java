@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
 
@@ -26,6 +28,15 @@ public class MainViewActivity extends Activity {
         ImageButton shippmentImageButton = (ImageButton)view.findViewById(R.id.shippmentImageButton);
         ImageButton inventoryImageButton = (ImageButton)view.findViewById(R.id.inventoryImageButton);
         ImageButton recordImageButton = (ImageButton)view.findViewById(R.id.recordImageButton);
+        orderImageButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    Toast.makeText(mContext, "讀取產品資料中...", Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+        });
         orderImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -64,7 +75,6 @@ public class MainViewActivity extends Activity {
             public void run() {
                 try
                 {
-
 //                    Util.WebServiceAPI.SaveConsumeSetting2();
                     Util.WebServiceAPI.GetProducts(WebServiceAPI.mBranchID, WebServiceAPI.mTokenID);
                 } catch (Exception e) {

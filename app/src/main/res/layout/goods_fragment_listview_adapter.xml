@@ -9,11 +9,10 @@
 
     <ImageView
         android:id="@+id/ItemImage"
-        android:layout_width="wrap_content"
+        android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:padding="2dip"
-        android:contentDescription="Btn_Text"
-        android:layout_marginLeft="10dp" />
+        android:contentDescription="Btn_Text" />
 
     <LinearLayout android:layout_toRightOf="@id/ItemImage"
         android:layout_alignTop="@+id/ItemImage"
