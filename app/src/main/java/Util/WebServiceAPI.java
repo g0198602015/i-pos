@@ -11,6 +11,9 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jerome.i_pos.R;
 
 /**
@@ -18,6 +21,23 @@ import jerome.i_pos.R;
  */
 public class WebServiceAPI
 {
+    private static List<OnProductDataReceivedListener> _OnProductDataReceivedListener = new ArrayList<OnProductDataReceivedListener>();
+    public interface OnProductDataReceivedListener
+    {
+        abstract void onDataReceive(long total, long current);
+    }
+    public static void addProductDataReceivedListener(OnProductDataReceivedListener listener)
+    {
+        _OnProductDataReceivedListener.add(listener);
+    }
+    public static void removeProductDataReceivedListener(OnProductDataReceivedListener listener)
+    {
+        _OnProductDataReceivedListener.remove(listener);
+    }
+    public static void clearProductDataReceivedListener()
+    {
+        _OnProductDataReceivedListener.clear();
+    }
 //    private static final String SOAP_ACTION1 = "http://tempuri.org/HelloWorld"; //Web Services命名空間+函數名稱
 
 //    private static final String HelloWorldmethod = "HelloWorld";　//要呼叫的函數名稱
@@ -200,16 +220,16 @@ public class WebServiceAPI
             String message= e.toString();
         }
     }
-
-    public static boolean mBGetProductsing = false;
+    public static boolean mBGettingProductsFinish = false;
+    public static boolean mBGettingProducts = false;
     public static boolean mBTest= false;
     public static int mRecallTime = 0;
     public static void GetProducts(int branchID, String tokenID)
     {
-        if (mBGetProductsing && mRecallTime >= 2 )
+        if (mBGettingProducts && mRecallTime >= 2 )
             return;
 
-        mBGetProductsing = true;
+        mBGettingProducts = true;
         int serialIndex = 0;
         String methodName = "GetProducts"; //GetBranch, GetProducts
         String soapAction = NAMESPACE+methodName;
@@ -562,8 +582,20 @@ public class WebServiceAPI
                     newGoodsItemData.setParent(item);
                     item.addChild(newGoodsItemData);
                 }
-            }
+                try {
+                    for (int index = 0; index < _OnProductDataReceivedListener.size(); index++) {
+                        _OnProductDataReceivedListener.get(index).onDataReceive(productCount, productIndex);
+                    }
+                    Thread.sleep(100);
+                }catch (Exception e){
 
+                    String message= e.toString();
+                    message = message;
+
+                }
+
+            }
+            mBGettingProductsFinish = true;
             String results = result.toString();
 
         }catch (Exception e){
@@ -572,7 +604,7 @@ public class WebServiceAPI
             message = message;
 
         }
-        mBGetProductsing = false;
+        mBGettingProducts = false;
 
     }
     public static void GetBranch(int branchID, String tokenID)

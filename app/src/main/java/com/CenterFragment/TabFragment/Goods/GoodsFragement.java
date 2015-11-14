@@ -1,12 +1,8 @@
 package com.CenterFragment.TabFragment.Goods;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +13,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.CenterFragment.TabFragment.BaseFragment;
 import com.LeftFragement.BaseItemData;
@@ -84,7 +78,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
             {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        while(Util.WebServiceAPI.mBGetProductsing == true) {
+                        while(Util.WebServiceAPI.mBGettingProducts == true) {
                             try {
                                 Thread.sleep(300);
                             } catch (InterruptedException e) {
@@ -140,7 +134,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         mGoodsListViewAdapter = new GoodsListViewAdapter(
                 getActivity(),
                 mListViewItems,
-//                getSearchText(),
+                getSearchText(),
                 getBarcode()
         );
         mGoodsListViewAdapter.notifyDataSetChanged();
