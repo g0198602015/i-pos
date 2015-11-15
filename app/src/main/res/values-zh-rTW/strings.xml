@@ -10,6 +10,10 @@
     <string name="button_ok">確定</string>
     <string name="message_exit">確定要離開嗎?</string>
     <string name="button_cancel">取消</string>
+    <string name="button_order">打單</string>
+    <string name="button_shipment">Shipment</string>
+    <string name="button_inventory">盤點</string>
+    <string name="button_record">紀錄</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

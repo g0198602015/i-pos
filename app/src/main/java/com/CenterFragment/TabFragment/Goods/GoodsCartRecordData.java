@@ -7,7 +7,7 @@ import model.GoodsItemData;
 /**
  * Created by Jerome on 2015/10/17.
  */
-public class GoodsCardRecordData
+public class GoodsCartRecordData
 {
     private static BaseItemData mListViewItems = new BaseItemData("全部",0);
     public static BaseItemData getAllGoodsItem() {
@@ -19,10 +19,11 @@ public class GoodsCardRecordData
             return null;
         return mListViewItems.getChild(index);
     }
-    public static void addGoodsItem(BaseItemData item)
+
+    public static void addGoodsItem(BaseItemData item, boolean bAllowRepeat)
     {
         GoodsItemData itemData = (GoodsItemData)contains(item.getSerialIndex());
-        if (itemData != null)
+        if (itemData != null && bAllowRepeat == false)
         {
            GoodsItemData goodsItemData = (GoodsItemData)itemData;
            int count = goodsItemData.getCount() + ((GoodsItemData)item).getCount();
@@ -30,6 +31,14 @@ public class GoodsCardRecordData
         }
         else
             mListViewItems.addChild(item);
+    }
+    public static void clearGoodsItem()
+    {
+        int size = mListViewItems.getChildSize();
+        for (int index = size -1 ; index >= 0 ; index--)
+        {
+            mListViewItems.removeChild(mListViewItems.getChild(index));
+        }
     }
     public static void removeGoodsItem(BaseItemData item)
     {
@@ -52,8 +61,8 @@ public class GoodsCardRecordData
     public static double getSubTotal()
     {
         double sum = 0;
-        for (int index = 0; index < GoodsCardRecordData.getGoodsItemSize(); index++) {
-            GoodsItemData itemData = (GoodsItemData) GoodsCardRecordData.getGoodsItem(index);
+        for (int index = 0; index < GoodsCartRecordData.getGoodsItemSize(); index++) {
+            GoodsItemData itemData = (GoodsItemData) GoodsCartRecordData.getGoodsItem(index);
             double subtotal = itemData.getCount() * itemData.getPrice();
             sum = sum + subtotal;
         }

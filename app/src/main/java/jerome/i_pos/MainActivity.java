@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import com.CenterFragment.TabFragment.BaseFragment;
 import com.CenterFragment.TabFragment.Goods.GoodsDetailActivity;
-import com.CenterFragment.TabFragment.Goods.GoodsItemRecordsData;
+import com.CenterFragment.TabFragment.Goods.GoodsItemAllData;
 import com.LeftFragement.LeftFragment;
 import com.LeftFragement.BaseItemData;
 import com.RightFragment.RightFragment;
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
             if (scanResult != null)
             {
                 String result = scanResult.getContents();
-                GoodsItemData goodsItemData = (GoodsItemData)GoodsItemRecordsData.getGoodsItemRecordsData();
+                GoodsItemData goodsItemData = (GoodsItemData) GoodsItemAllData.getGoodsItemRecordsData();
                 GoodsItemData resultItemData = IsContainsBarcode(goodsItemData, result);
                 if (resultItemData != null)
                 {

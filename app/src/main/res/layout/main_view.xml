@@ -38,44 +38,82 @@
         <LinearLayout
             android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp">
 
-            <ImageButton
-                android:layout_width="wrap_content"
+            <Button
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/button_order"
                 android:id="@+id/orderImageButton"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/order" />
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/shippmentImageButton"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/shipment"
-                android:layout_marginLeft="20dp" />
-        </LinearLayout>
-        <LinearLayout
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#64cfcecb"
+                android:layout_marginBottom="20dp" />
 
-            <ImageButton
-                android:layout_width="wrap_content"
+            <Button
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/button_inventory"
                 android:id="@+id/inventoryImageButton"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/inventory" />
-            <ImageButton
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#64cfcecb"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/button_record"
                 android:id="@+id/recordImageButton"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/record"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#64cfcecb" />
         </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:gravity="center"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<ImageButton-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/orderImageButton"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:background="@drawable/order" />-->
+            <!--<ImageButton-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/shippmentImageButton"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:background="@drawable/shipment"-->
+                <!--android:layout_marginLeft="20dp" />-->
+        <!--</LinearLayout>-->
+        <!--<LinearLayout-->
+            <!--android:gravity="center"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+
+            <!--<ImageButton-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/inventoryImageButton"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:background="@drawable/inventory" />-->
+            <!--<ImageButton-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/recordImageButton"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:background="@drawable/record"-->
+                <!--android:layout_marginLeft="20dp" />-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 </LinearLayout>

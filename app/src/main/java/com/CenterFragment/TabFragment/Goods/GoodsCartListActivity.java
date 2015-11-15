@@ -39,6 +39,7 @@ public class GoodsCartListActivity extends Activity
     private View mMainView = null;
     private static TextView mSubToalTextView = null;
     private Context mContext = null;
+    private boolean mBSubmit = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +53,7 @@ public class GoodsCartListActivity extends Activity
         submitButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-                {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     Toast.makeText(mContext, "傳送中..請稍後...", Toast.LENGTH_SHORT).show();
 //                    barcodeTextView.setText("傳送中..請稍後...");
                 }
@@ -62,50 +62,41 @@ public class GoodsCartListActivity extends Activity
         });
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-//                Toast.makeText(mContext, "傳送中..請稍後...", Toast.LENGTH_LONG).show();
-//                barcodeTextView.setText("傳送中..請稍後...");
-//                Intent intent = new Intent();
-//                intent.setClass(mContext, GoodsCartListActivity.class);
-//
-//                startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_DETAIL_ACTIVITY);
-                ((Activity)mContext).runOnUiThread(new Runnable() {
-                    public void run() {
-//                        try {
-//                            Thread.sleep(10000);
-//                        } catch (Exception ex) {
-//
-//                        }
-                        String res = WebServiceAPI.SaveConsumeSetting2(WebServiceAPI.mBranchID, WebServiceAPI.mEmployeeID, WebServiceAPI.mTokenID, GoodsCardRecordData.getAllGoodsItem());
-                        String[] res2 = res.split(",");
-                        String barcode = "";
-                        if (res.length() > 1)
-                            barcode = res2[1];
-//                Toast.makeText(mContext, "已送出資料, 編號:"+res, Toast.LENGTH_LONG).show();
+            public void onClick(View v) {
+                if (GoodsCartRecordData.getGoodsItemSize() > 0) {
+                    ((Activity) mContext).runOnUiThread(new Runnable() {
+                        public void run() {
+                            try {
+                                String res = WebServiceAPI.SaveConsumeSetting2(WebServiceAPI.mBranchID, WebServiceAPI.mEmployeeID, WebServiceAPI.mTokenID, GoodsCartRecordData.getAllGoodsItem());
+                                String[] res2 = res.split(",");
+                                String barcode = "";
+                                if (res.length() > 1)
+                                    barcode = res2[1];
+                                mBSubmit = true;
+                                submitButton.setVisibility(View.GONE);
+                                com.google.zxing.MultiFormatWriter writer = new MultiFormatWriter();
+                                String finaldata = barcode;
+                                BitMatrix bitMatrix = null;
 
-                        com.google.zxing.MultiFormatWriter writer = new MultiFormatWriter();
-                        String finaldata = barcode;
-                        BitMatrix bm = null;
-                        try {
-                            int width = (int) imageView.getWidth();
-                            int height = (int) imageView.getWidth() / 4;
-                            bm = writer.encode(finaldata, BarcodeFormat.CODE_128, width, height);
-                            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                            if (bitmap != null) {
-                                for (int i = 0; i < width; i++) {// width
-                                    for (int j = 0; j < height; j++) {// height
-                                        bitmap.setPixel(i, j, bm.get(i, j) ? Color.BLACK : Color.WHITE);
+                                int width = (int) imageView.getWidth();
+                                int height = (int) imageView.getWidth() / 4;
+                                bitMatrix = writer.encode(finaldata, BarcodeFormat.CODE_128, width, height);
+                                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                                if (bitmap != null) {
+                                    for (int i = 0; i < width; i++) {// width
+                                        for (int j = 0; j < height; j++) {// height
+                                            bitmap.setPixel(i, j, bitMatrix.get(i, j) ? Color.BLACK : Color.WHITE);
+                                        }
                                     }
+                                    imageView.setImageBitmap(bitmap);
+                                    barcodeTextView.setText(finaldata);
                                 }
-                                imageView.setImageBitmap(bitmap);
-                                barcodeTextView.setText(finaldata);
+                            } catch (WriterException e) {
+                                e.printStackTrace();
                             }
-                        } catch (WriterException e) {
-                            e.printStackTrace();
                         }
-                    }
-                });
+                    });
+                }
 
 
             }
@@ -127,7 +118,7 @@ public class GoodsCartListActivity extends Activity
     }
     public static void updateSubTotalValue()
     {
-        mSubToalTextView.setText("$"+GoodsCardRecordData.getSubTotal());
+        mSubToalTextView.setText("$"+GoodsCartRecordData.getSubTotal());
     }
 //    public static void addSubtotalValue(double value)
 //    {
@@ -139,9 +130,15 @@ public class GoodsCartListActivity extends Activity
 //        double total = Double.parseDouble(mSubToalTextView.getText().toString().replace("$", ""));
 //        mSubToalTextView.setText("$"+(total-value));
 //    }
+    public static void addItem(BaseItemData item, boolean bAllowRepeat)
+    {
+        GoodsCartRecordData.addGoodsItem(item, bAllowRepeat);
+        mRecyclerViewerAdapter.notifyDataSetChanged();
+    }
+
     public static void removeItem(BaseItemData item)
     {
-        GoodsCardRecordData.removeGoodsItem(item);
+        GoodsCartRecordData.removeGoodsItem(item);
         mRecyclerViewerAdapter.notifyDataSetChanged();
     }
     public void queryGoodsRecord()
@@ -149,7 +146,7 @@ public class GoodsCartListActivity extends Activity
         GoodsCartListActivity.updateSubTotalValue();
         mRecyclerViewerAdapter = new GoodsCartListRecyclerViewAdapter(
                 this,
-                GoodsCardRecordData.getAllGoodsItem()
+                GoodsCartRecordData.getAllGoodsItem()
         );
         mRecyclerViewerAdapter.notifyDataSetChanged();
         // Inflate the layout for this fragment
@@ -178,5 +175,13 @@ public class GoodsCartListActivity extends Activity
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ActivityRequestCodeConstant.GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER)
             finish();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (mBSubmit)
+            GoodsCartRecordData.clearGoodsItem();
+        super.onBackPressed();
     }
 }

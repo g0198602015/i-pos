@@ -9,6 +9,10 @@
     <string name="button_ok">OK</string>
     <string name="message_exit">Exit i-so pos</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_order">Order</string>
+    <string name="button_shipment">Shipment</string>
+    <string name="button_inventory">Inventory</string>
+    <string name="button_record">Record</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

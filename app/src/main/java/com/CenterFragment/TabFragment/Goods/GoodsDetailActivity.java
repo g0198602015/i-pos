@@ -220,10 +220,10 @@ public class GoodsDetailActivity extends Activity {
         });
 
         mGoodsCartCountTextView = (TextView)view.findViewById(R.id.goods_detail_goodsCartCount_textivew);
-        mGoodsCartCountTextView.setText("(" + GoodsCardRecordData.getGoodsItemSize() + ")");
+        mGoodsCartCountTextView.setText("(" + GoodsCartRecordData.getGoodsItemSize() + ")");
 
         mGoodsCartSubtotalTextView = (TextView)view.findViewById(R.id.goods_detail_goodssubtotal_textivew);
-        mGoodsCartSubtotalTextView.setText("$" + GoodsCardRecordData.getSubTotal());
+        mGoodsCartSubtotalTextView.setText("$" + GoodsCartRecordData.getSubTotal());
 
         //製作購物車的動畫
         TextView addGoodsTextView =  (TextView)view.findViewById(R.id.goods_detial_addgoods_textview);
@@ -242,18 +242,18 @@ public class GoodsDetailActivity extends Activity {
                         goodItemData.setCount(Integer.parseInt(countEditText.getText().toString()));
                         //goodItemData.setPrice(Double.parseDouble(priceTextView.getText().toString()));
                         goodsIconImageView.startAnimation(animationSet);
-                        GoodsCardRecordData.addGoodsItem(goodItemData);
+                        GoodsCartRecordData.addGoodsItem(goodItemData, false);
                     } else if (mType == 1) {
-                        GoodsItemData goodsItem = (GoodsItemData) GoodsCardRecordData.contains(mItem.getSerialIndex());
+                        GoodsItemData goodsItem = (GoodsItemData) GoodsCartRecordData.contains(mItem.getSerialIndex());
                         goodsItem.setCount(Integer.parseInt(countEditText.getText().toString()));
                         //goodsItem.setPrice(Double.parseDouble(priceTextView.getText().toString()));
                         goodsIconImageView.startAnimation(animationSet);
 
                     }
                     mGoodsCartCountTextView.setTextColor(getResources().getColor(R.color.red));
-                    mGoodsCartCountTextView.setText("(" + GoodsCardRecordData.getGoodsItemSize() + ")" );
+                    mGoodsCartCountTextView.setText("(" + GoodsCartRecordData.getGoodsItemSize() + ")" );
                     mGoodsCartSubtotalTextView.setTextColor(getResources().getColor(R.color.red));
-                    mGoodsCartSubtotalTextView.setText("$" + GoodsCardRecordData.getSubTotal());
+                    mGoodsCartSubtotalTextView.setText("$" + GoodsCartRecordData.getSubTotal());
                 } catch (Exception ex) {
 
                 }

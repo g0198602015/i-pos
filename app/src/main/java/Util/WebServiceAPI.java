@@ -2,7 +2,7 @@ package Util;
 
 import model.GoodsItemData;
 
-import com.CenterFragment.TabFragment.Goods.GoodsItemRecordsData;
+import com.CenterFragment.TabFragment.Goods.GoodsItemAllData;
 import com.LeftFragement.BaseItemData;
 
 import org.ksoap2.SoapEnvelope;
@@ -561,10 +561,10 @@ public class WebServiceAPI
                 boolean bExistMainClassName = false;
                 String newItemMainClassName = newGoodsItemData.getMainClassName();
                 newGoodsItemData.setIconResourceID(R.drawable.hairdresser);
-                int childSize = GoodsItemRecordsData.getChildSize();
+                int childSize = GoodsItemAllData.getChildSize();
                 for (int childIndex = 0 ; childIndex < childSize ; childIndex++)
                 {
-                    GoodsItemData childItem = (GoodsItemData)GoodsItemRecordsData.getChild(childIndex);
+                    GoodsItemData childItem = (GoodsItemData)GoodsItemAllData.getChild(childIndex);
                     if (childItem.getClassification() && childItem.getmClassificationName().compareToIgnoreCase(newItemMainClassName) == 0)
                     {
 
@@ -576,8 +576,8 @@ public class WebServiceAPI
                 if (!bExistMainClassName)
                 {
                     BaseItemData item = new GoodsItemData(newItemMainClassName, ++serialIndex);
-                    item.setParent(GoodsItemRecordsData.getGoodsItemRecordsData());
-                    GoodsItemRecordsData.addChild((GoodsItemData)item);
+                    item.setParent(GoodsItemAllData.getGoodsItemRecordsData());
+                    GoodsItemAllData.addChild((GoodsItemData)item);
 
                     newGoodsItemData.setParent(item);
                     item.addChild(newGoodsItemData);

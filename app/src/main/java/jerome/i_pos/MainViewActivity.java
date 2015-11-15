@@ -11,6 +11,7 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,36 +40,14 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
 //        mProgressBar.setVisibility(View.GONE);
         mProgressTextView = (TextView)view.findViewById(R.id.textView3);
 //        mProgressTextView.setVisibility(View.GONE);
-        ImageButton orderImageButton = (ImageButton)view.findViewById(R.id.orderImageButton);
-        ImageButton shippmentImageButton = (ImageButton)view.findViewById(R.id.shippmentImageButton);
-        ImageButton inventoryImageButton = (ImageButton)view.findViewById(R.id.inventoryImageButton);
-        ImageButton recordImageButton = (ImageButton)view.findViewById(R.id.recordImageButton);
-//        orderImageButton.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent motionEvent) {
-//
-//                new Thread()
-//                {
-//                    @Override
-//                    public void run() {
-//                        try {
-////                    Util.WebServiceAPI.SaveConsumeSetting2();
-////                            Util.WebServiceAPI.GetProducts(WebServiceAPI.mBranchID, WebServiceAPI.mTokenID);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        } finally {
-//                        }
-//                    }
-//                }.start(); //開始執行執行緒
-////                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-////                    Toast.makeText(mContext, "讀取產品資料中...", Toast.LENGTH_LONG).show();
-////                }
-//                return false;
-//            }
-//        });
+        Button orderImageButton = (Button)view.findViewById(R.id.orderImageButton);
+//        Button shippmentImageButton = (Button)view.findViewById(R.id.shippmentImageButton);
+        Button inventoryImageButton = (Button)view.findViewById(R.id.inventoryImageButton);
+        Button recordImageButton = (Button)view.findViewById(R.id.recordImageButton);
         orderImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                mProgressTextView.setVisibility(View.VISIBLE);
+                mProgressTextView.setText("讀取產品資料中...");
 //
                 if (Util.WebServiceAPI.mBGettingProductsFinish == false) {
                     new Thread() {
@@ -80,24 +59,18 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                 }
                 else
                     startMainActivity();
+            }
+        });
+//        shippmentImageButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
 //                Intent intent = new Intent();
 //                intent.setClass(mContext, MainActivity.class);
 //                Bundle bundle = new Bundle();
-//                bundle.putInt("Type", 0);
+//                bundle.putInt("Type", 1);
 //                intent.putExtras(bundle);
 //                startActivityForResult(intent, ActivityRequestConstants.MAIN_ACTVITIY);
-            }
-        });
-        shippmentImageButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, MainActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("Type", 1);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, ActivityRequestConstants.MAIN_ACTVITIY);
-            }
-        });
+//            }
+//        });
         inventoryImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //do something
@@ -170,7 +143,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         runOnUiThread(new Runnable() {
                           @Override
                           public void run() {
-                              mProgressTextView.setVisibility(View.VISIBLE);
+
                               mProgressTextView.setText("讀取產品資料中..." + progress + "/" + max);
                               mProgressBar.setVisibility(View.VISIBLE);
                               mProgressBar.setProgress(progress);

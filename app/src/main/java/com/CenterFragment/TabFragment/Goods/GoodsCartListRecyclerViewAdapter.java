@@ -5,7 +5,9 @@ package com.CenterFragment.TabFragment.Goods;
  */
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.LeftFragement.BaseItemData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import jerome.i_pos.R;
 import model.ActivityRequestCodeConstant;
@@ -49,7 +54,7 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
 
     @Override
     public void onBindViewHolder(NormalTextViewHolder holder, int position) {
-        GoodsItemData appInfo = (GoodsItemData)GoodsCardRecordData.getGoodsItem(position);
+        GoodsItemData appInfo = (GoodsItemData)GoodsCartRecordData.getGoodsItem(position);
         if (appInfo != null)
         {
             holder.goodsItemData = appInfo;
@@ -67,7 +72,7 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
     @Override
     public int getItemCount()
     {
-        return GoodsCardRecordData.getGoodsItemSize();
+        return GoodsCartRecordData.getGoodsItemSize();
     }
 
     public static class NormalTextViewHolder extends RecyclerView.ViewHolder {
@@ -80,8 +85,13 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
         TextView subTotalTextView;
         TextView priceTextView;
         GoodsItemData goodsItemData;
+        List<String> mClickItems;
         NormalTextViewHolder(View view) {
             super(view);
+            mClickItems = new ArrayList<>();
+            mClickItems.add("修改數量");
+            mClickItems.add("拆單");
+            mClickItems.add("贈送一個");
             itemImage = (ImageView)view.findViewById(R.id.ItemImage);
             itemName = (TextView)view.findViewById(R.id.ItemName);
 //            itemInfo = (TextView)view.findViewById(R.id.ItemInfo);
@@ -126,14 +136,47 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
                     if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                         if (padding < 3) //click
                         {
-                            if (GoodsCardRecordData.contains(goodsItemData.getSerialIndex()) != null) {
-                                Intent intent = new Intent();
-                                intent.setClass(((Activity) mContext), GoodsDetailActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putInt(BundleConstant.TYPE, 1);
-                                bundle.putSerializable("ListViewData", goodsItemData);
-                                intent.putExtras(bundle);
-                                ((Activity) mContext).startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER);
+                            if (GoodsCartRecordData.contains(goodsItemData.getSerialIndex()) != null)
+                            {
+                                new AlertDialog.Builder(mContext).setItems(mClickItems.toArray(new String[mClickItems.size()]), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        if (which == 0) //修改數量
+                                        {
+                                            Intent intent = new Intent();
+                                            intent.setClass(((Activity) mContext), GoodsDetailActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt(BundleConstant.TYPE, 1);
+                                            bundle.putSerializable("ListViewData", goodsItemData);
+                                            intent.putExtras(bundle);
+                                            ((Activity) mContext).startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER);
+                                        }
+                                        else if (which == 1) //拆單
+                                        {
+                                            int count = Integer.parseInt(countTextView.getText().toString());
+                                            if (count > 1) // 數量大於兩個才可以拆單
+                                            {
+                                                //Org
+                                                GoodsItemData newGoodsItemData = (GoodsItemData)goodsItemData.clone();
+                                                goodsItemData.setCount( goodsItemData.getCount() - 1);
+                                                newGoodsItemData.setCount(1);
+                                                GoodsCartListActivity.addItem(newGoodsItemData, true);
+                                            }
+
+                                        }
+                                        else if (which == 2) //贈送一個
+                                        {
+                                            GoodsItemData newGoodsItemData = (GoodsItemData)goodsItemData.clone();
+                                            newGoodsItemData.setCount(1);
+                                            newGoodsItemData.setPrice(0);
+                                            GoodsCartListActivity.addItem(newGoodsItemData, true);
+                                        }
+
+                                    }
+                                })
+                                .show();
+
                             }
                         }
                         padding = 0;

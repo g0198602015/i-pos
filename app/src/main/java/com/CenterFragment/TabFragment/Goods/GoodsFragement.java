@@ -74,7 +74,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
             super.onResume();
             Log.i("i-pos", getTitle()+" "+"onResume()............");
 
-            if (GoodsItemRecordsData.getChildSize() == 0)
+            if (GoodsItemAllData.getChildSize() == 0)
             {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
@@ -127,7 +127,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     {
         if (mListViewItems == null)
         {
-            mListViewItems =  GoodsItemRecordsData.getGoodsItemRecordsData();
+            mListViewItems =  GoodsItemAllData.getGoodsItemRecordsData();
 //            mListViewItems =parseData();
         }
         mCallback.onListViewDataChanged(mListViewItems);
@@ -171,10 +171,10 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
         GoodsItemData goodsItemData = (GoodsItemData) mGoodsListViewAdapter.getItem(position);
-        if (GoodsCardRecordData.contains(goodsItemData.getSerialIndex()) != null)
+        if (GoodsCartRecordData.contains(goodsItemData.getSerialIndex()) != null)
         {
 
-            GoodsCardRecordData.addGoodsItem(goodsItemData);
+            GoodsCartRecordData.addGoodsItem(goodsItemData, false);
             //final ImageView goodsIconImageView = (ImageView)view.findViewById(R.id.goods_detail_goods_icon);
             int width = mView.getWidth();
             int[] goodsImageViewlocation = new int[2];
