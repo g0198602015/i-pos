@@ -1,4 +1,4 @@
-package com.CenterFragment.TabFragment.Goods;
+package model;
 
 import com.LeftFragement.BaseItemData;
 

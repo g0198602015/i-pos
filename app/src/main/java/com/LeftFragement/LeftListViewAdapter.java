@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import jerome.i_pos.R;
+import i_so.pos.R;
 
 /**
  * Created by Jerome on 2015/9/3.
@@ -71,92 +71,16 @@ public class LeftListViewAdapter extends BaseAdapter
         {
             rootLinearLayout.setBackgroundResource(R.color.leftfragment_item_others);
         }
-//        rootLinearLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                 int position = (int)v.getTag();
-//                 for (int index = 0 ; index < mDatas.getChildSize() ; index++) {
-//                     if (position == 0)
-//                         mDatas.getChild(index).setVisible(true);
-//                     else if (index == (position - 1))
-//                         mDatas.getChild(index).setVisible(true);
-//                     else
-//                         mDatas.getChild(index).setVisible(false);
-//                 }
-//                 mCallback.onListViewClickChanged();
-//            }
-//        });
-//        rootLinearLayout.setTag(position);
-//        ImageView imageView = (ImageView) containView.findViewById(R.id.leftFragmentListViewItemImageView);
-//        final CheckBox checkBox = (CheckBox) containView.findViewById(R.id.leftFragmentListViewItemCheckBox);
         TextView textView = (TextView) containView.findViewById(R.id.left_fragment_classifcationName);
-//      Version 1 <可以有多個分類>
-//        if (mDatas.getParent() != null )
-//        {
-//            if (position == 0 )
-//            {
-//                imageView.setImageResource(R.drawable.go_top);
-//                imageView.setVisibility(View.VISIBLE);
-//                checkBox.setVisibility(View.GONE);
-//                textView.setText(mDatas.getTitle());
-//            }
-//            else {
-//                int index = position -1;
-//                imageView.setImageResource(R.drawable.go_bottom);
-//                imageView.setVisibility(View.GONE);
-//                checkBox.setVisibility(View.VISIBLE);
-//                checkBox.setChecked( mDatas.getChild(index).getVisible());
-//                checkBox.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        int position = (int)v.getTag();
-//                        mDatas.getChild(position).setVisible(checkBox.isChecked());
-//                        mCallback.onListViewClickChanged();
-//                    }
-//                });
-//                checkBox.setTag(index);
-//                textView.setText(mDatas.getChild(index).getTitle());
-//
-//            }
-//        }
-//        else if (mDatas.getParent() == null)
-//        {
-//            imageView.setImageResource(R.drawable.go_bottom);
-//            imageView.setVisibility(View.VISIBLE);
-//            checkBox.setVisibility(View.GONE);
-//            textView.setText(mDatas.getChild(position).getTitle());
-//
-//        }
-
-
         if (mDatas.getParent() == null)
         {
-//            imageView.setVisibility(View.VISIBLE);
-//            checkBox.setVisibility(View.GONE);
 
             if (position == 0 )
             {
-//                imageView.setImageResource(R.drawable.go_top);
                 textView.setText(mDatas.getTitle());
             }
             else {
-//                int index = position -1;
-//                imageView.setImageResource(R.drawable.go_bottom);
                 textView.setText(" "+mDatas.getChild(position - 1).getTitle());
-//                imageView.setVisibility(View.GONE);
-//                checkBox.setVisibility(View.VISIBLE);
-//                checkBox.setChecked( mDatas.getChild(index).getVisible());
-//                checkBox.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        int position = (int)v.getTag();
-//                        mDatas.getChild(position).setVisible(checkBox.isChecked());
-//                        mCallback.onListViewClickChanged();
-//                    }
-//                });
-//                checkBox.setTag(index);
-
-
 
             }
 

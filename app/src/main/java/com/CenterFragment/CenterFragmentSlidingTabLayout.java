@@ -36,7 +36,7 @@ package com.CenterFragment;
         import android.widget.LinearLayout;
         import android.widget.TextView;
 
-        import jerome.i_pos.R;
+        import i_so.pos.R;
 
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to

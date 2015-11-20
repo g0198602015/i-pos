@@ -1,14 +1,11 @@
 package com.CenterFragment.TabFragment.Goods;
 
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,8 +23,10 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 import Util.WebServiceAPI;
-import jerome.i_pos.R;
+import i_so.pos.R;
 import model.ActivityRequestCodeConstant;
+import model.GoodsCartRecordData;
+import model.UserConnectionData;
 
 /**
  * Created by Jerome on 2015/10/5.
@@ -39,7 +38,7 @@ public class GoodsCartListActivity extends Activity
     private View mMainView = null;
     private static TextView mSubToalTextView = null;
     private Context mContext = null;
-    private boolean mBSubmit = false;
+    public static boolean mBSubmit = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +66,7 @@ public class GoodsCartListActivity extends Activity
                     ((Activity) mContext).runOnUiThread(new Runnable() {
                         public void run() {
                             try {
-                                String res = WebServiceAPI.SaveConsumeSetting2(WebServiceAPI.mBranchID, WebServiceAPI.mEmployeeID, WebServiceAPI.mTokenID, GoodsCartRecordData.getAllGoodsItem());
+                                String res = WebServiceAPI.SaveConsumeSetting2(UserConnectionData.getCloudService(), UserConnectionData.getBranchID(), UserConnectionData.getEmployeeID(), UserConnectionData.getTokenID(), GoodsCartRecordData.getAllGoodsItem());
                                 String[] res2 = res.split(",");
                                 String barcode = "";
                                 if (res.length() > 1)
@@ -180,8 +179,10 @@ public class GoodsCartListActivity extends Activity
     @Override
     public void onBackPressed()
     {
-        if (mBSubmit)
+        if (mBSubmit) {
             GoodsCartRecordData.clearGoodsItem();
+            mBSubmit = false;
+        }
         super.onBackPressed();
     }
 }

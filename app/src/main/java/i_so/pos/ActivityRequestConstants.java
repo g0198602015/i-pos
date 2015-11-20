@@ -1,4 +1,4 @@
-package jerome.i_pos;
+package i_so.pos;
 
 /**
  * Created by Jerome on 2015/9/12.

@@ -2,7 +2,7 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="jerome.i_pos" >
+    package="i_so.pos" >
 
     <application
         tools:replace="android:icon,android:theme"
@@ -15,7 +15,7 @@
             android:label="i-so POS" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.HOME"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

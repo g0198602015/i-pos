@@ -1,4 +1,4 @@
-package jerome.i_pos;
+package i_so.pos;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.CenterFragment.TabFragment.BaseFragment;
+import com.CenterFragment.BaseFragment;
 import com.CenterFragment.TabFragment.Goods.GoodsDetailActivity;
-import com.CenterFragment.TabFragment.Goods.GoodsItemAllData;
+import model.GoodsItemAllData;
 import com.LeftFragement.LeftFragment;
 import com.LeftFragement.BaseItemData;
 import com.RightFragment.RightFragment;
@@ -16,8 +16,6 @@ import com.CenterFragment.SlidingMenu;
 import com.CenterFragment.CenterFragmenet;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
-import java.util.ArrayList;
 
 import model.ActivityRequestCodeConstant;
 import model.BundleConstant;
@@ -131,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
                 {
                     ShowGoodsDetailActivity(resultItemData);
                 }
-//                mCenterFragmenet.updateFragmentData("", result);
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.CenterFragment.TabFragment;
+package com.CenterFragment;
 
 import android.support.v4.app.Fragment;
 

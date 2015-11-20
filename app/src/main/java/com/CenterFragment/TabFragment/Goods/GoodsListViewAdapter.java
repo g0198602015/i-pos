@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.LeftFragement.BaseItemData;
 
-import jerome.i_pos.R;
+import i_so.pos.R;
 import model.GoodsItemData;
 
 public class GoodsListViewAdapter extends BaseAdapter

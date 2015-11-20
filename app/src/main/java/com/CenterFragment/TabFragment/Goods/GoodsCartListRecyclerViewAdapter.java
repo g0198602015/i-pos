@@ -24,9 +24,10 @@ import com.LeftFragement.BaseItemData;
 import java.util.ArrayList;
 import java.util.List;
 
-import jerome.i_pos.R;
+import i_so.pos.R;
 import model.ActivityRequestCodeConstant;
 import model.BundleConstant;
+import model.GoodsCartRecordData;
 import model.GoodsItemData;
 
 public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<GoodsCartListRecyclerViewAdapter.NormalTextViewHolder> {
@@ -54,7 +55,7 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
 
     @Override
     public void onBindViewHolder(NormalTextViewHolder holder, int position) {
-        GoodsItemData appInfo = (GoodsItemData)GoodsCartRecordData.getGoodsItem(position);
+        GoodsItemData appInfo = (GoodsItemData) GoodsCartRecordData.getGoodsItem(position);
         if (appInfo != null)
         {
             holder.goodsItemData = appInfo;
@@ -121,6 +122,8 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
                 private View viewHolder;
                 private int width;
                 public boolean onTouch(View v, MotionEvent event) {
+                    if (GoodsCartListActivity.mBSubmit)
+                        return true;
                     width = v.getWidth();
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         padding = 0;
@@ -136,6 +139,7 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
                     if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
                         if (padding < 3) //click
                         {
+
                             if (GoodsCartRecordData.contains(goodsItemData.getSerialIndex()) != null)
                             {
                                 new AlertDialog.Builder(mContext).setItems(mClickItems.toArray(new String[mClickItems.size()]), new DialogInterface.OnClickListener() {

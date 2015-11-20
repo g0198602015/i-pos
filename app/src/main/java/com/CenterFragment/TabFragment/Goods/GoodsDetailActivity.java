@@ -19,16 +19,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.LeftFragement.BaseItemData;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import jerome.i_pos.R;
+import i_so.pos.R;
 import model.ActivityRequestCodeConstant;
 import model.BundleConstant;
+import model.GoodsCartRecordData;
 import model.GoodsItemData;
 
 public class GoodsDetailActivity extends Activity {

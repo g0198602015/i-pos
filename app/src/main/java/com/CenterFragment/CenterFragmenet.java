@@ -22,19 +22,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.CenterFragment.TabFragment.BaseFragment;
 import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
 import com.CenterFragment.TabFragment.Goods.GoodsFragement;
-import com.CenterFragment.TabFragment.Shippment.ShippmentFragement;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.tools.ImageUtility;
+import Util.ImageUtility;
 
 import java.util.LinkedList;
 
-import jerome.i_pos.ActivityRequestConstants;
-import jerome.i_pos.MainActivity;
-import jerome.i_pos.R;
+import i_so.pos.ActivityRequestConstants;
+import i_so.pos.MainActivity;
+import i_so.pos.R;
 
 /**
  * Created by Jerome on 2015/8/8.
@@ -47,7 +44,6 @@ public class CenterFragmenet extends BaseFragment
     private FragmentPagerAdapter adapter;
     private String[] titles = {"加入品項", "進貨", "盤點", "紀錄"};
     private GoodsFragement mGoodsFragment = null;
-    private ShippmentFragement mShippmentFragment = null;
     private BaseFragment mBaseFragment = null;
 
     public static CenterFragmenet newInstance()
@@ -134,11 +130,7 @@ public class CenterFragmenet extends BaseFragment
             mBaseFragment = mGoodsFragment;
             //fragments.add(mGoodsFragment);
         }
-        else if (type ==1 )
-        {
-            mShippmentFragment = ShippmentFragement.newInstance();
-            mBaseFragment = mShippmentFragment;
-        }
+
         fragments.add(mBaseFragment);
 //        fragments.add(GoodsFragement.newInstance("進貨", indicatorColor, dividerColor, ImageUtility.createBitmap(getActivity(), R.drawable.shipment, 50, 50)));
 //        fragments.add(GoodsFragement.newInstance("盤點", indicatorColor, dividerColor, ImageUtility.createBitmap(getActivity(), R.drawable.inventory, 50, 50)));

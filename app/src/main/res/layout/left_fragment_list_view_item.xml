@@ -8,9 +8,7 @@
         android:id="@+id/left_fragment_listview_root_linearlayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/left_fragment_classifcationName"
@@ -21,9 +19,9 @@
             android:layout_marginLeft="5.0dip"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:gravity="center_vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
 
     </LinearLayout>
 </LinearLayout>

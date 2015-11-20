@@ -1,4 +1,4 @@
-package jerome.i_pos;
+package i_so.pos;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +21,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 
 import Util.WebServiceAPI;
+import model.GoodsItemAllData;
+import model.GoodsItemData;
+import model.UserConnectionData;
 
 public class MainViewActivity extends Activity implements WebServiceAPI.OnProductDataReceivedListener {
 
@@ -27,6 +45,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
     private Context mContext;
     private int myProgress = 0;
     private TextView mProgressTextView;
+    private String mUserConnectionDataXMLPath = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +54,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         View view = inflater.inflate(R.layout.main_view, null);
 
         mContext = this;
+        mUserConnectionDataXMLPath = getCacheDir() + "userConnectionData.txt";
         Util.WebServiceAPI.addProductDataReceivedListener(this);
         mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
 //        mProgressBar.setVisibility(View.GONE);
@@ -53,7 +73,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                     new Thread() {
                         @Override
                         public void run() {
-                            Util.WebServiceAPI.GetProducts(WebServiceAPI.mBranchID, WebServiceAPI.mTokenID);
+                            Util.WebServiceAPI.GetProducts(UserConnectionData.getCloudService(), UserConnectionData.getBranchID(), UserConnectionData.getTokenID());
                         }
                     }.start(); //開始執行執行緒
                 }
@@ -71,6 +91,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
 //                startActivityForResult(intent, ActivityRequestConstants.MAIN_ACTVITIY);
 //            }
 //        });
+
         inventoryImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //do something
@@ -84,15 +105,61 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                 startActivity(intent);
             }
         });
+        //UserConnectionData.CreateInstance("http://zoom-world.tw/WuchDemo/CloudService.asmx",  "64860217");
+        //setContentView(view);
+        if (!getUserConnectionData())
+        {
 
+            startScanQRCodeActivity();
+
+        }
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                startScanQRCodeActivity();
+                return false;
+            }
+        });
         setContentView(view);
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IntentIntegrator.REQUEST_CODE && data != null)
+        {
+            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            String text = "";
+            if (scanResult != null)
+            {
+                String base64 = scanResult.getContents();
+                byte[] decodeBytes = Base64.decode(base64, Base64.DEFAULT);
+                int length = decodeBytes.length / 2;
+                byte[] decodeBytes2 = new byte[length];
+                for (int index = 0 ;index < length ; index++ )
+                {
+                    decodeBytes2[index] = decodeBytes[index*2];
+                }
+                try {
+                    text = new String(decodeBytes2, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+            text  = text + "";
+            String[] token = text.split("\n");
+            if (token.length == 3)
+            {
+                String loginAspx = token[0];
+                String cloudService = token[1];
+                String tokenID = token[2];
+                saveUserConnectionData(loginAspx, cloudService, tokenID);
+            }
+            text = text;
+        }
     }
     public void enableNetwork()
     {
@@ -165,4 +232,50 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         intent.putExtras(bundle);
         startActivityForResult(intent, ActivityRequestConstants.MAIN_ACTVITIY);
     }
+
+    private boolean getUserConnectionData()
+    {
+        try
+        {
+            File file = new File(mUserConnectionDataXMLPath);
+            if (file.exists())
+            {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String loginAspx = br.readLine();
+                String cloudService = br.readLine();
+                String tokenID = br.readLine();
+                br.close();
+                UserConnectionData.CreateInstance(cloudService,  tokenID);
+                return true;
+            }
+        }
+        catch (IOException e) {
+        }
+        return false;
+    }
+    private void saveUserConnectionData(String loginAspx, String cloudService,  String tokenID)
+    {
+        try
+        {
+            File file;
+            FileOutputStream outputStream;
+            file = new File(mUserConnectionDataXMLPath);
+            Writer writer =  new BufferedWriter(new FileWriter(file));
+            writer.write(loginAspx+"\r\n");
+            writer.write(cloudService+"\r\n");
+            writer.write(tokenID+"\r\n");
+            writer.close();
+            getUserConnectionData();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startScanQRCodeActivity()
+    {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
+    }
+
 }

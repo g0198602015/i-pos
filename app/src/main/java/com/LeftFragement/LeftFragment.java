@@ -24,8 +24,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import jerome.i_pos.MainActivity;
-import jerome.i_pos.R;
+import i_so.pos.MainActivity;
+import i_so.pos.R;
 
 
 public class LeftFragment extends Fragment

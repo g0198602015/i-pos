@@ -20,7 +20,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import jerome.i_pos.R;
+import i_so.pos.R;
 
 public class RightFragment extends Fragment {
 

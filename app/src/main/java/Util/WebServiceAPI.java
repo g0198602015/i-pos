@@ -2,7 +2,7 @@ package Util;
 
 import model.GoodsItemData;
 
-import com.CenterFragment.TabFragment.Goods.GoodsItemAllData;
+import model.GoodsItemAllData;
 import com.LeftFragement.BaseItemData;
 
 import org.ksoap2.SoapEnvelope;
@@ -14,7 +14,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import java.util.ArrayList;
 import java.util.List;
 
-import jerome.i_pos.R;
+import i_so.pos.R;
 
 /**
  * Created by Jerome on 2015/10/12.
@@ -44,19 +44,15 @@ public class WebServiceAPI
 
     private static final String NAMESPACE = "http://tempuri.org/"; //Web Services命名空間
 
-    private static final String URL = "http://zoom-world.tw/WuchDemo/CloudService.asmx"; //Web Services的網址
-
-
-    public static int mBranchID = 1;
-    public static String mTokenID = "64860217";
-    public static int mEmployeeID = 0;
+    //private static final String URL = "http://zoom-world.tw/WuchDemo/CloudService.asmx"; //Web Services的網址
+    
     public WebServiceAPI()
     {
 
     }
 
 
-    public static String SaveConsumeSetting2(int branchID, int employeeID, String token, BaseItemData goodsCartData)
+    public static String SaveConsumeSetting2(String url, int branchID, int employeeID, String token, BaseItemData goodsCartData)
     {
         String methodName = "SaveConsumeSetting2";
         String soapAction = NAMESPACE+methodName;
@@ -70,7 +66,7 @@ public class WebServiceAPI
             MarshalDouble md = new MarshalDouble();
             md.register(envelope);
             //Web method call
-            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL, 30000);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(url, 30000);
             envelope.dotNet = true;
             request1.addProperty("BranchID", branchID);
             request1.addProperty("EmployeeID", employeeID);
@@ -166,7 +162,7 @@ public class WebServiceAPI
             return "";
         }
     }
-    public static void GetEmployee()
+    public static void GetEmployee(String url)
     {
         String methodName = "GetEmployee";
         String soapAction = NAMESPACE+methodName;
@@ -179,7 +175,7 @@ public class WebServiceAPI
             envelope.setOutputSoapObject(request1);
 
             //Web method call
-            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL, 30000);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(url, 30000);
             envelope.dotNet = true;
             request1.addProperty("EmID",0);
             request1.addProperty("token","64860217");
@@ -193,7 +189,7 @@ public class WebServiceAPI
             String message= e.toString();
         }
     }
-    public static void GetStoresName()
+    public static void GetStoresName(String url)
     {
         String methodName = "GetStoreName";
         String soapAction = NAMESPACE+methodName;
@@ -206,7 +202,7 @@ public class WebServiceAPI
             envelope.setOutputSoapObject(request1);
 
             //Web method call
-            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(url);
             androidHttpTransport.debug = true;
             androidHttpTransport.call(soapAction, envelope);
 
@@ -224,7 +220,7 @@ public class WebServiceAPI
     public static boolean mBGettingProducts = false;
     public static boolean mBTest= false;
     public static int mRecallTime = 0;
-    public static void GetProducts(int branchID, String tokenID)
+    public static void GetProducts(String url, int branchID, String tokenID)
     {
         if (mBGettingProducts && mRecallTime >= 2 )
             return;
@@ -250,7 +246,7 @@ public class WebServiceAPI
 
             //Web method call
 
-            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL, 30000);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(url, 30000);
 
             androidHttpTransport.debug = true;
 
@@ -261,9 +257,9 @@ public class WebServiceAPI
             int productCount = result.getPropertyCount();
             if (productCount == 0 && mRecallTime<=2)
             {
-                GetBranch(branchID, tokenID);
+                GetBranch(url, branchID, tokenID);
                 mRecallTime++;
-                GetProducts(branchID, tokenID);
+                GetProducts(url, branchID, tokenID);
             }
             for(int productIndex = 0; productIndex<productCount; productIndex++)
             {
@@ -607,7 +603,7 @@ public class WebServiceAPI
         mBGettingProducts = false;
 
     }
-    public static void GetBranch(int branchID, String tokenID)
+    public static void GetBranch(String url, int branchID, String tokenID)
     {
 
         int serialIndex = 0;
@@ -625,7 +621,7 @@ public class WebServiceAPI
             request1.addProperty("token", tokenID);
             envelope.setOutputSoapObject(request1);
             //Web method call
-            HttpTransportSE androidHttpTransport = new HttpTransportSE(URL, 30000);
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(url, 30000);
             androidHttpTransport.debug = true;
             androidHttpTransport.call(soapAction, envelope);
             SoapObject result= (SoapObject)envelope.getResponse();

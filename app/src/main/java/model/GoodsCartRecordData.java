@@ -1,8 +1,6 @@
-package com.CenterFragment.TabFragment.Goods;
+package model;
 
 import com.LeftFragement.BaseItemData;
-
-import model.GoodsItemData;
 
 /**
  * Created by Jerome on 2015/10/17.

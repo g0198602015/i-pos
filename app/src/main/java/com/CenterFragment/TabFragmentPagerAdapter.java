@@ -3,8 +3,6 @@ package com.CenterFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.CenterFragment.TabFragment.BaseFragment;
-
 import java.util.LinkedList;
 
 /**
