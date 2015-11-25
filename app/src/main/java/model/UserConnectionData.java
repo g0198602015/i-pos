@@ -1,9 +1,6 @@
 package model;
 
 import org.w3c.dom.Document;
-
-import XMLUtiltiy.DOMDocument;
-
 /**
  * Created by Jerome on 2015/11/17.
  */
