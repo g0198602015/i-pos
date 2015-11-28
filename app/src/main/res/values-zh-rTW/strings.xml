@@ -26,11 +26,12 @@
     <string name="goods_detail_subtotal">小計: </string>
     <string name="goods_detail_discount">折數: </string>
     <string name="goods_detail_comment">備註: </string>
-    <!-- TODO: Goods Cart Activtiy -->
+    <!--  Goods Cart Activtiy -->
     <string name="goods_cart_title">營業單</string>
     <string name="goods_cart_subtotal">總價:</string>
     <string name="goods_cart_submit">儲存</string>
-    <!-- TODO: Goods Cart Detail Didalog -->
+    <string name="goods_cart_print">列印</string>
+    <!--  Goods Cart Detail Didalog -->
     <string name="goods_record_detail_service_persion">服務人員</string>
     <string name="goods_record_detail_subtotal">小計: </string>
     <string name="goods_record_detail_price">單價: </string>
@@ -38,7 +39,38 @@
     <string name="goods_record_detail_count">數量: </string>
     <string name="goods_record_detail_addGoods">加入購物車</string>
     <string name="goods_record_detail_modifyGoods">修改</string>
-    <!-- TODO: Goods Cart ListView Item -->
+    <!-- Goods Cart ListView Item -->
     <string name="goods_cart_listview_price">單價:  </string>
     <string name="goods_cart_listview_subtotal">小計: </string>
+    <!-- Menu Item -->
+    <string name="menu_search">搜尋</string>
+    <string name="menu_scan_barcode">掃描條碼</string>
+    <string name="menu_cart">購物車</string>
+
+    <!-- Print Dialog -->
+    <string name="str_message">提示:</string>
+    <string name="str_connlast">是否連接到上次設備?</string>
+    <string name="yesconn">確認連接</string>
+    <string name="str_resel">重新搜索</string>
+    <string name="conn_failed">連接失敗</string>
+    <string name="conn_closed">連接關閉</string>
+    <string name="conn_no">沒有可連接的設備</string>
+    <string name="bt_not_enabled">藍牙沒有啓動</string>
+    <!--  DeviceListActivity -->
+    <string name="scanning">掃描設備中...</string>
+    <string name="select_device">請選擇要連接的設備</string>
+    <string name="none_paired">沒有匹配的設備</string>
+    <string name="has_paired">已配對</string>
+    <string name="not_paired">未配對</string>
+    <string name="rePaire_connect">重新配對並連接</string>
+    <string name="paire_connect">配對並連接</string>
+    <string name="unpair">取消配對</string>
+    <string name="connect_paired">連接</string>
+    <string name="select_options">選擇操作</string>
+    <string name="none_found">沒有找到設備</string>
+    <string name="no_bounded_device">未找到名稱以 %s 開頭的設備</string>
+    <string name="title_paired_devices">已配對的設備</string>
+    <string name="title_other_devices">其它可用設備</string>
+    <string name="button_scan">掃描新設備</string>
+    <string name="button_back">返回</string>
 </resources>

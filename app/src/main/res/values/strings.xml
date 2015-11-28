@@ -29,6 +29,7 @@
     <string name="goods_cart_title">Goods Cart</string>
     <string name="goods_cart_subtotal">Subtotal:</string>
     <string name="goods_cart_submit">Submit</string>
+    <string name="goods_cart_print">Print</string>
     <!-- TODO: Record_detail Didalog -->
     <string name="goods_record_detail_service_persion">Service Persion: </string>
     <string name="goods_record_detail_subtotal">Subtotal: </string>
@@ -40,4 +41,35 @@
     <!-- TODO: Goods Cart ListView Item -->
     <string name="goods_cart_listview_price">Price:  </string>
     <string name="goods_cart_listview_subtotal">Subtotal: </string>
+    <!-- Menu Item -->
+    <string name="menu_search">Search</string>
+    <string name="menu_scan_barcode">Scan Barcode</string>
+    <string name="menu_cart">Cart</string>
+
+    <!-- Print Dialog -->
+    <string name="str_message">tip：</string>
+    <string name="str_connlast">whether connect to last device？</string>
+    <string name="yesconn">connect</string>
+    <string name="str_resel">search again</string>
+    <string name="conn_failed">connection fail</string>
+    <string name="conn_closed">connection closed</string>
+    <string name="conn_no">can not connect</string>
+    <string name="bt_not_enabled">Bluetooth is not available</string>
+    <!--  DeviceListActivity -->
+    <string name="scanning">Scanning for devices...</string>
+    <string name="select_device">Please select a device to connect</string>
+    <string name="none_paired">No devices has been paired</string>
+    <string name="has_paired">paired</string>
+    <string name="not_paired">not paired</string>
+    <string name="rePaire_connect">Re-pair And Connect</string>
+    <string name="unpair">Unpair</string>
+    <string name="paire_connect">Pair And Connect</string>
+    <string name="connect_paired">Connect</string>
+    <string name="select_options">Select Options</string>
+    <string name="none_found">No devices found</string>
+    <string name="no_bounded_device">Don\'t found device which name start with %s</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for new devices</string>
+    <string name="button_back">back</string>
 </resources>

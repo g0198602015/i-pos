@@ -261,6 +261,7 @@ public class WebServiceAPI
                 mRecallTime++;
                 GetProducts(url, branchID, tokenID);
             }
+            int range = productCount/10;
             for(int productIndex = 0; productIndex<productCount; productIndex++)
             {
                 GoodsItemData newGoodsItemData = new GoodsItemData(++serialIndex);
@@ -578,16 +579,21 @@ public class WebServiceAPI
                     newGoodsItemData.setParent(item);
                     item.addChild(newGoodsItemData);
                 }
-                try {
-                    for (int index = 0; index < _OnProductDataReceivedListener.size(); index++) {
-                        _OnProductDataReceivedListener.get(index).onDataReceive(productCount, productIndex);
+                if (productIndex % range == 0 || (productIndex == productCount-1))
+                {
+                    try {
+                        for (int index = 0; index < _OnProductDataReceivedListener.size(); index++)
+                        {
+                            _OnProductDataReceivedListener.get(index).onDataReceive(100, (int)(((double)productIndex/(double)productCount)*100.0));
+                           // _OnProductDataReceivedListener.get(index).onDataReceive(productCount, productIndex);
+                        }
+                        Thread.sleep(100);
+                    } catch (Exception e) {
+
+                        String message = e.toString();
+                        message = message;
+
                     }
-                    Thread.sleep(100);
-                }catch (Exception e){
-
-                    String message= e.toString();
-                    message = message;
-
                 }
 
             }

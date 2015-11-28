@@ -18,14 +18,12 @@ import android.widget.ListView;
 import com.CenterFragment.BaseFragment;
 import com.LeftFragement.BaseItemData;
 
+import i_so.pos.ActivityRequestConstants;
 import i_so.pos.R;
-import model.ActivityRequestCodeConstant;
 import model.BundleConstant;
 import model.GoodsCartRecordData;
 import model.GoodsItemAllData;
 import model.GoodsItemData;
-
-import static java.lang.Thread.sleep;
 
 
 public class GoodsFragement extends BaseFragment implements AbsListView.OnItemClickListener
@@ -240,6 +238,6 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
         bundle.putInt(BundleConstant.TYPE, 0);
         bundle.putSerializable("ListViewData", goodsItemData);
         intent.putExtras(bundle);
-        startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_FRAGMENT);
+        startActivityForResult(intent, ActivityRequestConstants.GOODS_FRAGMENT);
     }
   }

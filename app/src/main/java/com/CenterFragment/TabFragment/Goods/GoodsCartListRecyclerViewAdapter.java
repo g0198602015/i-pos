@@ -24,8 +24,8 @@ import com.LeftFragement.BaseItemData;
 import java.util.ArrayList;
 import java.util.List;
 
+import i_so.pos.ActivityRequestConstants;
 import i_so.pos.R;
-import model.ActivityRequestCodeConstant;
 import model.BundleConstant;
 import model.GoodsCartRecordData;
 import model.GoodsItemData;
@@ -110,7 +110,7 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
                     bundle.putInt(BundleConstant.TYPE, 1);
                     bundle.putSerializable("ListViewData", goodsItemData);
                     intent.putExtras(bundle);
-                    ((Activity) mContext).startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER);
+                    ((Activity) mContext).startActivityForResult(intent, ActivityRequestConstants.GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER);
                 }
             });
             LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.goods_cart_listview_root_linearLayout);
@@ -154,7 +154,7 @@ public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<Goods
                                             bundle.putInt(BundleConstant.TYPE, 1);
                                             bundle.putSerializable("ListViewData", goodsItemData);
                                             intent.putExtras(bundle);
-                                            ((Activity) mContext).startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER);
+                                            ((Activity) mContext).startActivityForResult(intent, ActivityRequestConstants.GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER);
                                         }
                                         else if (which == 1) //拆單
                                         {

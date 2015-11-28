@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_search"
-        android:title="Search"
+        android:title="@string/menu_search"
         android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
     <item
         android:id="@+id/menuScanBarcode"
         android:orderInCategory="300"
-        android:title="Scan Barcode"
+        android:title="@string/menu_scan_barcode"
         android:icon="@drawable/barcode"
         app:showAsAction="always"></item>
     <item
         android:id="@+id/menuGoodsCart"
         android:orderInCategory="300"
-        android:title="Cart"
+        android:title="@string/menu_cart"
         android:icon="@drawable/shopping_cart"
         app:showAsAction="ifRoom"></item>
 </menu>

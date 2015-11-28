@@ -67,7 +67,10 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         orderImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mProgressTextView.setVisibility(View.VISIBLE);
-                mProgressTextView.setText("讀取產品資料中...");
+                if (!getUserConnectionData())
+                    mProgressTextView.setText("請先確認連線資訊");
+                else
+                    mProgressTextView.setText("讀取產品資料中...");
 //
                 if (Util.WebServiceAPI.mBGettingProductsFinish == false) {
                     new Thread() {
@@ -100,12 +103,13 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         });
         recordImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(mContext, GoodsCartListActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(mContext, GoodsCartListActivity.class);
+//                startActivity(intent);
+                startScanQRCodeActivity();
             }
         });
-        //UserConnectionData.CreateInstance("http://zoom-world.tw/WuchDemo/CloudService.asmx",  "64860217");
+//        UserConnectionData.CreateInstance("http://zoom-world.tw/WuchDemo/CloudService.asmx",  "64860217");
         //setContentView(view);
         if (!getUserConnectionData())
         {
@@ -205,7 +209,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
 
         final int max = (int)total;
         mProgressBar.setMax(max);
-        final int progress = (int)current +1;
+        final int progress = (int)current+1;
 
         runOnUiThread(new Runnable() {
                           @Override

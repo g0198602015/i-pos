@@ -100,7 +100,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp" />
-
+            <Button
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/goods_cart_print"
+                android:id="@+id/goods_cart_print_button"
+                android:background="@drawable/submit_button"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp" />
         </LinearLayout>
 
     </LinearLayout>

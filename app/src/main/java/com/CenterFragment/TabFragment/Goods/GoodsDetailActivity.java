@@ -24,8 +24,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import i_so.pos.ActivityRequestConstants;
 import i_so.pos.R;
-import model.ActivityRequestCodeConstant;
 import model.BundleConstant;
 import model.GoodsCartRecordData;
 import model.GoodsItemData;
@@ -72,7 +72,7 @@ public class GoodsDetailActivity extends Activity {
                 Intent intent = new Intent();
                 intent.setClass(mContext, GoodsCartListActivity.class);
 
-                startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_DETAIL_ACTIVITY);
+                startActivityForResult(intent, ActivityRequestConstants.GOODS_DETAIL_ACTIVITY);
             }
         });
         final EditText countEditText = (EditText)view.findViewById(R.id.goods_detail_count_editText);
@@ -320,7 +320,7 @@ public class GoodsDetailActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if ( requestCode == ActivityRequestCodeConstant.GOODS_DETAIL_ACTIVITY)
+        if ( requestCode == ActivityRequestConstants.GOODS_DETAIL_ACTIVITY)
         {
             finish();
         }

@@ -17,7 +17,6 @@ import com.CenterFragment.CenterFragmenet;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import model.ActivityRequestCodeConstant;
 import model.BundleConstant;
 import model.GoodsItemData;
 
@@ -152,7 +151,9 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
                 }
                 else
                 {
-                    return IsContainsBarcode((GoodsItemData) childDataItem, barcode); //類別的話, 繼續往下挖
+                    GoodsItemData data =  IsContainsBarcode((GoodsItemData) childDataItem, barcode);
+                    if (data != null)
+                        return data; //類別的話, 繼續往下挖
                 }
             }
         }
@@ -165,6 +166,6 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
         bundle.putInt(BundleConstant.TYPE, 0);
         bundle.putSerializable("ListViewData", goodsItemData);
         intent.putExtras(bundle);
-        startActivityForResult(intent, ActivityRequestCodeConstant.GOODS_FRAGMENT);
+        startActivityForResult(intent, ActivityRequestConstants.GOODS_FRAGMENT);
     }
 }
