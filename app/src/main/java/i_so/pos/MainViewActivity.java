@@ -46,6 +46,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
     private int myProgress = 0;
     private TextView mProgressTextView;
     private String mUserConnectionDataXMLPath = "";
+    private boolean m_debug = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,21 +104,27 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         });
         recordImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(mContext, GoodsCartListActivity.class);
-//                startActivity(intent);
-                startScanQRCodeActivity();
+                Intent intent = new Intent();
+                intent.setClass(mContext, GoodsCartListActivity.class);
+                startActivity(intent);
+
+                //Test
+//                IntentIntegrator integrator = new IntentIntegrator((Activity)mContext);
+//                integrator.initiateScan(IntentIntegrator.ALL_CODE_TYPES);
             }
         });
-//        UserConnectionData.CreateInstance("http://zoom-world.tw/WuchDemo/CloudService.asmx",  "64860217");
-        //setContentView(view);
-        if (!getUserConnectionData())
+        if (m_debug)
         {
-
-            startScanQRCodeActivity();
-
+            UserConnectionData.CreateInstance("http://zoom-world.tw/WuchDemo/CloudService.asmx", "64860217");
         }
+        else
+        {
+            if (!getUserConnectionData()) {
 
+                startScanQRCodeActivity();
+
+            }
+        }
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v)
