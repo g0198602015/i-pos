@@ -63,6 +63,7 @@ public final class CaptureActivityHandler extends Handler {
 			Map<DecodeHintType, ?> baseHints, String characterSet,
 			CameraManager cameraManager) {
 		this.activity = activity;
+		cameraManager.startPreview();
 		decodeThread = new DecodeThread(activity, decodeFormats, baseHints,
 				characterSet, new ViewfinderResultPointCallback(
 						activity.getViewfinderView()));
@@ -71,7 +72,7 @@ public final class CaptureActivityHandler extends Handler {
 
 		// Start ourselves capturing previews and decoding.
 		this.cameraManager = cameraManager;
-		cameraManager.startPreview();
+
 		restartPreviewAndDecode();
 	}
 
