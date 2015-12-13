@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 public class BitmapUtility
 {
 
-	public static Bitmap resampleBitmapFromByteArray(byte[] imageBytes, int reqWidth, int reqHeight)
+	static Bitmap resampleBitmapFromByteArray(byte[] imageBytes, int reqWidth, int reqHeight)
 	{
 		try
 		{
@@ -33,12 +33,12 @@ public class BitmapUtility
 		}
 	}
 
-	public static Bitmap createThumbnailsBitmap(String originalBitmapPath, int thumbnailsWidth, int thumbnailsHeight)
+	static Bitmap createThumbnailsBitmap(String originalBitmapPath, int thumbnailsWidth, int thumbnailsHeight)
 	{
 		return resampleBitmapFromPath(originalBitmapPath, thumbnailsWidth, thumbnailsHeight);
 	}
 
-    public static Bitmap resampleBitmapFromPath(String imagePath, int reqWidth, int reqHeight) {
+    static Bitmap resampleBitmapFromPath(String imagePath, int reqWidth, int reqHeight) {
 
 	    // First decode with inJustDecodeBounds=true to check dimensions
 	    final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -54,7 +54,7 @@ public class BitmapUtility
 	    return BitmapFactory.decodeFile(imagePath, options);
 	}
     
-    public static int calculateInSampleSize(
+    static int calculateInSampleSize(
             BitmapFactory.Options options, int reqWidth, int reqHeight) {
 	    // Raw height and width of image
 	    final int height = options.outHeight;

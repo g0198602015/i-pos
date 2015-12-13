@@ -9,9 +9,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
- 
 public class NIOSocketUtil extends Thread {
  
     private Selector selector = null;
