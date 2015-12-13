@@ -3,10 +3,10 @@ package BitmapUtility;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class DecodeBitmap 
+public class BitmapUtility
 {
 
-	public static Bitmap decodeBitmapFromByteArray(byte[] imageBytes, int reqWidth, int reqHeight)
+	public static Bitmap resampleBitmapFromByteArray(byte[] imageBytes, int reqWidth, int reqHeight)
 	{
 		try
 		{
@@ -32,7 +32,13 @@ public class DecodeBitmap
 			return null;
 		}
 	}
-    public static Bitmap decodeBitmapFromPath(String imagePath, int reqWidth, int reqHeight) {
+
+	public static Bitmap createThumbnailsBitmap(String originalBitmapPath, int thumbnailsWidth, int thumbnailsHeight)
+	{
+		return resampleBitmapFromPath(originalBitmapPath, thumbnailsWidth, thumbnailsHeight);
+	}
+
+    public static Bitmap resampleBitmapFromPath(String imagePath, int reqWidth, int reqHeight) {
 
 	    // First decode with inJustDecodeBounds=true to check dimensions
 	    final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -70,4 +76,5 @@ public class DecodeBitmap
 	
 	    return inSampleSize;
 	}
+
 }
