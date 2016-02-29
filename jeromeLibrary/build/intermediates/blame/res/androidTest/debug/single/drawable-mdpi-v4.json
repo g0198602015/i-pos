@@ -1,6 +1,22 @@
 [
     {
-        "merged": "C:\\Users\\Jerome\\AndroidStudioProjects\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\Jerome\\AndroidStudioProjects\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\ic_launcher.png"
+        "merged": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\file_picker_back.png",
+        "source": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\file_picker_back.png"
+    },
+    {
+        "merged": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\incoming_icon.png",
+        "source": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\incoming_icon.png"
+    },
+    {
+        "merged": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\file_picker_file.png",
+        "source": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\file_picker_file.png"
+    },
+    {
+        "merged": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\file_picker_folder.png",
+        "source": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\file_picker_folder.png"
     }
 ]

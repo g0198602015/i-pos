@@ -1,6 +1,14 @@
 [
     {
-        "merged": "C:\\Users\\Jerome\\AndroidStudioProjects\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_main.xml",
-        "source": "C:\\Users\\Jerome\\AndroidStudioProjects\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_main.xml"
+        "merged": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_incoming_caller.xml",
+        "source": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_incoming_caller.xml"
+    },
+    {
+        "merged": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_main.xml",
+        "source": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\activity_file_picker.xml",
+        "source": "C:\\workspace\\AndroidStudio\\i-pos\\jeromeLibrary\\build\\intermediates\\bundles\\debug\\res\\layout\\activity_file_picker.xml"
     }
 ]
