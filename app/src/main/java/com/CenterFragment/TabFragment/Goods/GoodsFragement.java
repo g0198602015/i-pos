@@ -18,12 +18,13 @@ import android.widget.ListView;
 import com.CenterFragment.BaseFragment;
 import com.LeftFragement.BaseItemData;
 
-import i_so.pos.ActivityRequestConstants;
+import com.Util.WebServiceAPI;
+import com.i_so.ActivityRequestConstants;
 import i_so.pos.R;
-import model.BundleConstant;
-import model.GoodsCartRecordData;
-import model.GoodsItemAllData;
-import model.GoodsItemData;
+import com.model.BundleConstant;
+import com.model.GoodsCartRecordData;
+import com.model.GoodsItemAllData;
+import com.model.GoodsItemData;
 
 
 public class GoodsFragement extends BaseFragment implements AbsListView.OnItemClickListener
@@ -78,7 +79,7 @@ public class GoodsFragement extends BaseFragment implements AbsListView.OnItemCl
             {
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
-                        while(Util.WebServiceAPI.mBGettingProducts == true) {
+                        while(WebServiceAPI.mBGettingProducts == true) {
                             try {
                                 Thread.sleep(300);
                             } catch (InterruptedException e) {

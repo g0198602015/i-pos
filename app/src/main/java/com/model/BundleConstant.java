@@ -1,4 +1,4 @@
-package model;
+package com.model;
 
 /**
  * Created by Jerome on 2015/10/18.

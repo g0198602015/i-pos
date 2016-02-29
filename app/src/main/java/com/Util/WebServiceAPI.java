@@ -1,8 +1,8 @@
-package Util;
+package com.Util;
 
-import model.GoodsItemData;
+import com.model.GoodsItemData;
 
-import model.GoodsItemAllData;
+import com.model.GoodsItemAllData;
 import com.LeftFragement.BaseItemData;
 
 import org.ksoap2.SoapEnvelope;

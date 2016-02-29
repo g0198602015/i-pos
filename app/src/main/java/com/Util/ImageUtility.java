@@ -1,4 +1,4 @@
-package Util;
+package com.Util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

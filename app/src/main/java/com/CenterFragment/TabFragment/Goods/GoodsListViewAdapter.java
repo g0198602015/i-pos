@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.LeftFragement.BaseItemData;
 
 import i_so.pos.R;
-import model.GoodsItemData;
+import com.model.GoodsItemData;
 
 public class GoodsListViewAdapter extends BaseAdapter
 {

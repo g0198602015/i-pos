@@ -28,15 +28,14 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
-import Util.PrintUtility;
-import i_so.pos.ActivityRequestConstants;
-import i_so.pos.BluetoothDeviceList;
-import i_so.pos.BluetoothOperation;
-import Util.IPrinterOpertion;
-import Util.WebServiceAPI;
+import com.Util.PrintUtility;
+import com.i_so.ActivityRequestConstants;
+import com.i_so.BluetoothOperation;
+import com.Util.IPrinterOpertion;
+import com.Util.WebServiceAPI;
 import i_so.pos.R;
-import model.GoodsCartRecordData;
-import model.UserConnectionData;
+import com.model.GoodsCartRecordData;
+import com.model.UserConnectionData;
 
 /**
  * Created by Jerome on 2015/10/5.

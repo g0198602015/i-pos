@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import i_so.pos.MainActivity;
+import com.i_so.MainActivity;
 import i_so.pos.R;
 
 

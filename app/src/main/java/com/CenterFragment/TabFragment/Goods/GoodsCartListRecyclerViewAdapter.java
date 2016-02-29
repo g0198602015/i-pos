@@ -24,11 +24,11 @@ import com.LeftFragement.BaseItemData;
 import java.util.ArrayList;
 import java.util.List;
 
-import i_so.pos.ActivityRequestConstants;
+import com.i_so.ActivityRequestConstants;
 import i_so.pos.R;
-import model.BundleConstant;
-import model.GoodsCartRecordData;
-import model.GoodsItemData;
+import com.model.BundleConstant;
+import com.model.GoodsCartRecordData;
+import com.model.GoodsItemData;
 
 public class GoodsCartListRecyclerViewAdapter extends RecyclerView.Adapter<GoodsCartListRecyclerViewAdapter.NormalTextViewHolder> {
 //    private static ArrayList<BaseItemData> _DataItems;

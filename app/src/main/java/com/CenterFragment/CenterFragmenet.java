@@ -25,12 +25,12 @@ import android.widget.TextView;
 import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
 import com.CenterFragment.TabFragment.Goods.GoodsFragement;
 import com.google.zxing.integration.android.IntentIntegrator;
-import Util.ImageUtility;
+import com.Util.ImageUtility;
 
 import java.util.LinkedList;
 
-import i_so.pos.ActivityRequestConstants;
-import i_so.pos.MainActivity;
+import com.i_so.ActivityRequestConstants;
+import com.i_so.MainActivity;
 import i_so.pos.R;
 
 /**

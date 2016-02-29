@@ -24,11 +24,11 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import i_so.pos.ActivityRequestConstants;
+import com.i_so.ActivityRequestConstants;
 import i_so.pos.R;
-import model.BundleConstant;
-import model.GoodsCartRecordData;
-import model.GoodsItemData;
+import com.model.BundleConstant;
+import com.model.GoodsCartRecordData;
+import com.model.GoodsItemData;
 
 public class GoodsDetailActivity extends Activity {
 

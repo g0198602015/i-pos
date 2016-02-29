@@ -1,4 +1,4 @@
-package Util;
+package com.Util;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -6,17 +6,14 @@ import android.graphics.BitmapFactory;
 
 import com.LeftFragement.BaseItemData;
 import com.android.print.sdk.Barcode;
-import com.android.print.sdk.CanvasPrint;
-import com.android.print.sdk.FontProperty;
 import com.android.print.sdk.PrinterConstants;
 import com.android.print.sdk.PrinterInstance;
-import com.android.print.sdk.PrinterType;
+import com.model.GoodsItemData;
 
 import java.text.SimpleDateFormat;
 
 import i_so.pos.R;
-import model.GoodsCartRecordData;
-import model.GoodsItemData;
+import com.model.GoodsCartRecordData;
 
 /**
  * Created by Jerome on 2015/11/28.

@@ -1,6 +1,5 @@
-package model;
+package com.model;
 
-import org.w3c.dom.Document;
 /**
  * Created by Jerome on 2015/11/17.
  */
