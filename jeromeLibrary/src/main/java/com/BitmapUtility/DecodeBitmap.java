@@ -1,4 +1,4 @@
-package BitmapUtility;
+package com.BitmapUtility;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

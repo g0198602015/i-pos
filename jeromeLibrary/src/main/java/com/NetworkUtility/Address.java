@@ -1,4 +1,4 @@
-package NetworkUtility;
+package com.NetworkUtility;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
