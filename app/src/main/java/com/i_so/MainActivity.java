@@ -1,4 +1,4 @@
-package i_so.pos;
+package com.i_so;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
@@ -8,7 +8,8 @@ import android.view.MenuItem;
 
 import com.CenterFragment.BaseFragment;
 import com.CenterFragment.TabFragment.Goods.GoodsDetailActivity;
-import model.GoodsItemAllData;
+
+import com.model.GoodsItemAllData;
 import com.LeftFragement.LeftFragment;
 import com.LeftFragement.BaseItemData;
 import com.RightFragment.RightFragment;
@@ -17,8 +18,10 @@ import com.CenterFragment.CenterFragmenet;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import model.BundleConstant;
-import model.GoodsItemData;
+import com.model.BundleConstant;
+import com.model.GoodsItemData;
+
+import i_so.pos.R;
 
 public class MainActivity extends AppCompatActivity implements LeftFragment.OnLeftFragmentEventListener, BaseFragment.BaseFragmentEventListener
 {

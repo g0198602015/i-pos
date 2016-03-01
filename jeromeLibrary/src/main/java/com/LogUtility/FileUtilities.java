@@ -1,4 +1,4 @@
-package LogUtility;
+package com.LogUtility;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,4 +1,4 @@
-package i_so.pos;
+package com.i_so;
 
 
 
@@ -18,7 +18,7 @@ import com.android.print.sdk.PrinterConstants.Connect;
 import com.android.print.sdk.bluetooth.BluetoothPort;
 import com.android.print.sdk.util.Utils;
 
-import Util.IPrinterOpertion;
+import com.Util.IPrinterOpertion;
 
 public class BluetoothOperation implements IPrinterOpertion {
 	private BluetoothAdapter adapter;

@@ -1,4 +1,4 @@
-package i_so.pos;
+package com.i_so;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;

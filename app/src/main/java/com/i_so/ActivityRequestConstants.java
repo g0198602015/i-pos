@@ -1,4 +1,4 @@
-package i_so.pos;
+package com.i_so;
 
 /**
  * Created by Jerome on 2015/9/12.

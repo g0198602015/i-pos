@@ -1,4 +1,4 @@
-package i_so.pos;
+package com.i_so;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,19 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Base64;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -34,10 +27,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
-import Util.WebServiceAPI;
-import model.GoodsItemAllData;
-import model.GoodsItemData;
-import model.UserConnectionData;
+import com.Util.WebServiceAPI;
+import com.model.UserConnectionData;
+
+import i_so.pos.R;
 
 public class MainViewActivity extends Activity implements WebServiceAPI.OnProductDataReceivedListener {
 
@@ -46,7 +39,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
     private int myProgress = 0;
     private TextView mProgressTextView;
     private String mUserConnectionDataXMLPath = "";
-    private boolean m_debug = false;
+    private boolean m_debug = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +49,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
 
         mContext = this;
         mUserConnectionDataXMLPath = getCacheDir() + "userConnectionData.txt";
-        Util.WebServiceAPI.addProductDataReceivedListener(this);
+        WebServiceAPI.addProductDataReceivedListener(this);
         mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
 //        mProgressBar.setVisibility(View.GONE);
         mProgressTextView = (TextView)view.findViewById(R.id.textView3);
@@ -73,11 +66,11 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                 else
                     mProgressTextView.setText("讀取產品資料中...");
 //
-                if (Util.WebServiceAPI.mBGettingProductsFinish == false) {
+                if (WebServiceAPI.mBGettingProductsFinish == false) {
                     new Thread() {
                         @Override
                         public void run() {
-                            Util.WebServiceAPI.GetProducts(UserConnectionData.getCloudService(), UserConnectionData.getBranchID(), UserConnectionData.getTokenID());
+                            WebServiceAPI.GetProducts(UserConnectionData.getCloudService(), UserConnectionData.getBranchID(), UserConnectionData.getTokenID());
                         }
                     }.start(); //開始執行執行緒
                 }
