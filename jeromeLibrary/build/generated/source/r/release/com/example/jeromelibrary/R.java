@@ -15,19 +15,15 @@ public final class R {
         public static int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static int file_picker_back=0x7f020000;
-        public static int file_picker_file=0x7f020001;
-        public static int file_picker_folder=0x7f020002;
-        public static int ic_launcher=0x7f020003;
-        public static int incoming_icon=0x7f020004;
+        public static int call_card_spam_icon=0x7f020000;
+        public static int file_picker_back=0x7f020001;
+        public static int file_picker_file=0x7f020002;
+        public static int file_picker_folder=0x7f020003;
+        public static int ic_launcher=0x7f020004;
+        public static int incoming_icon=0x7f020005;
     }
     public static final class id {
-        public static int exitButton=0x7f070001;
         public static int filePickerView=0x7f070000;
-        public static int imageView=0x7f070002;
-        public static int infoTextView=0x7f070005;
-        public static int phoneNumberTextView=0x7f070004;
-        public static int whoTextView=0x7f070003;
     }
     public static final class layout {
         public static int activity_file_picker=0x7f030000;

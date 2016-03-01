@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import LogUtility.Log;
+import com.LogUtility.Log;
 
 /**
  * Created by Jerome on 2015/11/17.
@@ -67,7 +67,7 @@ public class DOMDocument
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString() + "[" + _strXML + "]", Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString() + "[" + _strXML + "]", Log.LogLevel.ERROR);
 
             return null;
         }
@@ -85,7 +85,7 @@ public class DOMDocument
             String fullClassName = Thread.currentThread().getStackTrace()[2].getClassName();
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
             return null;
         }
     }
@@ -115,7 +115,7 @@ public class DOMDocument
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
             return null;
         }
     }
@@ -141,7 +141,7 @@ public class DOMDocument
             String fullClassName = Thread.currentThread().getStackTrace()[2].getClassName();
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
             return "";
         }
     }
@@ -163,7 +163,7 @@ public class DOMDocument
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
             return null;
         }
     }
@@ -186,7 +186,7 @@ public class DOMDocument
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
             return false;
         }
     }
@@ -209,7 +209,7 @@ public class DOMDocument
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
             return "";
         }
     }
@@ -230,7 +230,7 @@ public class DOMDocument
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
             return "";
         }
     }
@@ -251,7 +251,7 @@ public class DOMDocument
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString(), Log.LogLevel.ERROR);
             return null;
         }
     }
@@ -321,7 +321,7 @@ public class DOMDocument
             String fullClassName = Thread.currentThread().getStackTrace()[2].getClassName();
             String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
             String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
-            LogUtility.Log.WriteLog(fullClassName, methodName, ex.toString());
+            com.LogUtility.Log.getInstance().WriteLog(fullClassName, methodName, ex.toString());
             return "";
         }
     }
