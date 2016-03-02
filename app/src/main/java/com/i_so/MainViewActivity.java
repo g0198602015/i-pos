@@ -51,17 +51,15 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         mUserConnectionDataXMLPath = getCacheDir() + "userConnectionData.txt";
         WebServiceAPI.addProductDataReceivedListener(this);
         mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
-//        mProgressBar.setVisibility(View.GONE);
         mProgressTextView = (TextView)view.findViewById(R.id.textView3);
-//        mProgressTextView.setVisibility(View.GONE);
         Button orderImageButton = (Button)view.findViewById(R.id.orderImageButton);
-//        Button shippmentImageButton = (Button)view.findViewById(R.id.shippmentImageButton);
         Button inventoryImageButton = (Button)view.findViewById(R.id.inventoryImageButton);
         Button recordImageButton = (Button)view.findViewById(R.id.recordImageButton);
         orderImageButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 mProgressTextView.setVisibility(View.VISIBLE);
-                if (!getUserConnectionData())
+                if (UserConnectionData.getInstance() == null)
                     mProgressTextView.setText("請先確認連線資訊");
                 else
                     mProgressTextView.setText("讀取產品資料中...");
@@ -69,8 +67,11 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                 if (WebServiceAPI.mBGettingProductsFinish == false) {
                     new Thread() {
                         @Override
-                        public void run() {
-                            WebServiceAPI.GetProducts(UserConnectionData.getCloudService(), UserConnectionData.getBranchID(), UserConnectionData.getTokenID());
+                        public void run()
+                        {
+                            WebServiceAPI.GetProducts(UserConnectionData.getInstance().getCloudService(), UserConnectionData.getInstance().getBranchID(), UserConnectionData.getInstance().getTokenID());
+                            WebServiceAPI.getCustomerInfo(UserConnectionData.getInstance().getCloudService(), "0910954445", UserConnectionData.getInstance().getTokenID());
+
                         }
                     }.start(); //開始執行執行緒
                 }
@@ -78,17 +79,6 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                     startMainActivity();
             }
         });
-//        shippmentImageButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(mContext, MainActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("Type", 1);
-//                intent.putExtras(bundle);
-//                startActivityForResult(intent, ActivityRequestConstants.MAIN_ACTVITIY);
-//            }
-//        });
-
         inventoryImageButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //do something
@@ -100,28 +90,21 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                 Intent intent = new Intent();
                 intent.setClass(mContext, GoodsCartListActivity.class);
                 startActivity(intent);
-
-                //Test
-//                IntentIntegrator integrator = new IntentIntegrator((Activity)mContext);
-//                integrator.initiateScan(IntentIntegrator.ALL_CODE_TYPES);
             }
         });
         if (m_debug)
         {
-            UserConnectionData.CreateInstance("http://zoom-world.tw/WuchDemo/CloudService.asmx", "64860217");
+            UserConnectionData.CreateInstance("","http://zoom-world.tw/WuchDemo/CloudService.asmx", "64860217");
         }
         else
         {
-            if (!getUserConnectionData()) {
-
+            readUserConnectionData();
+            if (UserConnectionData.getInstance() == null)
                 startScanQRCodeActivity();
-
-            }
         }
         view.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v)
-            {
+            public boolean onLongClick(View v) {
                 startScanQRCodeActivity();
                 return false;
             }
@@ -129,7 +112,12 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         setContentView(view);
 
     }
-
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        mProgressTextView.setVisibility(View.GONE);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -237,7 +225,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         startActivityForResult(intent, ActivityRequestConstants.MAIN_ACTVITIY);
     }
 
-    private boolean getUserConnectionData()
+    private boolean readUserConnectionData()
     {
         try
         {
@@ -249,7 +237,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                 String cloudService = br.readLine();
                 String tokenID = br.readLine();
                 br.close();
-                UserConnectionData.CreateInstance(cloudService,  tokenID);
+                UserConnectionData.CreateInstance(loginAspx, cloudService,  tokenID);
                 return true;
             }
         }
@@ -269,7 +257,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
             writer.write(cloudService+"\r\n");
             writer.write(tokenID+"\r\n");
             writer.close();
-            getUserConnectionData();
+            readUserConnectionData();
 
         } catch (IOException e) {
             e.printStackTrace();

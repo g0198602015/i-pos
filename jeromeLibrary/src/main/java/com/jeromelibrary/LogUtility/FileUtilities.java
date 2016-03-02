@@ -1,4 +1,4 @@
-package com.LogUtility;
+package com.jeromelibrary.LogUtility;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

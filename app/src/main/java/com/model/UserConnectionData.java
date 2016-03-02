@@ -5,39 +5,46 @@ package com.model;
  */
 public class UserConnectionData
 {
-    private static int mBranchID = 1;
-    private static String mTokenID = "";
-    private static int mEmployeeID = 0;
-    private static String mCloudService = "";
-    private static UserConnectionData data = null;
-    private UserConnectionData(String cloudService,  String tokenID)
+    private String mLoginAspx ="";
+    private int mBranchID = 1;
+    private String mTokenID = "";
+    private int mEmployeeID = 0;
+    private String mCloudService = "";
+    private static UserConnectionData mUserConnectionData = null;
+    private UserConnectionData(String loginAspx, String cloudService,  String tokenID)
     {
+        mLoginAspx = loginAspx;
         mCloudService = cloudService;
         mTokenID = tokenID;
     }
-    public static UserConnectionData CreateInstance(String cloudService,  String tokenID)
+    public static UserConnectionData getInstance()
     {
-        if (data == null)
-        {
-            data = new UserConnectionData(cloudService, tokenID);
-        }
-        return data;
+        return mUserConnectionData;
     }
-    public static int getBranchID()
+    public static UserConnectionData CreateInstance(String loginAspx, String cloudService,  String tokenID)
+    {
+        mUserConnectionData = new UserConnectionData(loginAspx, cloudService, tokenID);
+        return mUserConnectionData;
+    }
+    public int getBranchID()
     {
         return mBranchID;
     }
-    public static String getTokenID()
+    public String getTokenID()
     {
         return mTokenID;
     }
-    public static int getEmployeeID()
+    public int getEmployeeID()
     {
         return mEmployeeID;
     }
-    public static String getCloudService()
+    public String getCloudService()
     {
         return mCloudService;
+    }
+    public String getLoginAspx()
+    {
+        return mLoginAspx;
     }
 
 }

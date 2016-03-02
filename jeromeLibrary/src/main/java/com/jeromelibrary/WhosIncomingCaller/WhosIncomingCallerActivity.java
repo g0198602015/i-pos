@@ -1,4 +1,4 @@
-package com.WhosIncomingCaller;
+package com.jeromelibrary.WhosIncomingCaller;
 import android.app.Activity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.LogUtility.Log;
+import com.jeromelibrary.LogUtility.Log;
 import com.jeromelibrary.R;
 
 

@@ -1,4 +1,4 @@
-package com.test;
+package com.jeromelibrary.test;
 
 import android.app.Activity;
 import android.os.Bundle;

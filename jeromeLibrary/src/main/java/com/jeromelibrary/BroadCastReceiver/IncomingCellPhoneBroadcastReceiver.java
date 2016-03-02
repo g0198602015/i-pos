@@ -1,10 +1,12 @@
-package com.BroadCastReceiver;
+package com.jeromelibrary.BroadCastReceiver;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.TelephonyManager;
+
+import com.jeromelibrary.WhosIncomingCaller.WhosIncomingCallerActivity;
 
 /**
  * Created by Jerome on 2016/2/25.
@@ -20,12 +22,12 @@ public class IncomingCellPhoneBroadcastReceiver extends BroadcastReceiver
         if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)
                 || state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
 
-            ComponentName comp = new ComponentName("com.jeromelibrary.WhosIncomingCaller", "com.jeromelibrary.WhosIncomingCallerActivity");
-            Intent i = new Intent();
+//            ComponentName comp = new ComponentName("com.jeromelibrary.WhosIncomingCaller", "com.jeromelibrary.WhosIncomingCaller.WhosIncomingCallerActivity");
+            Intent i = new Intent(context, WhosIncomingCallerActivity.class);
+            i.addCategory(Intent.CATEGORY_DEFAULT);
             i.putExtras(intent);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            i.setComponent(comp);
             context.startActivity(i);
         }
     }

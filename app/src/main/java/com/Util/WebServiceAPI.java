@@ -1,5 +1,6 @@
 package com.Util;
 
+import com.model.CustomerInfo;
 import com.model.GoodsItemData;
 
 import com.model.GoodsItemAllData;
@@ -220,6 +221,42 @@ public class WebServiceAPI
     public static boolean mBGettingProducts = false;
     public static boolean mBTest= false;
     public static int mRecallTime = 0;
+    public static CustomerInfo getCustomerInfo(String url, String number, String tokenID)
+    {
+        int serialIndex = 0;
+        String methodName = "GetCustomerInfo"; //GetBranch, GetProducts
+        String soapAction = NAMESPACE+methodName;
+        try{
+
+            // add paramaters and values
+
+            SoapObject request1 = new SoapObject(NAMESPACE, methodName);
+
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+
+            envelope.dotNet = true;
+            request1.addProperty("Phone",number);
+            request1.addProperty("token", tokenID);
+            envelope.setOutputSoapObject(request1);
+
+
+
+            //Web method call
+
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(url, 30000);
+            androidHttpTransport.debug = true;
+            androidHttpTransport.call(soapAction, envelope);
+            SoapObject result= (SoapObject)envelope.getResponse();
+            int productCount = result.getPropertyCount();
+        }catch (Exception e){
+
+            String message= e.toString();
+            message = message;
+
+        }
+        return null;
+    }
+
     public static void GetProducts(String url, int branchID, String tokenID)
     {
         if (mBGettingProducts && mRecallTime >= 2 )

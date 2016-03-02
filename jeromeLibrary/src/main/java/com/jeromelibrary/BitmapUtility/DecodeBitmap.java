@@ -1,4 +1,4 @@
-package com.BitmapUtility;
+package com.jeromelibrary.BitmapUtility;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,4 +1,4 @@
-package com.LogUtility;
+package com.jeromelibrary.LogUtility;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -130,7 +130,7 @@ public class Log
 	private boolean write(boolean bRecord, boolean isShowLogcat, String className,String methodName, String msg, LogLevel logLevel)
 	{
 		if (isShowLogcat)
-			android.util.Log.i("com/LogUtility",  className + "->" + methodName + "]: " + msg + "\n");
+			android.util.Log.i("LogUtility",  className + "->" + methodName + "]: " + msg + "\n");
 		if (bRecord)
 		{
 		    File root = Environment.getExternalStorageDirectory();

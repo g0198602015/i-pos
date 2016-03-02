@@ -50,7 +50,7 @@
             android:theme="@android:style/Theme.Dialog">
         </activity>
 
-        <receiver android:name="com.BroadCastReceiver.IncomingCellPhoneBroadcastReceiver" >
+        <receiver android:name="com.jeromelibrary.BroadCastReceiver.IncomingCellPhoneBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE"/>
             </intent-filter>

@@ -1,4 +1,4 @@
-package com.NetworkUtility;
+package com.jeromelibrary.NetworkUtility;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
