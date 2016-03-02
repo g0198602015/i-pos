@@ -2,43 +2,54 @@ package com.WhosIncomingCaller;
 import android.app.Activity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.jeromelibrary.R;
+import com.LogUtility.Log;
+import com.jeromelibrary.R;
 
 
 public class WhosIncomingCallerActivity extends Activity
 {
-
+    private Activity mActivity = null;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         try
         {
-            LogUtility.Log.getInstance().WriteLog("WhosIncomingCallerActivity", "savedInstanceState", "onCreate: ");
-            // TODO Auto-generated method stub
+            mActivity = this;
+            Log.getInstance().WriteLog("WhosIncomingCallerActivity", "savedInstanceState", "onCreate: ");
             super.onCreate(savedInstanceState);
-
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-
-            LogUtility.Log.getInstance().WriteLog("WhosIncomingCallerActivity", "savedInstanceState", "flagy ");
-
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             setContentView(R.layout.activity_incoming_caller);
-
-            LogUtility.Log.getInstance().WriteLog("WhosIncomingCallerActivity", "savedInstanceState", "flagz");
-
-            String number = getIntent().getStringExtra(
-                    TelephonyManager.EXTRA_INCOMING_NUMBER);
-            TextView text = (TextView) findViewById(R.id.textView);
-            text.setText("Incoming call from " + number);
+            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            String number = getIntent().getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+            TextView text = (TextView) findViewById(R.id.phoneNumberTextView);
+            text.setText(""+number);
+            Button exitButton = (Button)findViewById(R.id.exitButton);
+            exitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v)
+                {
+                    mActivity.finish();
+                }
+            });
         }
         catch (Exception e)
         {
-            LogUtility.Log.getInstance().WriteLog("WhosIncomingCallerActivity", "savedInstanceState", e.toString());
+            Log.getInstance().WriteLog("WhosIncomingCallerActivity", "savedInstanceState", e.toString());
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    @Override
+    public void onBackPressed()
+    {
+
     }
 }

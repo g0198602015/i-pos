@@ -1,12 +1,11 @@
 package com.test;
 
-import com.example.jeromelibrary.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jeromelibrary.R;
 
 public class MainActivity extends Activity {
 

@@ -20,7 +20,7 @@ public class IncomingCellPhoneBroadcastReceiver extends BroadcastReceiver
         if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)
                 || state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
 
-            ComponentName comp = new ComponentName("com.example.jeromelibrary.WhosIncomingCaller", "com.example.jeromelibrary.WhosIncomingCallerActivity");
+            ComponentName comp = new ComponentName("com.jeromelibrary.WhosIncomingCaller", "com.jeromelibrary.WhosIncomingCallerActivity");
             Intent i = new Intent();
             i.putExtras(intent);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
