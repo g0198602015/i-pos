@@ -32,14 +32,15 @@ import com.model.UserConnectionData;
 
 import i_so.pos.R;
 
-public class MainViewActivity extends Activity implements WebServiceAPI.OnProductDataReceivedListener {
+public class MainViewActivity extends Activity implements WebServiceAPI.OnProductDataReceivedListener
+{
 
     private ProgressBar mProgressBar;
     private Context mContext;
     private int myProgress = 0;
     private TextView mProgressTextView;
-    private String mUserConnectionDataXMLPath = "";
-    private boolean m_debug = true;
+
+    public static boolean m_debug = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +49,6 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         View view = inflater.inflate(R.layout.main_view, null);
 
         mContext = this;
-        mUserConnectionDataXMLPath = getCacheDir() + "userConnectionData.txt";
         WebServiceAPI.addProductDataReceivedListener(this);
         mProgressBar = (ProgressBar)view.findViewById(R.id.progressBar);
         mProgressTextView = (TextView)view.findViewById(R.id.textView3);
@@ -70,7 +70,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                         public void run()
                         {
                             WebServiceAPI.GetProducts(UserConnectionData.getInstance().getCloudService(), UserConnectionData.getInstance().getBranchID(), UserConnectionData.getInstance().getTokenID());
-                            WebServiceAPI.getCustomerInfo(UserConnectionData.getInstance().getCloudService(), "0910954445", UserConnectionData.getInstance().getTokenID());
+               //             WebServiceAPI.getCustomerInfo(UserConnectionData.getInstance().getCloudService(), "0910954445", UserConnectionData.getInstance().getTokenID());
 
                         }
                     }.start(); //開始執行執行緒
@@ -94,11 +94,12 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         });
         if (m_debug)
         {
-            UserConnectionData.CreateInstance("","http://zoom-world.tw/WuchDemo/CloudService.asmx", "64860217");
+            UserConnectionData.CreateInstance("http://192.168.1.1/customer.aspx","http://zoom-world.tw/WuchDemo/CloudService.asmx", "64860217");
         }
         else
         {
-            readUserConnectionData();
+            if (UserConnectionData.getInstance() == null)
+                UserConnectionData.CreateInstance(getCacheDir() + com.Util.Constants.mUserConnectionDataXMLFileName);
             if (UserConnectionData.getInstance() == null)
                 startScanQRCodeActivity();
         }
@@ -225,40 +226,18 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         startActivityForResult(intent, ActivityRequestConstants.MAIN_ACTVITIY);
     }
 
-    private boolean readUserConnectionData()
-    {
-        try
-        {
-            File file = new File(mUserConnectionDataXMLPath);
-            if (file.exists())
-            {
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                String loginAspx = br.readLine();
-                String cloudService = br.readLine();
-                String tokenID = br.readLine();
-                br.close();
-                UserConnectionData.CreateInstance(loginAspx, cloudService,  tokenID);
-                return true;
-            }
-        }
-        catch (IOException e) {
-        }
-        return false;
-    }
     private void saveUserConnectionData(String loginAspx, String cloudService,  String tokenID)
     {
         try
         {
             File file;
             FileOutputStream outputStream;
-            file = new File(mUserConnectionDataXMLPath);
+            file = new File(getCacheDir() + com.Util.Constants.mUserConnectionDataXMLFileName);
             Writer writer =  new BufferedWriter(new FileWriter(file));
             writer.write(loginAspx+"\r\n");
             writer.write(cloudService+"\r\n");
             writer.write(tokenID+"\r\n");
             writer.close();
-            readUserConnectionData();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

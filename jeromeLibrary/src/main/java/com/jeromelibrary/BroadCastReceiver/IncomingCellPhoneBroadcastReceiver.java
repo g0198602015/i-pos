@@ -6,7 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.telephony.TelephonyManager;
 
-import com.jeromelibrary.WhosIncomingCaller.WhosIncomingCallerActivity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jerome on 2016/2/25.
@@ -21,14 +22,18 @@ public class IncomingCellPhoneBroadcastReceiver extends BroadcastReceiver
         final String mMethodName = "onReceive";
         if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)
                 || state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
-
-//            ComponentName comp = new ComponentName("com.jeromelibrary.WhosIncomingCaller", "com.jeromelibrary.WhosIncomingCaller.WhosIncomingCallerActivity");
-            Intent i = new Intent(context, WhosIncomingCallerActivity.class);
-            i.addCategory(Intent.CATEGORY_DEFAULT);
+//            jerome.i_pos/com.WhosIncomingCaller.WhosIncomingCallerActivity
+//            ComponentName comp = new ComponentName("jerome.i_pos", "com.WhosIncomingCaller.WhosIncomingCallerActivity");
+//            Intent i = new Intent();
+//            i.setComponent(comp);
+//            i.addCategory(Intent.CATEGORY_DEFAULT);
+//            i.putExtras(intent);
+//            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//            context.startActivity(i);
+            Intent i = new Intent("com.jeromeLibary.PHONE_STATE");
             i.putExtras(intent);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(i);
+            context.sendBroadcast(i);
         }
     }
 }

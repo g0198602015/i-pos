@@ -112,7 +112,7 @@ public class GoodsCartListActivity extends Activity {
                     ((Activity) mContext).runOnUiThread(new Runnable() {
                         public void run() {
                             try {
-                                String res = WebServiceAPI.SaveConsumeSetting2(UserConnectionData.getCloudService(), UserConnectionData.getBranchID(), UserConnectionData.getEmployeeID(), UserConnectionData.getTokenID(), GoodsCartRecordData.getAllGoodsItem());
+                                String res = WebServiceAPI.SaveConsumeSetting2(UserConnectionData.getInstance().getCloudService(), UserConnectionData.getInstance().getBranchID(), UserConnectionData.getInstance().getEmployeeID(), UserConnectionData.getInstance().getTokenID(), GoodsCartRecordData.getAllGoodsItem());
                                 String[] res2 = res.split(",");
                                 String barcode = "";
                                 if (res.length() > 1)

@@ -223,6 +223,7 @@ public class WebServiceAPI
     public static int mRecallTime = 0;
     public static CustomerInfo getCustomerInfo(String url, String number, String tokenID)
     {
+        CustomerInfo customerInfo = null;
         int serialIndex = 0;
         String methodName = "GetCustomerInfo"; //GetBranch, GetProducts
         String soapAction = NAMESPACE+methodName;
@@ -248,13 +249,56 @@ public class WebServiceAPI
             androidHttpTransport.call(soapAction, envelope);
             SoapObject result= (SoapObject)envelope.getResponse();
             int productCount = result.getPropertyCount();
+            if (productCount > 0)
+            {
+
+                customerInfo = new CustomerInfo();
+                SoapObject customerInfoSoapObject = (SoapObject)result.getProperty(0);
+                if (customerInfoSoapObject.getProperty("ID") != null)
+                {
+                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("ID");
+                    String value = property.getValue().toString();
+                    customerInfo.setID(Integer.parseInt(value));
+                }
+                else  if (customerInfoSoapObject.getProperty("Name") != null)
+                {
+                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("Name");
+                    String value = property.getValue().toString();
+                    customerInfo.setName(value);
+                }
+                else  if (customerInfoSoapObject.getProperty("Description") != null)
+                {
+                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("Description");
+                    String value = property.getValue().toString();
+                    customerInfo.setDescription(value);
+                }
+                else  if (customerInfoSoapObject.getProperty("LastConsumeDay") != null)
+                {
+                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("LastConsumeDay");
+                    String value = property.getValue().toString();
+                    customerInfo.setLastConsumeDay(value);
+                }
+                else  if (customerInfoSoapObject.getProperty("Birthday") != null)
+                {
+                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("Birthday");
+                    String value = property.getValue().toString();
+                    customerInfo.setBirthday(value);
+                }
+                else  if (customerInfoSoapObject.getProperty("Color") != null)
+                {
+                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("Color");
+                    String value = property.getValue().toString();
+                    customerInfo.setColor(Integer.parseInt(value));
+                }
+            }
+
         }catch (Exception e){
 
             String message= e.toString();
             message = message;
 
         }
-        return null;
+        return customerInfo;
     }
 
     public static void GetProducts(String url, int branchID, String tokenID)

@@ -1,5 +1,10 @@
 package com.model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * Created by Jerome on 2015/11/17.
  */
@@ -19,6 +24,31 @@ public class UserConnectionData
     }
     public static UserConnectionData getInstance()
     {
+        return mUserConnectionData;
+    }
+    private static boolean readUserConnectionData(String path)
+    {
+        try
+        {
+            File file = new File(path);
+            if (file.exists())
+            {
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String loginAspx = br.readLine();
+                String cloudService = br.readLine();
+                String tokenID = br.readLine();
+                br.close();
+                UserConnectionData.CreateInstance(loginAspx, cloudService,  tokenID);
+                return true;
+            }
+        }
+        catch (IOException e) {
+        }
+        return false;
+    }
+    public static UserConnectionData CreateInstance(String filePath)
+    {
+        readUserConnectionData(filePath);
         return mUserConnectionData;
     }
     public static UserConnectionData CreateInstance(String loginAspx, String cloudService,  String tokenID)
