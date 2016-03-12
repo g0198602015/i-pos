@@ -44,6 +44,7 @@
             android:layout_marginBottom="80dp">
 
             <Button
+                android:visibility="gone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_order"
@@ -54,6 +55,7 @@
                 android:layout_marginBottom="20dp" />
 
             <Button
+                android:visibility="gone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_inventory"
@@ -64,6 +66,7 @@
                 android:layout_marginBottom="20dp" />
 
             <Button
+                android:visibility="gone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/button_record"

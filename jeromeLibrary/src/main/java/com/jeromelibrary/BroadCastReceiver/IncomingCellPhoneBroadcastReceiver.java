@@ -20,20 +20,12 @@ public class IncomingCellPhoneBroadcastReceiver extends BroadcastReceiver
     {
         String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
         final String mMethodName = "onReceive";
-        if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)
-                || state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
-//            jerome.i_pos/com.WhosIncomingCaller.WhosIncomingCallerActivity
-//            ComponentName comp = new ComponentName("jerome.i_pos", "com.WhosIncomingCaller.WhosIncomingCallerActivity");
-//            Intent i = new Intent();
-//            i.setComponent(comp);
-//            i.addCategory(Intent.CATEGORY_DEFAULT);
-//            i.putExtras(intent);
-//            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//            context.startActivity(i);
-            Intent i = new Intent("com.jeromeLibary.PHONE_STATE");
-            i.putExtras(intent);
-            context.sendBroadcast(i);
-        }
+//        if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)
+//                || state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
+
+            Intent newIntent = new Intent("com.jeromeLibary.PHONE_STATE");
+            newIntent.putExtras(intent);
+            context.sendBroadcast(newIntent);
+//        }
     }
 }

@@ -1,6 +1,7 @@
 package com.Util;
 
 import com.model.CustomerInfo;
+import com.model.Employee;
 import com.model.GoodsItemData;
 
 import com.model.GoodsItemAllData;
@@ -22,6 +23,10 @@ import i_so.pos.R;
  */
 public class WebServiceAPI
 {
+    public static boolean mBGettingProductsFinish = false;
+    public static boolean mBGettingProducts = false;
+    public static boolean mBTest= false;
+    public static int mRecallTime = 0;
     private static List<OnProductDataReceivedListener> _OnProductDataReceivedListener = new ArrayList<OnProductDataReceivedListener>();
     public interface OnProductDataReceivedListener
     {
@@ -217,85 +222,101 @@ public class WebServiceAPI
             String message= e.toString();
         }
     }
-    public static boolean mBGettingProductsFinish = false;
-    public static boolean mBGettingProducts = false;
-    public static boolean mBTest= false;
-    public static int mRecallTime = 0;
-    public static CustomerInfo getCustomerInfo(String url, String number, String tokenID)
+    public static Employee VerifyEmployeeApp(String url,String name, String password, String token)
     {
+        com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("WebServiceAPI", "VerifyEmployeeApp", "URL:"+url+",name:"+name+", password:"+password+",token:"+token);
+        Employee employee = null;
+        int serialIndex = 0;
+        String methodName = "VerifyEmployeeApp"; //GetBranch, GetProducts
+        String soapAction = NAMESPACE+methodName;
+        try{
+
+            SoapObject request1 = new SoapObject(NAMESPACE, methodName);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            request1.addProperty("Name",name);
+            request1.addProperty("Password", password);
+            request1.addProperty("token", token);
+            envelope.setOutputSoapObject(request1);
+
+            HttpTransportSE androidHttpTransport = new HttpTransportSE(url, 30000);
+            androidHttpTransport.debug = true;
+            androidHttpTransport.call(soapAction, envelope);
+            SoapObject customerInfoSoapObject= (SoapObject)envelope.getResponse();
+            int productCount = customerInfoSoapObject.getPropertyCount();
+            String id = "";
+            String nickName = "";
+            if (productCount > 0)
+            {
+                if (customerInfoSoapObject.getProperty("ID") != null)
+                {
+                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("ID");
+                    id = property.getValue().toString();
+                }
+                if (customerInfoSoapObject.getProperty("名稱") != null)
+                {
+                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("名稱");
+                    nickName = property.getValue().toString();
+                }
+                employee = Employee.CreateInstance(id, nickName);
+            }
+
+        }catch (Exception e){
+            String message= e.toString();
+            com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("WebServiceAPI", "VerifyEmployeeApp", "error:"+message);
+            return null;
+        }
+        return employee;
+    }
+    public static CustomerInfo getCustomerInfo(String url, String number, String tokenID,int emID)
+    {
+        com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("WebServiceAPI", "getCustomerInfo", "URL:"+url+",number:"+number+", tokenID:"+tokenID);
         CustomerInfo customerInfo = null;
         int serialIndex = 0;
         String methodName = "GetCustomerInfo"; //GetBranch, GetProducts
         String soapAction = NAMESPACE+methodName;
         try{
 
-            // add paramaters and values
-
             SoapObject request1 = new SoapObject(NAMESPACE, methodName);
-
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-
             envelope.dotNet = true;
             request1.addProperty("Phone",number);
             request1.addProperty("token", tokenID);
+            request1.addProperty("EmID", emID);
             envelope.setOutputSoapObject(request1);
-
-
-
-            //Web method call
-
             HttpTransportSE androidHttpTransport = new HttpTransportSE(url, 30000);
             androidHttpTransport.debug = true;
             androidHttpTransport.call(soapAction, envelope);
-            SoapObject result= (SoapObject)envelope.getResponse();
-            int productCount = result.getPropertyCount();
+            SoapObject customerInfoSoapObject= (SoapObject)envelope.getResponse();
+            int productCount = customerInfoSoapObject.getPropertyCount();
             if (productCount > 0)
             {
-
                 customerInfo = new CustomerInfo();
-                SoapObject customerInfoSoapObject = (SoapObject)result.getProperty(0);
                 if (customerInfoSoapObject.getProperty("ID") != null)
                 {
                     SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("ID");
                     String value = property.getValue().toString();
                     customerInfo.setID(Integer.parseInt(value));
                 }
-                else  if (customerInfoSoapObject.getProperty("Name") != null)
+                if (customerInfoSoapObject.getProperty("Name") != null)
                 {
                     SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("Name");
                     String value = property.getValue().toString();
                     customerInfo.setName(value);
                 }
-                else  if (customerInfoSoapObject.getProperty("Description") != null)
+                if (customerInfoSoapObject.getProperty("Description") != null)
                 {
                     SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("Description");
                     String value = property.getValue().toString();
                     customerInfo.setDescription(value);
-                }
-                else  if (customerInfoSoapObject.getProperty("LastConsumeDay") != null)
-                {
-                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("LastConsumeDay");
-                    String value = property.getValue().toString();
-                    customerInfo.setLastConsumeDay(value);
-                }
-                else  if (customerInfoSoapObject.getProperty("Birthday") != null)
-                {
-                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("Birthday");
-                    String value = property.getValue().toString();
-                    customerInfo.setBirthday(value);
-                }
-                else  if (customerInfoSoapObject.getProperty("Color") != null)
-                {
-                    SoapPrimitive property = (SoapPrimitive) customerInfoSoapObject.getProperty("Color");
-                    String value = property.getValue().toString();
-                    customerInfo.setColor(Integer.parseInt(value));
                 }
             }
 
         }catch (Exception e){
 
             String message= e.toString();
-            message = message;
+            com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("WebServiceAPI", "getCustomerInfo", "error:"+message);
+            return null;
 
         }
         return customerInfo;

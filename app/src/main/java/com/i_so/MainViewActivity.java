@@ -2,6 +2,7 @@ package com.i_so;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,20 +15,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.CenterFragment.TabFragment.Goods.GoodsCartListActivity;
+import com.Util.Constants;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import com.Util.WebServiceAPI;
+import com.model.Employee;
 import com.model.UserConnectionData;
 
 import i_so.pos.R;
@@ -40,7 +41,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
     private int myProgress = 0;
     private TextView mProgressTextView;
 
-    public static boolean m_debug = true;
+    public static boolean m_debug = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +71,10 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
                         public void run()
                         {
                             WebServiceAPI.GetProducts(UserConnectionData.getInstance().getCloudService(), UserConnectionData.getInstance().getBranchID(), UserConnectionData.getInstance().getTokenID());
-               //             WebServiceAPI.getCustomerInfo(UserConnectionData.getInstance().getCloudService(), "0910954445", UserConnectionData.getInstance().getTokenID());
+//                            WebServiceAPI.getCustomerInfo(UserConnectionData.getInstance().getCloudService(), "0910954445", UserConnectionData.getInstance().getTokenID());
 
                         }
-                    }.start(); //開始執行執行緒
+                    }.start();
                 }
                 else
                     startMainActivity();
@@ -94,12 +95,13 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         });
         if (m_debug)
         {
-            UserConnectionData.CreateInstance("http://192.168.1.1/customer.aspx","http://zoom-world.tw/WuchDemo/CloudService.asmx", "64860217");
+            UserConnectionData.CreateInstance("http://zoom-world.tw/WuchDemo/Login.aspx","http://zoom-world.tw/WuchDemo/CloudService.asmx", "64860217");
+            //Employee.CreateInstance("2","zonghan");
         }
         else
         {
             if (UserConnectionData.getInstance() == null)
-                UserConnectionData.CreateInstance(getCacheDir() + com.Util.Constants.mUserConnectionDataXMLFileName);
+                UserConnectionData.CreateInstance(getCacheDir() + com.Util.Constants.FILE_USER_DATA);
             if (UserConnectionData.getInstance() == null)
                 startScanQRCodeActivity();
         }
@@ -118,40 +120,62 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
     {
         super.onResume();
         mProgressTextView.setVisibility(View.GONE);
+        if (UserConnectionData.getInstance() == null)
+            UserConnectionData.CreateInstance(getCacheDir() + com.Util.Constants.FILE_USER_DATA);
+        if (Employee.getInstance() == null || Employee.getInstance().getID() == 0)
+            Employee.CreateInstance(getCacheDir() + com.Util.Constants.FILE_EMPLOYEE);
+        if (UserConnectionData.getInstance() == null)
+            startScanQRCodeActivity();
+        else if (Employee.getInstance() == null || Employee.getInstance().getID() == 0)
+            startUserLogineActivity();
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == IntentIntegrator.REQUEST_CODE && data != null)
+        if (requestCode == IntentIntegrator.REQUEST_CODE )
         {
-            IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            String text = "";
-            if (scanResult != null)
-            {
-                String base64 = scanResult.getContents();
-                byte[] decodeBytes = Base64.decode(base64, Base64.DEFAULT);
-                int length = decodeBytes.length / 2;
-                byte[] decodeBytes2 = new byte[length];
-                for (int index = 0 ;index < length ; index++ )
-                {
-                    decodeBytes2[index] = decodeBytes[index*2];
+            if (data != null) {
+                IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+                String text = "";
+                if (scanResult != null) {
+                    String base64 = scanResult.getContents();
+                    byte[] decodeBytes = Base64.decode(base64, Base64.DEFAULT);
+                    int length = decodeBytes.length / 2;
+                    byte[] decodeBytes2 = new byte[length];
+                    for (int index = 0; index < length; index++) {
+                        decodeBytes2[index] = decodeBytes[index * 2];
+                    }
+                    try {
+                        text = new String(decodeBytes2, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
-                try {
-                    text = new String(decodeBytes2, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                text = text + "";
+                String[] token = text.split("\n");
+                if (token.length == 3) {
+                    String loginAspx = token[0];
+                    String cloudService = token[1];
+                    String tokenID = token[2];
+                    saveUserConnectionData(loginAspx, cloudService, tokenID);
                 }
+                text = text;
             }
-            text  = text + "";
-            String[] token = text.split("\n");
-            if (token.length == 3)
+            else
+                finish();
+        }
+        else if (requestCode == ActivityRequestConstants.USE_LOGIN_ACTIVITY)
+        {
+            if (resultCode == RESULT_OK)
             {
-                String loginAspx = token[0];
-                String cloudService = token[1];
-                String tokenID = token[2];
-                saveUserConnectionData(loginAspx, cloudService, tokenID);
+                int id = data.getExtras().getInt(Constants.BUNDLE_EMPLOYEE_ID);
+                String nickName = data.getExtras().getString(Constants.BUNDLE_EMPLOYEE_NICK_NAME);
+                saveEmployeeData(id+"", nickName);
+                finish();
             }
-            text = text;
+            else
+                finish();
         }
     }
     public void enableNetwork()
@@ -195,26 +219,23 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
     @Override
     public void onDataReceive(long total, long current)
     {
-
         final int max = (int)total;
         mProgressBar.setMax(max);
         final int progress = (int)current+1;
-
-        runOnUiThread(new Runnable() {
-                          @Override
-                          public void run() {
-
-                              mProgressTextView.setText("讀取產品資料中..." + progress + "/" + max);
-                              mProgressBar.setVisibility(View.VISIBLE);
-                              mProgressBar.setProgress(progress);
-                              if (max == progress) {
-                                  mProgressBar.setVisibility(View.GONE);
-                                  mProgressTextView.setVisibility(View.GONE);
-                                  startMainActivity();
-                              }
-                          }
-                      }
-        );
+        runOnUiThread(new Runnable()
+          {
+              @Override
+              public void run() {
+                  mProgressTextView.setText("讀取產品資料中..." + progress + "/" + max);
+                  mProgressBar.setVisibility(View.VISIBLE);
+                  mProgressBar.setProgress(progress);
+                  if (max == progress) {
+                      mProgressBar.setVisibility(View.GONE);
+                      mProgressTextView.setVisibility(View.GONE);
+                      startMainActivity();
+                  }
+              }
+          });
     }
     private void startMainActivity()
     {
@@ -225,14 +246,28 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         intent.putExtras(bundle);
         startActivityForResult(intent, ActivityRequestConstants.MAIN_ACTVITIY);
     }
-
+    private void saveEmployeeData(String employeeID, String employeeNickName)
+    {
+        try
+        {
+            File file;
+            FileOutputStream outputStream;
+            file = new File(getCacheDir() + com.Util.Constants.FILE_EMPLOYEE);
+            Writer writer =  new BufferedWriter(new FileWriter(file));
+            writer.write(employeeID+"\r\n");
+            writer.write(employeeNickName+"\r\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void saveUserConnectionData(String loginAspx, String cloudService,  String tokenID)
     {
         try
         {
             File file;
             FileOutputStream outputStream;
-            file = new File(getCacheDir() + com.Util.Constants.mUserConnectionDataXMLFileName);
+            file = new File(getCacheDir() + com.Util.Constants.FILE_USER_DATA);
             Writer writer =  new BufferedWriter(new FileWriter(file));
             writer.write(loginAspx+"\r\n");
             writer.write(cloudService+"\r\n");
@@ -248,5 +283,12 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.initiateScan(IntentIntegrator.QR_CODE_TYPES);
     }
-
+    private void startUserLogineActivity()
+    {
+        ComponentName comp = new ComponentName("jerome.i_pos", "com.i_so.UserLoginActivity");
+        Intent intent = new Intent();
+        intent.setComponent(comp);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        startActivityForResult(intent, ActivityRequestConstants.USE_LOGIN_ACTIVITY);
+    }
 }

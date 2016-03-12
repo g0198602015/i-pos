@@ -48,28 +48,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Zhnghan"
+                    android:text=""
                     android:id="@+id/whoTextView"
                     android:layout_gravity="center_horizontal|left"
                     android:textSize="20sp"
                     android:textColor="#FF222222"  />
-
-                </LinearLayout>
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:layout_gravity="center_horizontal|left"
-                    android:text="0910 XXX XXX"
+                    android:text=""
                     android:id="@+id/phoneNumberTextView"
                     android:textSize="15sp"
                     android:textColor="#FF333333" />
@@ -79,13 +72,49 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:layout_gravity="center_horizontal|left"
-                    android:text="VIP Customer"
+                    android:text=""
                     android:textColor="#FF333333"
                     android:id="@+id/infoTextView"
                     android:textSize="15sp" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp">
+                    <ImageView
+                        android:background="@mipmap/booking"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical" />
+                    <Button
+                        android:layout_weight="1"
+                        android:textSize="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button_customer_info"
+                        android:text="@string/button_customer_info"
+                        android:layout_gravity="center_vertical|right"
+                        android:background="#00000000" />
+                    <ImageView
+                        android:background="@mipmap/customersingle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical" />
+                    <Button
+                        android:layout_weight="1"
+                        android:textSize="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button_new_reservation"
+                        android:text="@string/button_new_reservation"
+                        android:layout_gravity="center_vertical|right"
+                        android:background="#00000000" />
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

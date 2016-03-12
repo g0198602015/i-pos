@@ -73,4 +73,17 @@
     <string name="title_other_devices">其它可用設備</string>
     <string name="button_scan">掃描新設備</string>
     <string name="button_back">返回</string>
+    <!--  Incoming Caller Activity -->
+    <string name="button_customer_info">顧客資料</string>
+    <string name="button_new_reservation">新增預約</string>
+    <string name="USERLOGIN_NAME_HINT_EDITTEXT">請輸入您的名稱、手機或員工編號</string>
+    <string name="USERLOGIN_PASSWORD_HINT_EDITTEXT">密碼</string>
+    <string name="USERLOGIN_TITLE_TEXTVIEW">登入 i-so POS</string>
+    <string name="USERLOGIN_LOGIN_BUTTON">登入</string>
+    <string name="MAINVIEW_QRCODE_LOGIN_BUTTON">QRCode 登入</string>
+    <string name="USERLOGIN_STARTUP_INCOMING_SERVICE">已啟動顧客來電顯示服務</string>
+    <string name="USERLOGIN_VERIFICATION_SUCCESFUL">驗證成功</string>
+    <string name="USERLOGIN_VERIFICATION_FAILED">驗證失敗, 請重新輸入</string>
+    <string name="USERLOGIN_ENJOY_ISO_POS">開始享受i-so POS</string>
+    <string name="USERLOGIN_QECODE_VERIFICATION_SUCCESFUL">已完成QRCode驗證</string>
 </resources>

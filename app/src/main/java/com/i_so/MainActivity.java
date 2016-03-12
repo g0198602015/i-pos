@@ -85,31 +85,20 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
     }
 
     public void onListViewClickChanged() {
-        // The user selected the headline of an article from the HeadlinesFragment
-        // Do something here to display that article
-
         CenterFragmenet articleFrag = (CenterFragmenet)
                 getSupportFragmentManager().findFragmentById(R.id.center_frame);
 
         if (articleFrag != null) {
-            // If article frag is available, we're in two-pane layout...
-
-            // Call a method in the ArticleFragment to update its content
             articleFrag.updateFragmentData("", "");
         }
     }
     private boolean bInitial = true;
     public void onListViewDataChanged(BaseItemData items) {
-        // The user selected the headline of an article from the HeadlinesFragment
-        // Do something here to display that article
         if (bInitial) {
             LeftFragment articleFrag = (LeftFragment)
                     getSupportFragmentManager().findFragmentById(R.id.left_frame);
 
             if (articleFrag != null) {
-                // If article frag is available, we're in two-pane layout...
-
-                // Call a method in the ArticleFragment to update its content
                 articleFrag.setListViewData(items);
             }
             bInitial = false;
@@ -117,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements LeftFragment.OnLe
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentIntegrator.REQUEST_CODE && data != null)
         {

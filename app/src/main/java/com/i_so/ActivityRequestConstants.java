@@ -13,4 +13,5 @@ public class ActivityRequestConstants
     public static int GOODS_FRAGMENT =  ++NONE;
     public static int GOODS_CART_LIST_RECYCLER_VIEW_ADAPTER = ++NONE;
     public static int GOODS_DETAIL_ACTIVITY =  ++NONE;
+    public static int USE_LOGIN_ACTIVITY = ++NONE;
 }

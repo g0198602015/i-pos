@@ -1,5 +1,7 @@
 package com.WhosIncomingCaller;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -15,6 +17,7 @@ import com.Util.WebServiceAPI;
 import com.jeromelibrary.LogUtility.Log;
 import com.jeromelibrary.Utility.IntentFactory;
 import com.model.CustomerInfo;
+import com.model.Employee;
 import com.model.UserConnectionData;
 
 import i_so.pos.R;
@@ -22,7 +25,8 @@ import i_so.pos.R;
 
 public class WhosIncomingCallerActivity extends Activity
 {
-    private Activity mActivity = null;
+    private static Activity mActivity = null;
+    public static final String ACTION_CLOSE = "com.WhosIncomingCaller.ACTION_CLOSE";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -53,34 +57,50 @@ public class WhosIncomingCallerActivity extends Activity
                     @Override
                     public void run()
                     {
-                        final CustomerInfo customerInfo = WebServiceAPI.getCustomerInfo(UserConnectionData.getInstance().getCloudService(), number, UserConnectionData.getInstance().getTokenID());
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run()
-                            {
-                                TextView text = (TextView) findViewById(R.id.whoTextView);
-                                text.setText("" + customerInfo.getName());
-                                text = (TextView) findViewById(R.id.infoTextView);
-                                text.setText("" + customerInfo.getDescription());
-                                ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                                imageView.setOnClickListener(new View.OnClickListener() {
+                        try {
+                            com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("WhosIncomingCallerActivity", "onCreate", "getCustomerInfo");
+                            final CustomerInfo customerInfo = WebServiceAPI.getCustomerInfo(UserConnectionData.getInstance().getCloudService(), number, UserConnectionData.getInstance().getTokenID(), Employee.getInstance().getID());
+                            if (customerInfo != null) {
+                                mActivity.runOnUiThread(new Runnable() {
                                     @Override
-                                    public void onClick(View v) {
-                                        Intent intent = IntentFactory.getIntent(IntentFactory.IntentType.WEB, UserConnectionData.getInstance().getLoginAspx()+"CustomerInfo?"+customerInfo.getID());
-                                        startActivity(intent);
+                                    public void run() {
+                                        com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("WhosIncomingCallerActivity", "onCreate", "Update UI:" + customerInfo.getName() + "," + customerInfo.getDescription());
+                                        TextView text = (TextView) findViewById(R.id.whoTextView);
+                                        text.setText("" + customerInfo.getName());
+                                        text = (TextView) findViewById(R.id.infoTextView);
+                                        text.setText("" + customerInfo.getDescription());
+                                        Button customerInfoButton = (Button) findViewById(R.id.button_customer_info);
+                                        customerInfoButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = IntentFactory.getIntent(IntentFactory.IntentType.WEB, UserConnectionData.getInstance().getLoginAspx() + "?CusID=" + customerInfo.getID());
+                                                startActivity(intent);
+                                            }
+                                        });
+                                        Button newReservationButton = (Button) findViewById(R.id.button_new_reservation);
+                                        newReservationButton.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+                                            }
+                                        });
                                     }
                                 });
                             }
-                        });
+                        }
+                        catch (Exception ex)
+                        {
+                            com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("WhosIncomingCallerActivity", "onCreate", "error:"+ex.toString());
+
+                        }
                     }
-                }.start(); //開始執行執行緒
+                }.start();
             }
 
         }
         catch (Exception e)
         {
             Log.getInstance().WriteLog("WhosIncomingCallerActivity", "savedInstanceState", e.toString());
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -89,4 +109,18 @@ public class WhosIncomingCallerActivity extends Activity
     {
 
     }
+    public static void closeActivity()
+    {
+        if (mActivity != null)
+            mActivity.finish();
+    }
+//    class CellPhoneStateBroadcatReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//
+//            if (intent.getAction().equals(ACTION_CLOSE)) {
+//                First.this.finish();
+//            }
+//        }
+//    }
 }

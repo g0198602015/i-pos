@@ -5,5 +5,8 @@ package com.Util;
  */
 public class Constants
 {
-    public final static String mUserConnectionDataXMLFileName= "userConnectionData.txt";
+    public final static String FILE_USER_DATA = "userConnectionData.txt";
+    public final static String FILE_EMPLOYEE =  "employeeData.txt";
+    public final static String BUNDLE_EMPLOYEE_ID = "EmployeeID";
+    public final static String BUNDLE_EMPLOYEE_NICK_NAME = "EmployeeNickName";
 }
