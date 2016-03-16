@@ -8,20 +8,25 @@ import java.io.IOException;
 /**
  * Created by Jerome on 2015/11/17.
  */
-public class UserConnectionData
-{
-    private String mLoginAspx ="";
+public class UserConnectionData {
+
+
+    private String mHttpURI = "";
     private int mBranchID = 1;
     private String mTokenID = "";
     private int mEmployeeID = 0;
     private String mCloudService = "";
     private static UserConnectionData mUserConnectionData = null;
-    private UserConnectionData(String loginAspx, String cloudService,  String tokenID)
-    {
-        mLoginAspx = loginAspx;
+
+    private UserConnectionData(String aspx, String cloudService, String tokenID) {
+        //http://zoom-world.tw/WuchDemo/Login.aspx
+        int charIndex = aspx.lastIndexOf("/");
+        mHttpURI = aspx.substring(0,charIndex+1);
         mCloudService = cloudService;
         mTokenID = tokenID;
     }
+
+
     public static UserConnectionData getInstance()
     {
         return mUserConnectionData;
@@ -72,9 +77,16 @@ public class UserConnectionData
     {
         return mCloudService;
     }
-    public String getLoginAspx()
+    public String getLoginURL()
     {
-        return mLoginAspx;
+        return mHttpURI+"Login.aspx";
     }
-
+    public String getAddingTempConsumeRecordURL()
+    {
+        return mHttpURI+"addTempConsumeRecord.aspx";
+    }
+    public String getCustomerURL()
+    {
+        return mHttpURI+"customer.aspx";
+    }
 }

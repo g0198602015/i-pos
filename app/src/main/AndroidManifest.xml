@@ -66,11 +66,17 @@
                 <action android:name="android.intent.action.PHONE_STATE"/>
             </intent-filter>
         </receiver>
+        <receiver android:name="com.BroadCastReceiver.IncomingNotifcationServices" />
         <receiver android:name="com.BroadCastReceiver.IncomingCellServices" >
             <intent-filter>
                 <action android:name="com.jeromeLibary.PHONE_STATE" />
             </intent-filter>
         </receiver>
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CAMERA"/>

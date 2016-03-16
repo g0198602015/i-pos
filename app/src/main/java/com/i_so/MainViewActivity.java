@@ -41,7 +41,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
     private int myProgress = 0;
     private TextView mProgressTextView;
 
-    public static boolean m_debug = false;
+    public static boolean m_debug = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +96,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
         if (m_debug)
         {
             UserConnectionData.CreateInstance("http://zoom-world.tw/WuchDemo/Login.aspx","http://zoom-world.tw/WuchDemo/CloudService.asmx", "64860217");
-            //Employee.CreateInstance("2","zonghan");
+            Employee.CreateInstance("2","zonghan");
         }
         else
         {
