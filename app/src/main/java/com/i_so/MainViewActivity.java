@@ -41,7 +41,7 @@ public class MainViewActivity extends Activity implements WebServiceAPI.OnProduc
     private int myProgress = 0;
     private TextView mProgressTextView;
 
-    public static boolean m_debug = true;
+    public static boolean m_debug = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

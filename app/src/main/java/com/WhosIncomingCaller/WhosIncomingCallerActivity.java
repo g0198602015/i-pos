@@ -113,7 +113,14 @@ public class WhosIncomingCallerActivity extends Activity {
                                 tempIntent2.putExtra(Constants.BUNDLE_INCOMING_NOTIFACTION_INTENT, customerInfoIntent);
                                 final PendingIntent customerInfoPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, tempIntent2, flags); // 取得PendingIntent
                                 final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); // 取得系統的通知服務
-                                final Notification notification = new Notification.Builder(getApplicationContext()).setSmallIcon(R.drawable.incoming_icon).setContentTitle("i-so pos").setContentText(number).addAction(R.mipmap.booking, getResources().getString(R.string.button_customer_info), customerInfoPendingIntent).addAction(R.mipmap.customersingle, getResources().getString(R.string.button_new_reservation), newReservationPendingIntent).build(); // 建立通知
+                                final Notification notification = new Notification.Builder(getApplicationContext())
+                                                                                 .setSmallIcon(R.drawable.incoming_icon)
+                                                                                 .setContentTitle("i-so pos")
+                                                                                 .setContentText(number)
+                                                                                 .addAction(R.mipmap.booking, getResources().getString(R.string.button_customer_info), customerInfoPendingIntent)
+                                                                                 .addAction(R.mipmap.customersingle, getResources().getString(R.string.button_new_reservation), newReservationPendingIntent)
+                                                                                 .setAutoCancel(true)
+                                                                                 .build(); // 建立通知
 
                                 notificationManager.notify(notifyID, notification); // 發送通知
 
