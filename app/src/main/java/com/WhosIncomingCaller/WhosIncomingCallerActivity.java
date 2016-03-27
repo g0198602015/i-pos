@@ -6,9 +6,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.telephony.TelephonyManager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -16,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RemoteViews;
 import android.widget.TextView;
 
 import com.BroadCastReceiver.IncomingCellServices;
@@ -58,30 +62,47 @@ public class WhosIncomingCallerActivity extends Activity {
             });
             final LinearLayout imageParent = (LinearLayout) findViewById(R.id.LinearLayout_Incoming_ImageParent);
             imageParent.setVisibility(View.GONE);
-            View.OnClickListener customerInfoButtonClickListener = new View.OnClickListener() {
+           // ((Button) findViewById(R.id.Button_Incoming_NewReservation)).setOnClickListener(newReservationClickListener);
+            View.OnTouchListener newReservationTouchListener = new View.OnTouchListener() {
                 @Override
-                public void onClick(View v) {
-                    if (mCustomerInfo != null && UserConnectionData.getInstance() != null) {
-                        Intent intent = IntentFactory.getIntent(IntentFactory.IntentType.WEB, UserConnectionData.getInstance().getCustomerURL() + "?CusID=" + mCustomerInfo.getID());
-                        startActivity(intent);
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch(event.getAction())
+                    {
+                        case MotionEvent.ACTION_DOWN:
+                            v.setBackgroundColor(Color.parseColor("#D3D3D3"));
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            if (mCustomerInfo != null && UserConnectionData.getInstance() != null) {
+                                Intent intent = IntentFactory.getIntent(IntentFactory.IntentType.WEB, UserConnectionData.getInstance().getAddingTempConsumeRecordURL() + "?CusID=" + mCustomerInfo.getID());
+                                ((Context)mActivity).startActivity(intent);
+                            }
+                            v.setBackgroundColor(Color.WHITE);
+                            break;
                     }
+                    return true;
                 }
             };
-            ((Button) findViewById(R.id.button_customer_info)).setOnClickListener(customerInfoButtonClickListener);
-            ((ImageView) findViewById(R.id.Image_Incoming_NewReservation)).setOnClickListener(customerInfoButtonClickListener);
-
-            View.OnClickListener newReservationClickListener = new View.OnClickListener() {
+            View.OnTouchListener bookingTouchListener = new View.OnTouchListener() {
                 @Override
-                public void onClick(View v) {
-                    //http://192.168.1.1/addTempConsumeRecord.aspx?CusID=950
-                    if (mCustomerInfo != null && UserConnectionData.getInstance() != null) {
-                        Intent intent = IntentFactory.getIntent(IntentFactory.IntentType.WEB, UserConnectionData.getInstance().getAddingTempConsumeRecordURL() + "?CusID=" + mCustomerInfo.getID());
-                        startActivity(intent);
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch(event.getAction())
+                    {
+                        case MotionEvent.ACTION_DOWN:
+                            v.setBackgroundColor(Color.parseColor("#D3D3D3"));
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            if (mCustomerInfo != null && UserConnectionData.getInstance() != null) {
+                                Intent intent = IntentFactory.getIntent(IntentFactory.IntentType.WEB, UserConnectionData.getInstance().getCustomerURL() + "?CusID=" + mCustomerInfo.getID());
+                                ((Context)mActivity).startActivity(intent);
+                            }
+                            v.setBackgroundColor(Color.WHITE);
+                            break;
                     }
+                    return true;
                 }
             };
-            ((ImageView) findViewById(R.id.Image_Incoming_NewReservation)).setOnClickListener(newReservationClickListener);
-            ((Button) findViewById(R.id.Button_Incoming_NewReservation)).setOnClickListener(newReservationClickListener);
+            ((LinearLayout) findViewById(R.id.LinearLayout_Incoming_NewReservation)).setOnTouchListener(newReservationTouchListener);
+            ((LinearLayout) findViewById(R.id.LinearLayout_Incoming_Booking)).setOnTouchListener(bookingTouchListener);
 
             if (UserConnectionData.getInstance() != null)
             {
@@ -111,19 +132,38 @@ public class WhosIncomingCallerActivity extends Activity {
                                 Intent tempIntent2 = new Intent(getApplicationContext(), IncomingNotifcationServices.class);
                                 tempIntent2.putExtra(Constants.BUNDLE_INCOMING_NOTIFACTION_ID, notifyID);
                                 tempIntent2.putExtra(Constants.BUNDLE_INCOMING_NOTIFACTION_INTENT, customerInfoIntent);
-                                final PendingIntent customerInfoPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, tempIntent2, flags); // 取得PendingIntent
+                                final PendingIntent bookingPendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, tempIntent2, flags); // 取得PendingIntent
+//                                final Notification notification = new Notification.Builder(getApplicationContext())
+//                                                                                 .setSmallIcon(R.drawable.incoming_icon)
+//                                                                                 .setContentTitle("i-so pos")
+//                                                                                 .setContentText(number)
+//                                                                                 .addAction(R.mipmap.booking, getResources().getString(R.string.button_customer_info), customerInfoPendingIntent)
+//                                                                                 .addAction(R.mipmap.customersingle, getResources().getString(R.string.button_new_reservation), newReservationPendingIntent)
+//                                                                                 .setAutoCancel(true)
+//                                                                                 .build(); // 建立通知
+//
+//                                notificationManager.notify(notifyID, notification); // 發送通知
+
+                                RemoteViews remoteViews = new RemoteViews(
+                                        ((Context)mActivity).getPackageName(),
+                                        R.layout.activity_incoming_caller2
+                                );
+                                remoteViews.setTextViewText(R.id.whoTextView, mCustomerInfo.getName()+", "+number);
+                                remoteViews.setTextViewText(R.id.infoTextView, mCustomerInfo.getDescription());
+                                remoteViews.setOnClickPendingIntent(R.id.LinearLayout_Incoming_NewReservation, newReservationPendingIntent);
+                                remoteViews.setOnClickPendingIntent(R.id.LinearLayout_Incoming_Booking,  bookingPendingIntent);
+// build notification
+                                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(((Context)mActivity))
+                                        .setSmallIcon(R.drawable.incoming_icon)
+                                    //    .setContentTitle("Content Title")
+                                    //    .setContentText("Content Text")
+                                    //    .setContentIntent(pendingIntent)
+                                        .setContent(remoteViews)
+                                        .setPriority(NotificationCompat.PRIORITY_MIN);
+
+                                final Notification notification = mBuilder.build();
                                 final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); // 取得系統的通知服務
-                                final Notification notification = new Notification.Builder(getApplicationContext())
-                                                                                 .setSmallIcon(R.drawable.incoming_icon)
-                                                                                 .setContentTitle("i-so pos")
-                                                                                 .setContentText(number)
-                                                                                 .addAction(R.mipmap.booking, getResources().getString(R.string.button_customer_info), customerInfoPendingIntent)
-                                                                                 .addAction(R.mipmap.customersingle, getResources().getString(R.string.button_new_reservation), newReservationPendingIntent)
-                                                                                 .setAutoCancel(true)
-                                                                                 .build(); // 建立通知
-
                                 notificationManager.notify(notifyID, notification); // 發送通知
-
                                 mActivity.runOnUiThread(new Runnable()
                                 {
                                     @Override

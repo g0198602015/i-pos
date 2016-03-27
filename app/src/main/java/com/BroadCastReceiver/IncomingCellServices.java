@@ -24,7 +24,11 @@ public class IncomingCellServices extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent)
     {
         com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("IncomingCellServices", "onReceive", "onReceive");
-
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String state =  intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
         com.jeromelibrary.LogUtility.Log.getInstance().WriteLog("IncomingCellServices", "onReceive", "state:"+state);
         if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
